@@ -1,2 +1,8 @@
-* add lisp parser
+* add id form
+* add list form
+* add global Int type
+* add parser 
+** id
+** Int
+** list
 * add macros
