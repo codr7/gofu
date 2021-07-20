@@ -1,6 +1,5 @@
-* add id form
 * add list form
-* add global Int type
+* add static Int type
 * add parser 
 ** id
 ** Int

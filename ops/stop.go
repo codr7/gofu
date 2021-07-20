@@ -4,12 +4,12 @@ import (
 	"github.com/codr7/gofu"
 )
 
-type stop struct {}
+type TStop struct {}
 
-func Stop() *stop {
-	return new(stop)
+func Stop() *TStop {
+	return new(TStop)
 }
 
-func (self stop) Eval(pc int, stack *gofu.Stack) (int, error) {
+func (self TStop) Eval(pc int, stack *gofu.Stack) (int, error) {
 	return -1, nil
 }

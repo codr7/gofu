@@ -4,17 +4,17 @@ import (
 	"github.com/codr7/gofu"
 )
 
-type push struct {
+type TPush struct {
 	slot gofu.Slot
 }
 
-func Push(t gofu.Type, v interface{}) *push {
-	op := new(push)
+func Push(t gofu.Type, v interface{}) *TPush {
+	op := new(TPush)
 	op.slot.Init(t, v)
 	return op
 }
 
-func (self push) Eval(pc int, stack *gofu.Stack) (int, error) {
+func (self TPush) Eval(pc int, stack *gofu.Stack) (int, error) {
 	stack.Push(self.slot)
 	return pc+1, nil
 }

@@ -15,6 +15,8 @@ func Literal(t gofu.Type, v interface{}) *literal {
 	return f
 }
 
-func (self literal) Emit(block *gofu.Block) {
-	block.Emit(ops.Push(self.slot.Type, self.slot.Value))
+func (self literal) Emit(scope *gofu.Scope, block *gofu.Block) error {
+	scope.Push()
+	block.Emit(ops.Push(self.slot.Type(), self.slot.Value()))
+	return nil
 }

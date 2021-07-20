@@ -1,5 +1,5 @@
 package gofu
 
 type Form interface {
-	Emit(block *Block)
+	Emit(scope *Scope, block *Block)
 }
