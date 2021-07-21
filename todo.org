@@ -1,7 +1,5 @@
-* add list form
-* add static Int type
+* add Call form
+** compile to Call/CallSlot ops depending on value
+* add List form
 * add parser 
-** id
-** Int
-** list
 * add macros
