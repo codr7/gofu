@@ -12,15 +12,18 @@
 *** only return recursive result if Slot (compile time)
 ** compile function definition in child scope
 *** store in Func and use to init stack when calling
+** call block.Eval
 **** move args from incoming stack
+* add Jump op
+** deltaPc
+* add Goto op
+** pc
+** add Block.Pc() int
+*** return len
 * add form based macros
 ** name
 ** implementation func(forms.Call, *Scope) (Form, error)
 ** Call at compile time 
-* add Skip op
-* add Jump op
-** add Block.Pc() int
-*** return len
 * add CompileError type with pos
 ** use in Form.Compile
 * add Bool type
