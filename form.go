@@ -4,15 +4,15 @@ type Form interface {
 	Compile(scope *Scope, block *Block) error
 }
 
-type BasicForm struct {
+type BForm struct {
 	pos TPos
 }
 
-func (self *BasicForm) Init(pos TPos) *BasicForm {
+func (self *BForm) Init(pos TPos) *BForm {
 	self.pos = pos
 	return self
 }
 
-func (self BasicForm) Pos() TPos {
+func (self BForm) Pos() TPos {
 	return self.pos
 }

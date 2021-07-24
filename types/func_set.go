@@ -5,7 +5,7 @@ import (
 )
 
 type TFuncSet struct {
-	gofu.BasicType
+	gofu.BType
 }
 
 var funcSet *TFuncSet

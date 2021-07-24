@@ -6,13 +6,13 @@ import (
 )
 
 type TBindId struct {
-	gofu.BasicForm
+	gofu.BForm
 	id string
 }
 
 func BindId(pos gofu.TPos, id string) TBindId {
 	f := TBindId{id: id}
-	f.BasicForm.Init(pos)
+	f.BForm.Init(pos)
 	return f
 }
 

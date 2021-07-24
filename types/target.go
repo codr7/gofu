@@ -5,7 +5,7 @@ import (
 )
 
 type TTarget struct {
-	gofu.BasicType
+	gofu.BType
 }
 
 var target *TTarget

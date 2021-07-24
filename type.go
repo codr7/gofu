@@ -11,29 +11,29 @@ type Type interface {
 	HasParent(parent Type) bool
 }
 
-type BasicType struct {
+type BType struct {
 	name string
 	parentTypes []Type
 }
 
-func (self *BasicType) Init(name string) *BasicType {
+func (self *BType) Init(name string) *BType {
 	self.name = name
 	return self
 }
 
-func (self BasicType) Name() string {
+func (self BType) Name() string {
 	return self.name
 }
 
-func (self BasicType) String() string {
+func (self BType) String() string {
 	return self.name
 }
 
-func (self BasicType) DumpValue(val interface{}, out io.Writer) {
+func (self BType) DumpValue(val interface{}, out io.Writer) {
 	fmt.Fprintf(out, "%v", val)
 }
 
-func (self BasicType) HasParent(parent Type) bool {
+func (self BType) HasParent(parent Type) bool {
 	for _, t := range self.parentTypes {
 		if Isa(t, parent) {
 			return true
@@ -43,7 +43,7 @@ func (self BasicType) HasParent(parent Type) bool {
 	return false
 }
 
-func (self BasicType) AddParent(parent Type) {
+func (self BType) AddParent(parent Type) {
 	self.parentTypes = append(self.parentTypes, parent)
 }
 

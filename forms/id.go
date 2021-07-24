@@ -7,13 +7,13 @@ import (
 )
 
 type TId struct {
-	gofu.BasicForm
+	gofu.BForm
 	name string
 }
 
 func Id(pos gofu.TPos, name string) TId {
 	f := TId{name: name}
-	f.BasicForm.Init(pos)
+	f.BForm.Init(pos)
 	return f
 }
 

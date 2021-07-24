@@ -8,14 +8,14 @@ import (
 )
 
 type TCall struct {
-	gofu.BasicForm
+	gofu.BForm
 	target TId
 	arguments []gofu.Form
 }
 
 func Call(pos gofu.TPos, target TId, args...gofu.Form) TCall {
 	f := TCall{target: target, arguments: args}
-	f.BasicForm.Init(pos)
+	f.BForm.Init(pos)
 	return f
 }
 

@@ -5,7 +5,7 @@ import (
 )
 
 type TInt struct {
-	gofu.BasicType
+	gofu.BType
 }
 
 var _int *TInt

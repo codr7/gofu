@@ -5,7 +5,7 @@ import (
 )
 
 type TNum struct {
-	gofu.BasicType
+	gofu.BType
 }
 
 var num *TNum

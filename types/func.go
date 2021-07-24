@@ -5,7 +5,7 @@ import (
 )
 
 type TFunc struct {
-	gofu.BasicType
+	gofu.BType
 }
 
 var _func *TFunc
