@@ -1,3 +1,9 @@
+* switch parentTypes to map[Type]Type
+** parent -> direct parent
+** change Type.Isa to Type.HasParent() Type
+*** check map 
+** add Type.AddParent()
+** update Isa
 * add Stack.String()
 * add CompileError type with file/pos
 ** use in Form.Compile
