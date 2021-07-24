@@ -14,6 +14,9 @@
 *** store in Func and use to init stack when calling
 ** call block.Eval
 **** move args from incoming stack
+* implement dynamic calls
+** set value when binding literals
+** convert test to dynamic call
 * add Jump op
 ** deltaPc
 * add Goto op

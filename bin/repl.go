@@ -43,7 +43,7 @@ func main() {
 	var stack gofu.Stack
 	stack.Init(scope.StackDepth())
 
-	if err := block.Eval(0, &calls, &stack); err != nil {
+	if err := block.Run(0, &calls, &stack); err != nil {
 		fmt.Println(err)
 	}
 	
