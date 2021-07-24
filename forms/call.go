@@ -8,12 +8,12 @@ import (
 )
 
 type TCall struct {
-	_func TId
+	target TId
 	arguments []gofu.Form
 }
 
-func Call(_func TId, args...gofu.Form) TCall {
-	return TCall{_func: _func, arguments: args}
+func Call(target TId, args...gofu.Form) TCall {
+	return TCall{target: target, arguments: args}
 }
 
 func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
@@ -26,7 +26,7 @@ func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
 		}
 	}
 
-	f := scope.Find(self._func.name)
+	f := scope.Find(self.target.name)
 	
 	switch s := f.(type) {
 	case int:
