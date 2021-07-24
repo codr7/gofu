@@ -1,20 +1,27 @@
 package gofu
 
+import (
+	"github.com/codr7/gofu/errors"
+)
+
 type Block struct {
 	ops []Op
 }
 
-func (self Block) Eval(pc int, stack *Stack) error {
+func (self Block) Eval(pc int, calls *CallStack, stack *Stack) error {
 	var err error
-
+	
 	for {
 		op := self.ops[pc]
-		pc, err = op.Eval(pc, stack)
 		
-		if pc == -1 {
+		
+		if err = op.Eval(&pc, calls, stack); err != nil {
+			if err == errors.Stop {
+				err = nil
+			}
+			
 			break
 		}
-
 	}
 
 	return err

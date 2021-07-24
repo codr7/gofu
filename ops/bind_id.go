@@ -8,14 +8,13 @@ type TBindId struct {
 	index int
 }
 
-func BindId(index int) *TBindId {
-	op := new(TBindId)
-	op.index = index
-	return op
+func BindId(idx int) TBindId {
+	return TBindId{index: idx}
 }
 
-func (self TBindId) Eval(pc int, stack *gofu.Stack) (int, error) {
+func (self TBindId) Eval(pc *int, calls *gofu.CallStack, stack *gofu.Stack) error {
 	it := stack.Pop()
 	stack.Set(self.index, it.Type(), it.Value())
-	return pc+1, nil
+	*pc++
+	return nil
 }

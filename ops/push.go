@@ -8,13 +8,14 @@ type TPush struct {
 	slot gofu.Slot
 }
 
-func Push(t gofu.Type, v interface{}) *TPush {
-	op := new(TPush)
+func Push(t gofu.Type, v interface{}) TPush {
+	var op TPush
 	op.slot.Init(t, v)
 	return op
 }
 
-func (self TPush) Eval(pc int, stack *gofu.Stack) (int, error) {
+func (self TPush) Eval(pc *int, calls *gofu.CallStack, stack *gofu.Stack) error {
 	stack.Push(self.slot)
-	return pc+1, nil
+	*pc++
+	return  nil
 }

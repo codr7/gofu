@@ -30,18 +30,19 @@ func main() {
 	})
 
 	scope.BindSlot("baz", types.Func, f)
-	c := forms.Call(forms.Id("baz"), forms.Literal(&types.Int, 28))
+	c := forms.Call(gofu.Pos("test", -1, -1), forms.Id("baz"), forms.Literal(&types.Int, 28))
 
 	if err := c.Compile(&scope, &block); err != nil {
 		fmt.Println(err)
 	}
 	
 	block.Emit(ops.Stop())
-	
+
+	var calls gofu.CallStack
 	var stack gofu.Stack
 	stack.Init(scope.StackDepth())
 
-	if err := block.Eval(0, &stack); err != nil {
+	if err := block.Eval(0, &calls, &stack); err != nil {
 		fmt.Println(err)
 	}
 	

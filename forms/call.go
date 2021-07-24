@@ -8,12 +8,15 @@ import (
 )
 
 type TCall struct {
+	gofu.BasicForm
 	target TId
 	arguments []gofu.Form
 }
 
-func Call(target TId, args...gofu.Form) TCall {
-	return TCall{target: target, arguments: args}
+func Call(pos gofu.TPos, target TId, args...gofu.Form) TCall {
+	c := TCall{target: target, arguments: args}
+	c.BasicForm.Init(pos)
+	return c
 }
 
 func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
@@ -55,7 +58,7 @@ func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
 			}
 		}
 		
-		block.Emit(ops.Call(f))
+		block.Emit(ops.Call(self.Pos(), f))
 	default:
 		return fmt.Errorf("Invalid target: %v", f)
 	}
