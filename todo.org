@@ -21,10 +21,10 @@
 * add Jump op
 ** add Block.Pc() int
 *** return len
-* add CompileError type with file/pos
+* add CompileError type with pos
 ** use in Form.Compile
 * add Bool type
 * add String type
 * add fuzzy search to Scope.Find
-** use to provide alternatives on failed search
+** use edit distance to provide alternatives on failed search
 * add parser framework
