@@ -15,20 +15,35 @@ func main() {
 	var scope gofu.Scope
 
 	scope.Init()
-	forms.Literal(types.Int, 7).Emit(&scope, &block)
+	forms.Literal(&types.Int, 7).Compile(&scope, &block)
 
-	scope.BindSlot("foo", types.Int, 14)	
-	forms.Id("foo").Emit(&scope, &block)
+	scope.BindSlot("foo", &types.Int, 14)	
+	forms.Id("foo").Compile(&scope, &block)
 
-	block.Emit(ops.Push(types.Int, 21))
-	forms.BindId("bar").Emit(&scope, &block)
-	forms.Id("bar").Emit(&scope, &block)
+	block.Emit(ops.Push(&types.Int, 21))
+	forms.BindId("bar").Compile(&scope, &block)
+	forms.Id("bar").Compile(&scope, &block)
+
+	f := gofu.NewFunc("baz", []gofu.Type{&types.Int}, &types.Int, func(stack *gofu.Stack) error {
+		fmt.Printf("Inside baz!\n")
+		return nil
+	})
+
+	scope.BindSlot("baz", types.Func, f)
+	c := forms.Call(forms.Id("baz"), forms.Literal(&types.Int, 28))
+
+	if err := c.Compile(&scope, &block); err != nil {
+		fmt.Println(err)
+	}
 	
 	block.Emit(ops.Stop())
 	
 	var stack gofu.Stack
 	stack.Init(scope.StackDepth())
-	block.Eval(0, &stack)
+
+	if err := block.Eval(0, &stack); err != nil {
+		fmt.Println(err)
+	}
 	
-	fmt.Printf("%v %v %v\n", stack.Pop(), stack.Pop(), stack.Pop())
+	fmt.Println(stack)
 }

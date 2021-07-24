@@ -1,5 +1,6 @@
-* add Call form
-** compile to Call/CallSlot ops depending on value
+* add Stack.String()
+* add CompileError type with file/pos
+** use in Form.Compile
 * add List form
 * add parser 
 * add macros

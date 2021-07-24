@@ -6,17 +6,15 @@ import (
 	"github.com/codr7/gofu/ops"
 )
 
-type id struct {
+type TId struct {
 	name string
 }
 
-func Id(name string) *id {
-	f := new(id)
-	f.name = name
-	return f
+func Id(name string) TId {
+	return TId{name: name}
 }
 
-func (self id) Emit(scope *gofu.Scope, block *gofu.Block) error {
+func (self TId) Compile(scope *gofu.Scope, block *gofu.Block) error {
 	found := scope.Find(self.name)
 
 	if found == nil {

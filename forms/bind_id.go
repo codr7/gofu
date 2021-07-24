@@ -9,13 +9,11 @@ type TBindId struct {
 	id string
 }
 
-func BindId(id string) *TBindId {
-	f := new(TBindId)
-	f.id = id
-	return f
+func BindId(id string) TBindId {
+	return TBindId{id: id}
 }
 
-func (self TBindId) Emit(scope *gofu.Scope, block *gofu.Block) error {
+func (self TBindId) Compile(scope *gofu.Scope, block *gofu.Block) error {
 	i := scope.BindId(self.id)
 	block.Emit(ops.BindId(i))
 	return nil
