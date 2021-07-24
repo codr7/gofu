@@ -8,7 +8,7 @@ import (
 type Type interface {
 	Name() string
 	DumpValue(val interface{}, out io.Writer)
-	Isa(parent Type) bool
+	HasParent(parent Type) bool
 }
 
 type BasicType struct {
@@ -33,12 +33,24 @@ func (self BasicType) DumpValue(val interface{}, out io.Writer) {
 	fmt.Fprintf(out, "%v", val)
 }
 
-func (self BasicType) Isa(parent Type) bool {
+func (self BasicType) HasParent(parent Type) bool {
 	for _, t := range self.parentTypes {
-		if t == parent || t.Isa(parent) {
+		if Isa(t, parent) {
 			return true
 		}
 	}
 
 	return false
+}
+
+func (self BasicType) AddParent(parent Type) {
+	self.parentTypes = append(self.parentTypes, parent)
+}
+
+func Isa(child, parent Type) bool {
+	if child == parent {
+		return true
+	}
+
+	return child.HasParent(parent)
 }

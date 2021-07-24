@@ -35,6 +35,10 @@ func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
 	case int:
 		return fmt.Errorf("Dynamic calls are not implemented: %v", f)
 	case gofu.Slot:
+		if gofu.Isa(s.Type(), types.Target()) {
+			return fmt.Errorf("Invalid call target: %v", s)
+		}
+		
 		f = s.Value()
 	default:
 		return fmt.Errorf("Invalid target: %v", f)
@@ -56,7 +60,7 @@ func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
 			for i, a := range(self.arguments) {
 				switch a := a.(type) {
 				case TLiteral:
-					if x, y := a.slot.Type(), ats[i]; !types.Isa(x, y) {
+					if x, y := a.slot.Type(), ats[i]; !gofu.Isa(x, y) {
 						return fmt.Errorf("Wrong argument type: %v/%v", x, y)
 					}
 				}

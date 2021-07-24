@@ -1,8 +1,8 @@
 * finish FuncSet
-** Add FuncSet type
-** GetFunc/Call
 ** convert Func to FuncSet in Scope.BindX
-** otherwise Push
+*** otherwise Push
+** GetFunc
+* add pos arg to Call funcs
 * switch parentTypes to map[Type]Type
 ** rename parentTypes to parents
 ** parent -> direct parent

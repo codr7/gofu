@@ -16,22 +16,22 @@ func main() {
 
 	scope.Init()
 	p := gofu.Pos("test", -1, -1)
-	forms.Literal(p, &types.Int, 7).Compile(&scope, &block)
+	forms.Literal(p, types.Int(), 7).Compile(&scope, &block)
 
-	scope.BindSlot("foo", &types.Int, 14)	
+	scope.BindSlot("foo", types.Int(), 14)	
 	forms.Id(p, "foo").Compile(&scope, &block)
 
-	block.Emit(ops.Push(&types.Int, 21))
+	block.Emit(ops.Push(types.Int(), 21))
 	forms.BindId(p, "bar").Compile(&scope, &block)
 	forms.Id(p, "bar").Compile(&scope, &block)
 
-	f := gofu.Func("baz", []gofu.Type{&types.Int}, &types.Int, func(stack *gofu.Stack) error {
+	f := gofu.Func("baz", []gofu.Type{types.Int()}, types.Int(), func(stack *gofu.Stack) error {
 		fmt.Printf("Inside baz!\n")
 		return nil
 	})
 
-	scope.BindSlot("baz", types.Func, f)
-	c := forms.Call(p, forms.Id(p, "baz"), forms.Literal(p, &types.Int, 28))
+	scope.BindSlot("baz", types.Func(), f)
+	c := forms.Call(p, forms.Id(p, "baz"), forms.Literal(p, types.Int(), 28))
 
 	if err := c.Compile(&scope, &block); err != nil {
 		fmt.Println(err)

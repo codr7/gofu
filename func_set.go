@@ -30,18 +30,34 @@ func (self *TFuncSet) Pop() *TFunc {
 }
 
 func (self *TFuncSet) GetFunc(args []Form) Target {
-	//TODO Return first matching implementation if possible
+	//TODO Return first matching implementation from end if possible,
+	//if and only if full match or nothing else matches
 	return self
 }
 
 func (self *TFuncSet) Call(stack *Stack) error {
 	n := len(self.items)
 
-	if n > 0 {
-		//TODO Pick first matching implementation from end
-		return self.items[n-1].Call(stack)
-	}
 
+	for i := n-1; i >= 0; i++ {
+		f := self.items[i]
+		match := true
+		
+		for j, t := range(f.argumentTypes) {
+			if t == nil {
+				continue
+			}
+
+			if !Isa(stack.Peek(self.arity-j).Type(), t) {
+				match = false
+			}
+		}
+
+		if match {
+			return f.Call(stack)
+		}
+	}
+	
 	return fmt.Errorf("No matching function found: %v", self.name)
 }
 

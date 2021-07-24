@@ -8,8 +8,14 @@ type TInt struct {
 	gofu.BasicType
 }
 
-var Int TInt
+var _int *TInt
 
-func init() {
-	Int.Init("Int")
+func Int() *TInt {
+	if _int == nil {
+		_int = new(TInt)
+		_int.Init("Int")
+		_int.AddParent(Num())
+	}
+	
+	return _int
 }

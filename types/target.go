@@ -4,7 +4,17 @@ import (
 	"github.com/codr7/gofu"
 )
 
-type Target interface {
-	gofu.Type
-	CallValue(val interface{}, stack *gofu.Stack) *gofu.Slot
+type TTarget struct {
+	gofu.BasicType
+}
+
+var target *TTarget
+
+func Target() *TTarget {
+	if target == nil {
+		target = new(TTarget)
+		target.Init("Target")
+	}
+	
+	return target
 }
