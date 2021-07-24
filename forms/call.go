@@ -50,7 +50,7 @@ func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
 			return fmt.Errorf("Wrong number of arguments: %v", n)
 		}
 
-		if m, ok := f.(*gofu.TMeta); ok {
+		if m, ok := f.(*gofu.TMulti); ok {
 			f = m.GetFunc(self.arguments)
 		}
 

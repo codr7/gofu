@@ -1,8 +1,5 @@
-* finish Meta
-** convert Func to Meta in Scope.BindX
-*** otherwise Push
-** finish GetFunc
 * add pos arg to Call funcs
+* add Stack.String()
 * switch parentTypes to map[Type]Type
 ** rename parentTypes to parents
 ** parent -> direct parent
@@ -10,7 +7,6 @@
 *** check map 
 ** add Type.AddParent()
 ** update Isa
-* add Stack.String()
 * add Scope.parent
 ** add Init arg
 ** search recursively in Find
@@ -19,6 +15,8 @@
 *** store in Func and use to init stack when calling
 ** call block.Eval
 **** move args from incoming stack
+* finish Multi
+** finish GetFunc
 * implement dynamic calls
 ** set value when binding literals
 ** convert test to dynamic call
