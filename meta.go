@@ -36,24 +36,8 @@ func (self *TMeta) GetFunc(args []Form) Target {
 }
 
 func (self *TMeta) Call(stack *Stack) error {
-	n := len(self.items)
-
-
-	for i := n-1; i >= 0; i++ {
-		f := self.items[i]
-		match := true
-		
-		for j, t := range(f.argumentTypes) {
-			if t == nil {
-				continue
-			}
-
-			if !Isa(stack.Peek(self.arity-j).Type(), t) {
-				match = false
-			}
-		}
-
-		if match {
+	for i := len(self.items)-1; i >= 0; i++ {
+		if f := self.items[i]; f.Check(stack) {
 			return f.Call(stack)
 		}
 	}
