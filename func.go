@@ -2,26 +2,29 @@ package gofu
 
 type FuncImp = func(stack *Stack) error
 
-type Func struct {
+type TFunc struct {
 	name string
 	argumentTypes []Type
 	returnType  Type
 	implementation  FuncImp
 }
 
-func NewFunc(name string, aTypes []Type, rType Type, imp FuncImp) *Func {
-	return &Func{name: name, argumentTypes: aTypes, returnType: rType, implementation: imp}
+func Func(name string, aTypes []Type, rType Type, imp FuncImp) *TFunc {
+	return &TFunc{name: name, argumentTypes: aTypes, returnType: rType, implementation: imp}
 }
 
-func (self Func) Name() string {
+func (self TFunc) Name() string {
 	return self.name
 }
 
-func (self Func) ArgumentTypes() []Type {
+func (self TFunc) Arity() int {
+	return len(self.argumentTypes)
+}
+
+func (self TFunc) ArgumentTypes() []Type {
 	return self.argumentTypes
 }
 
-func (self Func) Call(stack *Stack) error {
+func (self TFunc) Call(stack *Stack) error {
 	return self.implementation(stack)
 }
-

@@ -1,3 +1,8 @@
+* finish FuncSet
+** Add FuncSet type
+** GetFunc/Call
+** convert Func to FuncSet in Scope.BindX
+** otherwise Push
 * switch parentTypes to map[Type]Type
 ** rename parentTypes to parents
 ** parent -> direct parent

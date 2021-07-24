@@ -1,6 +1,6 @@
 package gofu
 
 type Target interface {
-	ArgumentTypes() []Type
+	Arity() int
 	Call(stack *Stack) error
 }

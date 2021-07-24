@@ -10,7 +10,7 @@ type TFunc struct {
 }
 
 func (self TFunc) CallValue(val interface{}, stack *gofu.Stack) error {
-	f := val.(gofu.Func)
+	f := val.(gofu.TFunc)
 	fmt.Printf("Calling %v!\n", f.Name())
 	return f.Call(stack)
 }

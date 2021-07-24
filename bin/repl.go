@@ -25,7 +25,7 @@ func main() {
 	forms.BindId(p, "bar").Compile(&scope, &block)
 	forms.Id(p, "bar").Compile(&scope, &block)
 
-	f := gofu.NewFunc("baz", []gofu.Type{&types.Int}, &types.Int, func(stack *gofu.Stack) error {
+	f := gofu.Func("baz", []gofu.Type{&types.Int}, &types.Int, func(stack *gofu.Stack) error {
 		fmt.Printf("Inside baz!\n")
 		return nil
 	})

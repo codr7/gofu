@@ -33,7 +33,7 @@ func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
 	
 	switch s := f.(type) {
 	case int:
-		return fmt.Errorf("Dynamic calls not supported yet: %v", f)
+		return fmt.Errorf("Dynamic calls are not implemented: %v", f)
 	case gofu.Slot:
 		f = s.Value()
 	default:
@@ -42,18 +42,23 @@ func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
 
 	switch f := f.(type) {
 	case gofu.Target:
-		ats := f.ArgumentTypes()
-		arity := len(ats)
-		
-		if n := len(self.arguments) ; n != arity {
+		if n := len(self.arguments) ; n != f.Arity() {
 			return fmt.Errorf("Wrong number of arguments: %v", n)
 		}
 
-		for i, a := range(self.arguments) {
-			switch a := a.(type) {
-			case TLiteral:
-				if x, y := a.slot.Type(), ats[i]; !types.Isa(x, y) {
-					return fmt.Errorf("Wrong argument type: %v/%v", x, y)
+		if fs, ok := f.(*gofu.TFuncSet); ok {
+			f = fs.GetFunc(self.arguments)
+		}
+
+		if f, ok := f.(*gofu.TFunc); ok {
+			ats := f.ArgumentTypes()
+			
+			for i, a := range(self.arguments) {
+				switch a := a.(type) {
+				case TLiteral:
+					if x, y := a.slot.Type(), ats[i]; !types.Isa(x, y) {
+						return fmt.Errorf("Wrong argument type: %v/%v", x, y)
+					}
 				}
 			}
 		}
