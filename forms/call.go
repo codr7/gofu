@@ -50,20 +50,27 @@ func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
 			return fmt.Errorf("Wrong number of arguments: %v", n)
 		}
 
-		if fs, ok := f.(*gofu.TFuncSet); ok {
-			f = fs.GetFunc(self.arguments)
+		if m, ok := f.(*gofu.TMeta); ok {
+			f = m.GetFunc(self.arguments)
 		}
 
 		if f, ok := f.(*gofu.TFunc); ok {
 			ats := f.ArgumentTypes()
-			
+			unknowns := 0
+
 			for i, a := range(self.arguments) {
 				switch a := a.(type) {
 				case TLiteral:
 					if x, y := a.slot.Type(), ats[i]; !gofu.Isa(x, y) {
 						return fmt.Errorf("Wrong argument type: %v/%v", x, y)
 					}
+				default:
+					unknowns++
 				}
+			}
+
+			if unknowns > 0 {
+				block.Emit(ops.Check(self.Pos(), f))
 			}
 		}
 		

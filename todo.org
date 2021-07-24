@@ -1,7 +1,7 @@
-* finish FuncSet
-** convert Func to FuncSet in Scope.BindX
+* finish Meta
+** convert Func to Meta in Scope.BindX
 *** otherwise Push
-** GetFunc
+** finish GetFunc
 * add pos arg to Call funcs
 * switch parentTypes to map[Type]Type
 ** rename parentTypes to parents

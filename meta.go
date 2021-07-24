@@ -4,38 +4,38 @@ import (
 	"fmt"
 )
 
-type TFuncSet struct {
+type TMeta struct {
 	name string
 	arity int
 	items []*TFunc
 }
 
-func FuncSet(name string, arity int) *TFuncSet {
-	return &TFuncSet{name: name, arity: arity}
+func Meta(name string, arity int) *TMeta {
+	return &TMeta{name: name, arity: arity}
 }
 
-func (self *TFuncSet) Arity() int {
+func (self *TMeta) Arity() int {
 	return self.arity;
 }
 
-func (self *TFuncSet) Push(_func *TFunc) {
+func (self *TMeta) Push(_func *TFunc) {
 	self.items = append(self.items, _func)
 }
 
-func (self *TFuncSet) Pop() *TFunc {
+func (self *TMeta) Pop() *TFunc {
 	i := len(self.items)-1
 	it := self.items[i]
 	self.items = self.items[:i]
 	return it
 }
 
-func (self *TFuncSet) GetFunc(args []Form) Target {
+func (self *TMeta) GetFunc(args []Form) Target {
 	//TODO Return first matching implementation from end if possible,
 	//if and only if full match or nothing else matches
 	return self
 }
 
-func (self *TFuncSet) Call(stack *Stack) error {
+func (self *TMeta) Call(stack *Stack) error {
 	n := len(self.items)
 
 

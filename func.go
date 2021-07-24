@@ -25,6 +25,18 @@ func (self TFunc) ArgumentTypes() []Type {
 	return self.argumentTypes
 }
 
+func (self TFunc) Check(stack *Stack) bool {
+	offs := self.Arity()-1
+
+	for i, t := range(self.argumentTypes) {
+		if !Isa(stack.Peek(offs-i).Type(), t) {
+			return false
+		}
+	}
+
+	return true
+}
+
 func (self TFunc) Call(stack *Stack) error {
 	return self.implementation(stack)
 }
