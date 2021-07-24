@@ -6,11 +6,13 @@ import (
 )
 
 type TLiteral struct {
+	gofu.BasicForm
 	slot gofu.Slot
 }
 
-func Literal(t gofu.Type, v interface{}) TLiteral {
+func Literal(pos gofu.TPos, t gofu.Type, v interface{}) TLiteral {
 	var f TLiteral
+	f.BasicForm.Init(pos)
 	f.slot.Init(t, v)
 	return f
 }

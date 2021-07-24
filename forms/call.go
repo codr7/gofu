@@ -14,9 +14,9 @@ type TCall struct {
 }
 
 func Call(pos gofu.TPos, target TId, args...gofu.Form) TCall {
-	c := TCall{target: target, arguments: args}
-	c.BasicForm.Init(pos)
-	return c
+	f := TCall{target: target, arguments: args}
+	f.BasicForm.Init(pos)
+	return f
 }
 
 func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {

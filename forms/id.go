@@ -7,11 +7,14 @@ import (
 )
 
 type TId struct {
+	gofu.BasicForm
 	name string
 }
 
-func Id(name string) TId {
-	return TId{name: name}
+func Id(pos gofu.TPos, name string) TId {
+	f := TId{name: name}
+	f.BasicForm.Init(pos)
+	return f
 }
 
 func (self TId) Compile(scope *gofu.Scope, block *gofu.Block) error {

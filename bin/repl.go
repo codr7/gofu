@@ -15,14 +15,15 @@ func main() {
 	var scope gofu.Scope
 
 	scope.Init()
-	forms.Literal(&types.Int, 7).Compile(&scope, &block)
+	p := gofu.Pos("test", -1, -1)
+	forms.Literal(p, &types.Int, 7).Compile(&scope, &block)
 
 	scope.BindSlot("foo", &types.Int, 14)	
-	forms.Id("foo").Compile(&scope, &block)
+	forms.Id(p, "foo").Compile(&scope, &block)
 
 	block.Emit(ops.Push(&types.Int, 21))
-	forms.BindId("bar").Compile(&scope, &block)
-	forms.Id("bar").Compile(&scope, &block)
+	forms.BindId(p, "bar").Compile(&scope, &block)
+	forms.Id(p, "bar").Compile(&scope, &block)
 
 	f := gofu.NewFunc("baz", []gofu.Type{&types.Int}, &types.Int, func(stack *gofu.Stack) error {
 		fmt.Printf("Inside baz!\n")
@@ -30,7 +31,7 @@ func main() {
 	})
 
 	scope.BindSlot("baz", types.Func, f)
-	c := forms.Call(gofu.Pos("test", -1, -1), forms.Id("baz"), forms.Literal(&types.Int, 28))
+	c := forms.Call(p, forms.Id(p, "baz"), forms.Literal(p, &types.Int, 28))
 
 	if err := c.Compile(&scope, &block); err != nil {
 		fmt.Println(err)

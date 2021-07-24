@@ -13,6 +13,10 @@
 ** compile function definition in child scope
 *** store in Func and use to init stack when calling
 **** move args from incoming stack
+* add form based macros
+** name
+** implementation func(forms.Call, *Scope) (Form, error)
+** Call at compile time 
 * add Skip op
 * add Jump op
 ** add Block.Pc() int
@@ -23,5 +27,4 @@
 * add String type
 * add fuzzy search to Scope.Find
 ** use to provide alternatives on failed search
-* add macros
 * add parser framework

@@ -6,11 +6,14 @@ import (
 )
 
 type TBindId struct {
+	gofu.BasicForm
 	id string
 }
 
-func BindId(id string) TBindId {
-	return TBindId{id: id}
+func BindId(pos gofu.TPos, id string) TBindId {
+	f := TBindId{id: id}
+	f.BasicForm.Init(pos)
+	return f
 }
 
 func (self TBindId) Compile(scope *gofu.Scope, block *gofu.Block) error {
