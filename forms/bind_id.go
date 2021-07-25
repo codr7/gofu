@@ -21,3 +21,4 @@ func (self TBindId) Compile(scope *gofu.Scope, block *gofu.Block) error {
 	block.Emit(ops.BindId(i))
 	return nil
 }
+

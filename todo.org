@@ -1,10 +1,3 @@
-* switch parentTypes to map[Type]Type
-** rename parentTypes to parents
-** parent -> direct parent
-** change Type.Isa to Type.HasParent() Type
-*** check map 
-** add Type.AddParent()
-** update Isa
 * add Scope.parent
 ** add Init arg
 ** search recursively in Find

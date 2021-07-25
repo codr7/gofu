@@ -14,7 +14,7 @@ func Int() *TInt {
 	if _int == nil {
 		_int = new(TInt)
 		_int.Init("Int")
-		_int.AddParent(Num())
+		_int.AddParent(Num(), true)
 	}
 	
 	return _int

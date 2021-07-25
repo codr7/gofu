@@ -14,7 +14,7 @@ func Func() *TFunc {
 	if (_func == nil) {
 		_func = new(TFunc)
 		_func.Init("Func")
-		_func.AddParent(Target())
+		_func.AddParent(Target(), true)
 	}
 
 	return _func
