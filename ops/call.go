@@ -15,8 +15,9 @@ func Call(pos gofu.TPos, tgt gofu.Target) TCall {
 
 func (self TCall) Eval(pc *int, calls *gofu.CallStack, stack *gofu.Stack) error {
 	tag := calls.Push(self.pos, self.target)
+	*pc++
 
-	if err := self.target.Call(stack); err != nil {
+	if err := self.target.Call(self.pos, pc, stack); err != nil {
 		return err
 	}
 
@@ -24,6 +25,5 @@ func (self TCall) Eval(pc *int, calls *gofu.CallStack, stack *gofu.Stack) error 
 		return err
 	}
 	
-	*pc++
 	return nil
 }

@@ -1,6 +1,6 @@
 package gofu
 
-type Fimp = func(stack *Stack) error
+type Fimp = func(pos TPos, pc *int, stack *Stack) error
 
 type TFunc struct {
 	name string
@@ -37,6 +37,6 @@ func (self TFunc) Applicable(stack *Stack) bool {
 	return true
 }
 
-func (self TFunc) Call(stack *Stack) error {
-	return self.implementation(stack)
+func (self TFunc) Call(pos TPos, pc *int, stack *Stack) error {
+	return self.implementation(pos, pc, stack)
 }

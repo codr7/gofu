@@ -18,8 +18,13 @@ func (self *TMulti) Arity() int {
 	return self.arity;
 }
 
-func (self *TMulti) Push(_func *TFunc) {
+func (self *TMulti) Push(_func *TFunc) error {
+	if x, y := _func.Arity(), self.arity; x != y {
+		return fmt.Errorf("Wrong arity for multi: %v/%v/%v", self.name, x, y)
+	}
+	
 	self.items = append(self.items, _func)
+	return nil
 }
 
 func (self *TMulti) Pop() *TFunc {
@@ -35,10 +40,10 @@ func (self *TMulti) GetFunc(args []Form) Target {
 	return self
 }
 
-func (self *TMulti) Call(stack *Stack) error {
+func (self *TMulti) Call(pos TPos, pc *int, stack *Stack) error {
 	for i := len(self.items)-1; i >= 0; i++ {
 		if f := self.items[i]; f.Applicable(stack) {
-			return f.Call(stack)
+			return f.Call(pos, pc, stack)
 		}
 	}
 	

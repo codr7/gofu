@@ -107,10 +107,11 @@ func TestFunc(t *testing.T) {
 	scope.Init()
 	p := gofu.Pos("TestFunc", -1, -1)
 
-	f := gofu.Func("foo", []gofu.Type{types.Int()}, types.Int(), func(stack *gofu.Stack) error {
-		stack.Push(types.Int(), stack.Pop().Value().(int) - 7)
-		return nil
-	})
+	f := gofu.Func("foo", []gofu.Type{types.Int()}, types.Int(),
+		func(pos gofu.TPos, pc *int, stack *gofu.Stack) error {
+			stack.Push(types.Int(), stack.Pop().Value().(int) - 7)
+			return nil
+		})
 
 	scope.BindSlot("foo", types.Func(), f)
 	c := forms.Call(p, forms.Id(p, "foo"), forms.Literal(p, types.Int(), 14))
