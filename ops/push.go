@@ -5,17 +5,16 @@ import (
 )
 
 type TPush struct {
-	slot gofu.Slot
+	t gofu.Type
+	v interface{}
 }
 
 func Push(t gofu.Type, v interface{}) TPush {
-	var op TPush
-	op.slot.Init(t, v)
-	return op
+	return TPush{t: t, v: v}
 }
 
 func (self TPush) Eval(pc *int, calls *gofu.CallStack, stack *gofu.Stack) error {
-	stack.Push(self.slot)
+	stack.Push(self.t, self.v)
 	*pc++
 	return  nil
 }

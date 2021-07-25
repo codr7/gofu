@@ -70,7 +70,7 @@ func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
 			}
 
 			if unknowns > 0 {
-				block.Emit(ops.Check(self.Pos(), f))
+				block.Emit(ops.Apply(self.Pos(), f))
 			}
 		}
 		

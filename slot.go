@@ -9,10 +9,9 @@ type Slot struct {
 	value interface{}
 }
 
-func (self *Slot) Init(t Type, v interface{}) *Slot {
+func (self *Slot) Init(t Type, v interface{}) {
 	self._type = t
 	self.value = v
-	return self
 }
 
 func (self Slot) Type() Type {

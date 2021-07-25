@@ -13,7 +13,8 @@ func Get(idx int) TGet {
 }
 
 func (self TGet) Eval(pc *int, calls *gofu.CallStack, stack *gofu.Stack) error {
-	stack.Push(stack.Get(self.index))
+	it := stack.Get(self.index)
+	stack.Push(it.Type(), it.Value())
 	*pc++
 	return nil
 }

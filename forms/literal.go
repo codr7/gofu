@@ -18,7 +18,6 @@ func Literal(pos gofu.TPos, t gofu.Type, v interface{}) TLiteral {
 }
 
 func (self TLiteral) Compile(scope *gofu.Scope, block *gofu.Block) error {
-	scope.Push()
 	block.Emit(ops.Push(self.slot.Type(), self.slot.Value()))
 	return nil
 }

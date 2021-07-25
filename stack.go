@@ -1,5 +1,9 @@
 package gofu
 
+import (
+	"strings"
+)
+
 type Stack struct {
 	items []Slot
 }
@@ -9,8 +13,18 @@ func (self *Stack) Init(n int) *Stack {
 	return self
 }
 
-func (self *Stack) Push(it Slot) {
-	self.items = append(self.items, it)
+func (self Stack) Empty() bool {
+	return len(self.items) == 0
+}
+
+func (self Stack) Len() int {
+	return len(self.items)
+}
+
+func (self *Stack) Push(t Type, v interface{}) {
+	var s Slot
+	s.Init(t, v)
+	self.items = append(self.items, s)
 }
 
 func (self Stack) Peek(offs int) Slot {
@@ -30,4 +44,20 @@ func (self *Stack) Get(index int) Slot {
 
 func (self *Stack) Set(index int, t Type, v interface{}) {
 	self.items[index].Init(t, v)
+}
+
+func (self Stack) String() string {
+	var out strings.Builder
+	out.WriteRune('[')
+
+	for i, s := range self.items {
+		if i > 0 {
+			out.WriteRune(' ')
+		}
+
+		s.Type().DumpValue(s.Value(), &out)
+	}
+	
+	out.WriteRune(']')
+	return out.String()
 }

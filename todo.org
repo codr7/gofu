@@ -1,5 +1,5 @@
-* add pos arg to Call funcs
-* add Stack.String()
+* add pos & pc args to Func/Multi.Call
+** also add to Fimp
 * switch parentTypes to map[Type]Type
 ** rename parentTypes to parents
 ** parent -> direct parent

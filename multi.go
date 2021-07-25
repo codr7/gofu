@@ -37,7 +37,7 @@ func (self *TMulti) GetFunc(args []Form) Target {
 
 func (self *TMulti) Call(stack *Stack) error {
 	for i := len(self.items)-1; i >= 0; i++ {
-		if f := self.items[i]; f.Check(stack) {
+		if f := self.items[i]; f.Applicable(stack) {
 			return f.Call(stack)
 		}
 	}
