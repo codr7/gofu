@@ -19,15 +19,19 @@ func (self *Scope) RegisterCount() int {
 
 func (self *Scope) BindId(id string) int {
 	i := self.registerCount
+
+	if self.bindings.Add(id, i) != nil {
+		return -1
+	}
+
 	self.registerCount++
-	self.bindings.Add(id, i)
 	return i
 }
 
-func (self *Scope) BindSlot(id string, t Type, v interface{}) {
+func (self *Scope) BindSlot(id string, t Type, v interface{}) bool {
 	var s Slot
 	s.Init(t, v)
-	self.bindings.Add(id, s)
+	return self.bindings.Add(id, s) == nil
 }
 
 func (self Scope) Find(id string) interface{} {
