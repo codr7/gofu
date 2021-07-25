@@ -18,7 +18,7 @@ func BindId(pos gofu.TPos, id string) TBindId {
 
 func (self TBindId) Compile(scope *gofu.Scope, block *gofu.Block) error {
 	i := scope.BindId(self.id)
-	block.Emit(ops.BindId(i))
+	block.Emit(ops.BindId(self.Pos(), i))
 	return nil
 }
 

@@ -17,14 +17,9 @@ func (self *Scope) RegisterCount() int {
 	return self.registerCount
 }
 
-func (self *Scope) Push() int {
+func (self *Scope) BindId(id string) int {
 	i := self.registerCount
 	self.registerCount++
-	return i
-}
-
-func (self *Scope) BindId(id string) int {
-	i := self.Push()
 	self.bindings.Add(id, i)
 	return i
 }

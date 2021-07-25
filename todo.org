@@ -2,10 +2,10 @@
 ** add Func.Compile(Form body, block *Block) error
 ** use separate scope
 ** keep pc in closure and return on call
-** store return_pc in TCall struct
+** store returnPc in TCall struct
 ** add Return op
-** change Call functions to pass *Stack
-*** init to scope.stackDepth before call
+*** save previous stack, Init before call & restore after
+**** store in Call struct
 *** move args from incoming stack
 * finish Multi
 ** finish GetFunc
