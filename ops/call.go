@@ -13,11 +13,11 @@ func Call(pos gofu.TPos, tgt gofu.Target) TCall {
 	return TCall{pos: pos, target: tgt}
 }
 
-func (self TCall) Eval(pc *int, calls *gofu.CallStack, stack *gofu.Stack) error {
+func (self TCall) Eval(pc *int, calls *gofu.CallStack, registers []gofu.Slot, stack *gofu.Stack) error {
 	tag := calls.Push(self.pos, self.target)
 	*pc++
 
-	if err := self.target.Call(self.pos, pc, stack); err != nil {
+	if err := self.target.Call(self.pos, pc, registers, stack); err != nil {
 		return err
 	}
 

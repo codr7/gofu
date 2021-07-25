@@ -1,16 +1,16 @@
 package gofu
 
-type Fimp = func(pos TPos, pc *int, stack *Stack) error
+type Fimp = func(pos TPos, pc *int, registers []Slot, stack *Stack) error
 
 type TFunc struct {
 	name string
 	argumentTypes []Type
 	returnType Type
-	implementation Fimp
+	body Fimp
 }
 
-func Func(name string, aTypes []Type, rType Type, imp Fimp) *TFunc {
-	return &TFunc{name: name, argumentTypes: aTypes, returnType: rType, implementation: imp}
+func Func(name string, aTypes []Type, rType Type, body Fimp) *TFunc {
+	return &TFunc{name: name, argumentTypes: aTypes, returnType: rType, body: body}
 }
 
 func (self TFunc) Name() string {
@@ -25,7 +25,7 @@ func (self TFunc) ArgumentTypes() []Type {
 	return self.argumentTypes
 }
 
-func (self TFunc) Applicable(stack *Stack) bool {
+func (self TFunc) Applicable(registers []Slot, stack *Stack) bool {
 	offs := self.Arity()-1
 
 	for i, t := range(self.argumentTypes) {
@@ -37,6 +37,6 @@ func (self TFunc) Applicable(stack *Stack) bool {
 	return true
 }
 
-func (self TFunc) Call(pos TPos, pc *int, stack *Stack) error {
-	return self.implementation(pos, pc, stack)
+func (self TFunc) Call(pos TPos, pc *int, registers []Slot, stack *Stack) error {
+	return self.body(pos, pc, registers, stack)
 }

@@ -8,11 +8,6 @@ type Stack struct {
 	items []Slot
 }
 
-func (self *Stack) Init(n int) *Stack {
-	self.items = make([]Slot, n)
-	return self
-}
-
 func (self Stack) Empty() bool {
 	return len(self.items) == 0
 }

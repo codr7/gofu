@@ -12,9 +12,8 @@ func BindId(idx int) TBindId {
 	return TBindId{index: idx}
 }
 
-func (self TBindId) Eval(pc *int, calls *gofu.CallStack, stack *gofu.Stack) error {
-	it := stack.Pop()
-	stack.Set(self.index, it.Type(), it.Value())
+func (self TBindId) Eval(pc *int, calls *gofu.CallStack, registers []gofu.Slot, stack *gofu.Stack) error {
+	registers[self.index] = stack.Pop()
 	*pc++
 	return nil
 }

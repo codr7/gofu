@@ -8,15 +8,15 @@ type Block struct {
 	ops []Op
 }
 
-func (self Block) Step(pc *int, calls *CallStack, stack *Stack) error {
-	return self.ops[*pc].Eval(pc, calls, stack)
+func (self Block) Step(pc *int, calls *CallStack, registers []Slot, stack *Stack) error {
+	return self.ops[*pc].Eval(pc, calls, registers, stack)
 }
 
-func (self Block) Run(pc int, calls *CallStack, stack *Stack) error {
+func (self Block) Run(pc int, calls *CallStack, registers []Slot, stack *Stack) error {
 	var err error
 	
 	for {
-		if err = self.ops[pc].Eval(&pc, calls, stack); err != nil {
+		if err = self.ops[pc].Eval(&pc, calls, registers, stack); err != nil {
 			if err == errors.Stop {
 				err = nil
 			}

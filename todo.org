@@ -1,11 +1,12 @@
-* add Scope.parent
-** add Init arg
-** search recursively in Find
-*** only return recursive result if Slot (compile time)
-** compile function definition in child scope
-*** store in Func and use to init stack when calling
-** call block.Eval
-**** move args from incoming stack
+* compile function definition
+** add Func.Compile(Form body, block *Block) error
+** use separate scope
+** keep pc in closure and return on call
+** store return_pc in TCall struct
+** add Return op
+** change Call functions to pass *Stack
+*** init to scope.stackDepth before call
+*** move args from incoming stack
 * finish Multi
 ** finish GetFunc
 * implement dynamic calls

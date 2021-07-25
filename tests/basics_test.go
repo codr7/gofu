@@ -30,9 +30,8 @@ func TestLiteral(t *testing.T) {
 	block.Emit(ops.Stop())	
 	var calls gofu.CallStack
 	var stack gofu.Stack
-	stack.Init(scope.StackDepth())
 	
-	if err := block.Run(0, &calls, &stack); err != nil {
+	if err := block.Run(0, &calls, make([]gofu.Slot, scope.RegisterCount()), &stack); err != nil {
 		t.Fatal(err)
 	}
 
@@ -58,9 +57,8 @@ func TestBindSlot(t *testing.T) {
 	block.Emit(ops.Stop())	
 	var calls gofu.CallStack
 	var stack gofu.Stack
-	stack.Init(scope.StackDepth())
 	
-	if err := block.Run(0, &calls, &stack); err != nil {
+	if err := block.Run(0, &calls, make([]gofu.Slot, scope.RegisterCount()), &stack); err != nil {
 		t.Fatal(err)
 	}
 
@@ -90,13 +88,11 @@ func TestBindId(t *testing.T) {
 	block.Emit(ops.Stop())	
 	var calls gofu.CallStack
 	var stack gofu.Stack
-	stack.Init(scope.StackDepth())
 	
-	if err := block.Run(0, &calls, &stack); err != nil {
+	if err := block.Run(0, &calls, make([]gofu.Slot, scope.RegisterCount()), &stack); err != nil {
 		t.Fatal(err)
 	}
 
-	Expect7(t, &stack)
 	Expect7(t, &stack)
 }
 
@@ -108,7 +104,7 @@ func TestFunc(t *testing.T) {
 	p := gofu.Pos("TestFunc", -1, -1)
 
 	f := gofu.Func("foo", []gofu.Type{types.Int()}, types.Int(),
-		func(pos gofu.TPos, pc *int, stack *gofu.Stack) error {
+		func(pos gofu.TPos, pc *int, registers []gofu.Slot, stack *gofu.Stack) error {
 			stack.Push(types.Int(), stack.Pop().Value().(int) - 7)
 			return nil
 		})
@@ -123,9 +119,8 @@ func TestFunc(t *testing.T) {
 	block.Emit(ops.Stop())	
 	var calls gofu.CallStack
 	var stack gofu.Stack
-	stack.Init(scope.StackDepth())
 	
-	if err := block.Run(0, &calls, &stack); err != nil {
+	if err := block.Run(0, &calls, make([]gofu.Slot, scope.RegisterCount()), &stack); err != nil {
 		t.Fatal(err)
 	}
 

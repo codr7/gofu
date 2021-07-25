@@ -6,20 +6,20 @@ import (
 
 type Scope struct {
 	bindings gollies.SliceMap
-	stackDepth int
+	registerCount int
 }
 
 func (self *Scope) Init() {
 	self.bindings.Init(gollies.CompareString)
 }
 
-func (self *Scope) StackDepth() int {
-	return self.stackDepth
+func (self *Scope) RegisterCount() int {
+	return self.registerCount
 }
 
 func (self *Scope) Push() int {
-	i := self.stackDepth
-	self.stackDepth++
+	i := self.registerCount
+	self.registerCount++
 	return i
 }
 
