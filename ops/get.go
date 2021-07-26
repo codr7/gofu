@@ -12,9 +12,9 @@ func Get(idx int) TGet {
 	return TGet{index: idx}
 }
 
-func (self TGet) Eval(pc *int, calls *gofu.CallStack, registers []gofu.Slot, stack *gofu.Stack) error {
-	it := registers[self.index]
-	stack.Push(it.Type(), it.Value())
+func (self TGet) Eval(thread *gofu.TThread, pc *int) error {
+	it := thread.Get(self.index)
+	thread.Stack().Push(it.Type(), it.Value())
 	*pc++
 	return nil
 }

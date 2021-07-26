@@ -1,6 +1,9 @@
 package gofu
 
-type Fimp = func(pos TPos, pc *int, registers []Slot, stack *Stack) error
+import (
+)
+
+type Fimp = func(pos TPos, thread *TThread, pc *int) error
 
 type TFunc struct {
 	name string
@@ -25,7 +28,8 @@ func (self TFunc) ArgumentTypes() []Type {
 	return self.argumentTypes
 }
 
-func (self TFunc) Applicable(registers []Slot, stack *Stack) bool {
+func (self TFunc) Applicable(thread *TThread) bool {
+	stack := thread.Stack()
 	offs := self.Arity()-1
 
 	for i, t := range(self.argumentTypes) {
@@ -37,6 +41,6 @@ func (self TFunc) Applicable(registers []Slot, stack *Stack) bool {
 	return true
 }
 
-func (self TFunc) Call(pos TPos, pc *int, registers []Slot, stack *Stack) error {
-	return self.body(pos, pc, registers, stack)
+func (self TFunc) Call(pos TPos, thread *TThread, pc *int) error {
+	return self.body(pos, thread, pc)
 }

@@ -40,10 +40,10 @@ func (self *TMulti) GetFunc(args []Form) Target {
 	return self
 }
 
-func (self *TMulti) Call(pos TPos, pc *int, registers []Slot, stack *Stack) error {
+func (self *TMulti) Call(pos TPos, thread *TThread, pc *int) error {
 	for i := len(self.items)-1; i >= 0; i++ {
-		if f := self.items[i]; f.Applicable(registers, stack) {
-			return f.Call(pos, pc, registers, stack)
+		if f := self.items[i]; f.Applicable(thread) {
+			return f.Call(pos, thread, pc)
 		}
 	}
 	

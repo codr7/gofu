@@ -8,6 +8,10 @@ type Stack struct {
 	items []Slot
 }
 
+func (self *Stack) Init() {
+	self.items = nil
+}
+
 func (self Stack) Empty() bool {
 	return len(self.items) == 0
 }
@@ -31,14 +35,6 @@ func (self *Stack) Pop() Slot {
 	it := self.items[i]
 	self.items = self.items[:i]
 	return it
-}
-
-func (self *Stack) Get(index int) Slot {
-	return self.items[index]
-}
-
-func (self *Stack) Set(index int, t Type, v interface{}) {
-	self.items[index].Init(t, v)
 }
 
 func (self Stack) String() string {

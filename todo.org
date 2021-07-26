@@ -1,12 +1,6 @@
-* compile function definition
-** add Func.Compile(Form body, block *Block) error
-** use separate scope
-** keep pc in closure and return on call
-** store returnPc in TCall struct
-** add Return op
-*** save previous stack, Init before call & restore after
-**** store in Call struct
-*** move args from incoming stack
+* change returnType to returnTypes
+** check in Return op
+*** take *Func arg
 * finish Multi
 ** finish GetFunc
 * implement dynamic calls
@@ -29,6 +23,3 @@
 * add fuzzy search to Scope.Find
 ** use edit distance to provide alternatives on failed search
 * add parser framework
-
-
-

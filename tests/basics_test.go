@@ -14,6 +14,10 @@ func Expect7(t *testing.T, stack *gofu.Stack) {
 	} else if s.Value() != 7 {
 		t.Errorf("Expected 7: %v", s.Value())
 	}
+
+	if !stack.Empty() {
+		t.Errorf("Expected empty stack: %v", stack)
+	}
 }
 
 func TestLiteral(t *testing.T) {
@@ -28,18 +32,14 @@ func TestLiteral(t *testing.T) {
 	}
 	
 	block.Emit(ops.Stop())	
-	var calls gofu.CallStack
-	var stack gofu.Stack
+	var thread gofu.TThread
+	thread.Init(&scope)
 	
-	if err := block.Run(0, &calls, make([]gofu.Slot, scope.RegisterCount()), &stack); err != nil {
+	if err := block.Run(&thread, 0); err != nil {
 		t.Fatal(err)
 	}
 
-	Expect7(t, &stack)
-
-	if !stack.Empty() {
-		t.Errorf("Expected empty stack: %v", stack)
-	}
+	Expect7(t, thread.Stack())
 }
 
 func TestBindSlot(t *testing.T) {
@@ -55,18 +55,14 @@ func TestBindSlot(t *testing.T) {
 	}
 	
 	block.Emit(ops.Stop())	
-	var calls gofu.CallStack
-	var stack gofu.Stack
+	var thread gofu.TThread
+	thread.Init(&scope)
 	
-	if err := block.Run(0, &calls, make([]gofu.Slot, scope.RegisterCount()), &stack); err != nil {
+	if err := block.Run(&thread, 0); err != nil {
 		t.Fatal(err)
 	}
 
-	Expect7(t, &stack)
-	
-	if !stack.Empty() {
-		t.Errorf("Expected empty stack: %v", stack)
-	}
+	Expect7(t, thread.Stack())
 }
 
 func TestBindId(t *testing.T) {
@@ -86,14 +82,14 @@ func TestBindId(t *testing.T) {
 	}
 	
 	block.Emit(ops.Stop())	
-	var calls gofu.CallStack
-	var stack gofu.Stack
+	var thread gofu.TThread
+	thread.Init(&scope)
 	
-	if err := block.Run(0, &calls, make([]gofu.Slot, scope.RegisterCount()), &stack); err != nil {
+	if err := block.Run(&thread, 0); err != nil {
 		t.Fatal(err)
 	}
 
-	Expect7(t, &stack)
+	Expect7(t, thread.Stack())
 }
 
 func TestFunc(t *testing.T) {
@@ -104,7 +100,8 @@ func TestFunc(t *testing.T) {
 	p := gofu.Pos("TestFunc", -1, -1)
 
 	f := gofu.Func("foo", []gofu.Type{types.Int()}, types.Int(),
-		func(pos gofu.TPos, pc *int, registers []gofu.Slot, stack *gofu.Stack) error {
+		func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+			stack := thread.Stack()
 			stack.Push(types.Int(), stack.Pop().Value().(int) - 7)
 			return nil
 		})
@@ -115,16 +112,47 @@ func TestFunc(t *testing.T) {
 	if err := c.Compile(&scope, &block); err != nil {
 		t.Fatal(err)
 	}
-
-	block.Emit(ops.Stop())	
-	var calls gofu.CallStack
-	var stack gofu.Stack
 	
-	if err := block.Run(0, &calls, make([]gofu.Slot, scope.RegisterCount()), &stack); err != nil {
+	block.Emit(ops.Stop())	
+	var thread gofu.TThread
+	thread.Init(&scope)
+	
+	if err := block.Run(&thread, 0); err != nil {
 		t.Fatal(err)
 	}
 
-	Expect7(t, &stack)
+	Expect7(t, thread.Stack())
+}
+
+func TestFimp(t *testing.T) {
+	var block gofu.Block	
+	var scope gofu.Scope
+	
+	scope.Init()
+	p := gofu.Pos("TestFimp", -1, -1)
+
+	fimp, err := ops.CompileFimp(forms.Literal(p, types.Int(), 7), &block)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	
+	f := gofu.Func("foo", nil, types.Int(), fimp)
+	scope.BindSlot("foo", types.Func(), f)
+
+	if err := forms.Call(p, forms.Id(p, "foo")).Compile(&scope, &block); err != nil {
+		t.Fatal(err)
+	}
+
+	block.Emit(ops.Stop())	
+	var thread gofu.TThread
+	thread.Init(&scope)
+	
+	if err := block.Run(&thread, 0); err != nil {
+		t.Fatal(err)
+	}
+
+	Expect7(t, thread.Stack())
 }
 
 

@@ -11,6 +11,6 @@ func Stop() *TStop {
 	return new(TStop)
 }
 
-func (self TStop) Eval(pc *int, calls *gofu.CallStack, registers []gofu.Slot, stack *gofu.Stack) error {
+func (self TStop) Eval(thread *gofu.TThread, pc *int) error {
 	return errors.Stop
 }

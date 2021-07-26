@@ -13,8 +13,8 @@ func Push(t gofu.Type, v interface{}) TPush {
 	return TPush{t: t, v: v}
 }
 
-func (self TPush) Eval(pc *int, calls *gofu.CallStack, registers []gofu.Slot, stack *gofu.Stack) error {
-	stack.Push(self.t, self.v)
+func (self TPush) Eval(thread *gofu.TThread, pc *int) error {
+	thread.Stack().Push(self.t, self.v)
 	*pc++
 	return  nil
 }

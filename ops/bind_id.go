@@ -14,12 +14,15 @@ func BindId(pos gofu.TPos, idx int) TBindId {
 	return TBindId{pos: pos, index: idx}
 }
 
-func (self TBindId) Eval(pc *int, calls *gofu.CallStack, registers []gofu.Slot, stack *gofu.Stack) error {
+func (self TBindId) Eval(thread *gofu.TThread, pc *int) error {
+	stack := thread.Stack()
+	
 	if stack.Empty() {
 		return fmt.Errorf("Missing value to bind")
 	}
-	
-	registers[self.index] = stack.Pop()
+
+	s := stack.Pop()
+	thread.Set(self.index, s.Type(), s.Value())
 	*pc++
 	return nil
 }
