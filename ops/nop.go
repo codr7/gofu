@@ -6,8 +6,10 @@ import (
 
 type TNop struct {}
 
-func Nop() *TNop {
-	return new(TNop)
+var nop TNop
+
+func Nop() TNop {
+	return nop
 }
 
 func (self TNop) Eval(thread *gofu.TThread, pc *int) error {
