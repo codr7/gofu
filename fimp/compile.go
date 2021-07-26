@@ -1,22 +1,23 @@
-package ops
+package fimp
 
 import (
 	"github.com/codr7/gofu"
+	"github.com/codr7/gofu/ops"
 )
 
-func CompileFimp(body gofu.Form, block *gofu.Block) (gofu.Fimp, error) {
+func Compile(body gofu.Form, block *gofu.Block) (gofu.Fimp, error) {
 	var scope gofu.Scope
 	scope.Init()
 
-	skip := block.Emit(Nop())
+	skip := block.Emit(ops.Nop())
 	startPc := block.Pc()
 	
 	if err := body.Compile(&scope, block); err != nil {
 		return nil, err
 	}
 
-	block.Emit(Return())
-	block.Set(skip, Goto(block.Pc()))
+	block.Emit(ops.Return())
+	block.Set(skip, ops.Goto(block.Pc()))
 	
 	return func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
 		thread.PeekCall().Enter(&scope, thread, pc)
