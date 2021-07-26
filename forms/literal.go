@@ -17,7 +17,7 @@ func Literal(pos gofu.TPos, t gofu.Type, v interface{}) TLiteral {
 	return f
 }
 
-func (self TLiteral) Compile(scope *gofu.Scope, block *gofu.Block) error {
+func (self TLiteral) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	block.Emit(ops.Push(self.slot.Type(), self.slot.Value()))
 	return nil
 }

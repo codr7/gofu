@@ -19,7 +19,7 @@ func Call(pos gofu.TPos, target TId, args...gofu.Form) TCall {
 	return f
 }
 
-func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
+func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	for _, a := range self.arguments {
 		switch a := a.(type) {
 		case TLiteral:
@@ -46,7 +46,7 @@ func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
 
 	switch f := f.(type) {
 	case gofu.Target:
-		if n := len(self.arguments) ; n != f.Arity() {
+		if n := len(self.arguments) ; n != f.ArgCount() {
 			return fmt.Errorf("Wrong number of arguments: %v", n)
 		}
 
@@ -55,7 +55,7 @@ func (self TCall) Compile(scope *gofu.Scope, block *gofu.Block) error {
 		}
 
 		if f, ok := f.(*gofu.TFunc); ok {
-			ats := f.ArgumentTypes()
+			ats := f.ArgTypes()
 			unknowns := 0
 
 			for i, a := range(self.arguments) {

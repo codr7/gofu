@@ -4,19 +4,19 @@ import (
 	"github.com/codr7/gofu/errors"
 )
 
-type Block struct {
+type TBlock struct {
 	ops []Op
 }
 
-func (self Block) Pc() int {
+func (self TBlock) Pc() int {
 	return len(self.ops)
 }
 
-func (self Block) Step(thread *TThread, pc *int) error {
+func (self TBlock) Step(thread *TThread, pc *int) error {
 	return self.ops[*pc].Eval(thread, pc)
 }
 
-func (self Block) Run(thread *TThread, pc int) error {
+func (self TBlock) Run(thread *TThread, pc int) error {
 	var err error
 	
 	for {
@@ -32,18 +32,18 @@ func (self Block) Run(thread *TThread, pc int) error {
 	return err
 }
 
-func (self *Block) Emit(op Op) int {
+func (self *TBlock) Emit(op Op) int {
 	i := len(self.ops)
 	self.ops = append(self.ops, op)
 	return i
 }
 
-func (self Block) Set(idx int, op Op) {
+func (self TBlock) Set(idx int, op Op) {
 	self.ops[idx] = op
 }
 
 
-func (self *Block) Peek() *Op {
+func (self TBlock) Peek() *Op {
 	n := len(self.ops)
 	
 	if n == 0 {

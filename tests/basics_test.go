@@ -22,8 +22,8 @@ func Expect7(t *testing.T, stack *gofu.Stack) {
 }
 
 func TestLiteral(t *testing.T) {
-	var block gofu.Block	
-	var scope gofu.Scope
+	var block gofu.TBlock	
+	var scope gofu.TScope
 	
 	scope.Init()
 	p := gofu.Pos("TestLiteral", -1, -1)
@@ -44,8 +44,8 @@ func TestLiteral(t *testing.T) {
 }
 
 func TestBindSlot(t *testing.T) {
-	var block gofu.Block	
-	var scope gofu.Scope
+	var block gofu.TBlock	
+	var scope gofu.TScope
 	
 	scope.Init()
 	p := gofu.Pos("TestBindSlot", -1, -1)
@@ -67,8 +67,8 @@ func TestBindSlot(t *testing.T) {
 }
 
 func TestBindId(t *testing.T) {
-	var block gofu.Block	
-	var scope gofu.Scope
+	var block gofu.TBlock	
+	var scope gofu.TScope
 	
 	scope.Init()
 	p := gofu.Pos("TestBindId", -1, -1)
@@ -94,13 +94,13 @@ func TestBindId(t *testing.T) {
 }
 
 func TestFunc(t *testing.T) {
-	var block gofu.Block	
-	var scope gofu.Scope
+	var block gofu.TBlock	
+	var scope gofu.TScope
 	
 	scope.Init()
 	p := gofu.Pos("TestFunc", -1, -1)
 
-	f := gofu.Func("foo", []gofu.Type{types.Int()}, types.Int(),
+	f := gofu.Func("foo", []gofu.Type{types.Int()}, []gofu.Type{types.Int()},
 		func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
 			stack := thread.Stack()
 			stack.Push(types.Int(), stack.Pop().Value().(int) - 7)
@@ -126,8 +126,8 @@ func TestFunc(t *testing.T) {
 }
 
 func TestFimp(t *testing.T) {
-	var block gofu.Block	
-	var scope gofu.Scope
+	var block gofu.TBlock	
+	var scope gofu.TScope
 	
 	scope.Init()
 	p := gofu.Pos("TestFimp", -1, -1)
@@ -138,7 +138,7 @@ func TestFimp(t *testing.T) {
 		t.Fatal(err)
 	}
 	
-	f := gofu.Func("foo", nil, types.Int(), fimp)
+	f := gofu.Func("foo", nil, []gofu.Type{types.Int()}, fimp)
 	scope.BindSlot("foo", types.Func(), f)
 
 	if err := forms.Call(p, forms.Id(p, "foo")).Compile(&scope, &block); err != nil {
@@ -156,6 +156,39 @@ func TestFimp(t *testing.T) {
 	Expect7(t, thread.Stack())
 }
 
+func TestMulti(t *testing.T) {
+	var block gofu.TBlock	
+	var scope gofu.TScope
+	
+	scope.Init()
+	p := gofu.Pos("TestMulti", -1, -1)
 
+	f1 := gofu.Func("foo", []gofu.Type{types.Bool()}, []gofu.Type{types.Int()},
+		func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+			stack := thread.Stack()
+			stack.Pop()
+			stack.Push(types.Int(), 7)
+			return nil
+		})
 
+	f2 := gofu.Func("foo", []gofu.Type{types.Int()}, []gofu.Type{types.Int()},
+		func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+			stack := thread.Stack()
+			stack.Pop()
+			stack.Push(types.Int(), 14)
+			return nil
+		})
 
+	m := gofu.Multi("foo", 1, f1, f2)
+	block.Emit(ops.Push(types.Bool(), true))
+	block.Emit(ops.Call(p, m))
+	block.Emit(ops.Stop())	
+	var thread gofu.TThread
+	thread.Init(&scope)
+
+	if err := block.Run(&thread, 0); err != nil {
+		t.Fatal(err)
+	}
+
+	Expect7(t, thread.Stack())
+}

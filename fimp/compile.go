@@ -5,8 +5,8 @@ import (
 	"github.com/codr7/gofu/ops"
 )
 
-func Compile(body gofu.Form, block *gofu.Block) (gofu.Fimp, error) {
-	var scope gofu.Scope
+func Compile(body gofu.Form, block *gofu.TBlock) (gofu.Fimp, error) {
+	var scope gofu.TScope
 	scope.Init()
 
 	skip := block.Emit(ops.Nop())

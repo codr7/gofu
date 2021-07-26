@@ -18,6 +18,5 @@ func (self TReturn) Eval(thread *gofu.TThread, pc *int) error {
 		return fmt.Errorf("No call in progress")
 	}
 	
-	c.Exit(thread, pc)
-	return  nil
+	return c.Exit(thread, pc)
 }

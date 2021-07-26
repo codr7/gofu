@@ -17,7 +17,7 @@ func BindId(pos gofu.TPos, id string) TBindId {
 	return f
 }
 
-func (self TBindId) Compile(scope *gofu.Scope, block *gofu.Block) error {
+func (self TBindId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	i := scope.BindId(self.id)
 
 	if i == -1 {

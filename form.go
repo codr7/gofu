@@ -1,7 +1,7 @@
 package gofu
 
 type Form interface {
-	Compile(scope *Scope, block *Block) error
+	Compile(scope *TScope, block *TBlock) error
 }
 
 type BForm struct {

@@ -7,32 +7,40 @@ type Fimp = func(pos TPos, thread *TThread, pc *int) error
 
 type TFunc struct {
 	name string
-	argumentTypes []Type
-	returnType Type
+	argTypes []Type
+	resTypes []Type
 	body Fimp
 }
 
-func Func(name string, aTypes []Type, rType Type, body Fimp) *TFunc {
-	return &TFunc{name: name, argumentTypes: aTypes, returnType: rType, body: body}
+func Func(name string, aTypes []Type, rTypes []Type, body Fimp) *TFunc {
+	return &TFunc{name: name, argTypes: aTypes, resTypes: rTypes, body: body}
 }
 
 func (self TFunc) Name() string {
 	return self.name
 }
 
-func (self TFunc) Arity() int {
-	return len(self.argumentTypes)
+func (self TFunc) ArgCount() int {
+	return len(self.argTypes)
 }
 
-func (self TFunc) ArgumentTypes() []Type {
-	return self.argumentTypes
+func (self TFunc) ResCount() int {
+	return len(self.resTypes)
+}
+
+func (self TFunc) ArgTypes() []Type {
+	return self.argTypes
+}
+
+func (self TFunc) ResTypes() []Type {
+	return self.resTypes
 }
 
 func (self TFunc) Applicable(thread *TThread) bool {
 	stack := thread.Stack()
-	offs := self.Arity()-1
+	offs := self.ArgCount()-1
 
-	for i, t := range(self.argumentTypes) {
+	for i, t := range(self.argTypes) {
 		if !Isa(stack.Peek(offs-i).Type(), t) {
 			return false
 		}

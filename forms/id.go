@@ -17,7 +17,7 @@ func Id(pos gofu.TPos, name string) TId {
 	return f
 }
 
-func (self TId) Compile(scope *gofu.Scope, block *gofu.Block) error {
+func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	found := scope.Find(self.name)
 
 	if found == nil {

@@ -1,6 +1,6 @@
 package gofu
 
 type Target interface {
-	Arity() int
+	ArgCount() int
 	Call(pos TPos, thread *TThread, pc *int) error
 }

@@ -1,6 +1,8 @@
-* change returnType to returnTypes
-** check in Return op
-*** take *Func arg
+* check returned slots in Return op
+** add _func attr
+* add Stack type
+** add stack binding to repl
+*** push thread.stack
 * finish Multi
 ** finish GetFunc
 * implement dynamic calls

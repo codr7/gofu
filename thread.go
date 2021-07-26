@@ -9,11 +9,11 @@ type TThread struct {
 	stack Stack
 }
 
-func Thread(scope *Scope) *TThread {
+func Thread(scope *TScope) *TThread {
 	return new(TThread).Init(scope)
 }
 
-func (self *TThread) Init(scope *Scope) *TThread {
+func (self *TThread) Init(scope *TScope) *TThread {
 	self.registers = make([]Slot, scope.RegisterCount())
 	return self
 }

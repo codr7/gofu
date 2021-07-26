@@ -6,31 +6,37 @@ import (
 
 type TMulti struct {
 	name string
-	arity int
-	items []*TFunc
+	argCount int
+	funcs []*TFunc
 }
 
-func Multi(name string, arity int) *TMulti {
-	return &TMulti{name: name, arity: arity}
+func Multi(name string, argCount int, funcs...*TFunc) *TMulti {
+	var m = TMulti{name: name, argCount: argCount}
+
+	for _, f := range(funcs) {
+		m.Push(f)
+	}
+	
+	return &m
 }
 
-func (self *TMulti) Arity() int {
-	return self.arity;
+func (self *TMulti) ArgCount() int {
+	return self.argCount;
 }
 
 func (self *TMulti) Push(_func *TFunc) error {
-	if x, y := _func.Arity(), self.arity; x != y {
-		return fmt.Errorf("Wrong arity for multi: %v/%v/%v", self.name, x, y)
+	if x, y := _func.ArgCount(), self.argCount; x != y {
+		return fmt.Errorf("Wrong arg count for multi: %v/%v/%v", self.name, x, y)
 	}
 	
-	self.items = append(self.items, _func)
+	self.funcs = append(self.funcs, _func)
 	return nil
 }
 
 func (self *TMulti) Pop() *TFunc {
-	i := len(self.items)-1
-	it := self.items[i]
-	self.items = self.items[:i]
+	i := len(self.funcs)-1
+	it := self.funcs[i]
+	self.funcs = self.funcs[:i]
 	return it
 }
 
@@ -41,8 +47,8 @@ func (self *TMulti) GetFunc(args []Form) Target {
 }
 
 func (self *TMulti) Call(pos TPos, thread *TThread, pc *int) error {
-	for i := len(self.items)-1; i >= 0; i++ {
-		if f := self.items[i]; f.Applicable(thread) {
+	for i := len(self.funcs)-1; i >= 0; i-- {
+		if f := self.funcs[i]; f.Applicable(thread) {
 			return f.Call(pos, thread, pc)
 		}
 	}
