@@ -45,8 +45,8 @@ block.Emit(ops.Stop())
 
 ```
 fimp, err := fimp.Compile(forms.Literal(p, []gofu.Type{types.Int()}, 42), &block)
-fortytwo := gofu.Func("fortytwo", nil, []gofu.Type{types.Int()}, fimp)
-scope.BindSlot("fortytwo", types.Func(), f)
+fortyTwo := gofu.Func("fortyTwo", nil, []gofu.Type{types.Int()}, fimp)
+scope.BindSlot("fortyTwo", types.Func(), f)
 ```
 
 #### multiple dispatch
