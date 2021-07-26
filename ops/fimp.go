@@ -16,7 +16,7 @@ func CompileFimp(body gofu.Form, block *gofu.Block) (gofu.Fimp, error) {
 	}
 
 	block.Emit(Return())
-	block.Set(skip, Jump(block.Pc()))
+	block.Set(skip, Goto(block.Pc()))
 	
 	return func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
 		thread.PeekCall().Enter(&scope, thread, pc)

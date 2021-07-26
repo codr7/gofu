@@ -6,12 +6,6 @@
 * implement dynamic calls
 ** set value when binding literals
 ** convert test to dynamic call
-* add Jump op
-** deltaPc
-* add Goto op
-** pc
-** add Block.Pc() int
-*** return len
 * add form based macros
 ** name
 ** implementation func(forms.Call, *Scope) (Form, error)
