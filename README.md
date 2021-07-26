@@ -8,6 +8,8 @@
 Functions have names, argument types, return types and bodies.
 
 ```
+p := gofu.Pos("Test", -1, -1)
+
 add := gofu.Func("+", []gofu.Type{types.Int(), types.Int()}, []gofu.Type{types.Int()},
 	func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
 		stack := thread.Stack()
@@ -35,7 +37,6 @@ The same thing could be accomplished by manually emitting operations.
 ...
 block.Emit(ops.Push(types.Int(), 35))
 block.Emit(ops.Push(types.Int(), 7))
-p := gofu.Pos("Test", -1, -1)
 block.Emit(ops.Call(p, add))
 block.Emit(ops.Stop())
 ...
