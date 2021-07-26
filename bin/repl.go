@@ -17,14 +17,12 @@ func main() {
 	//p := gofu.Pos("repl", 1, 1)
 	block.Emit(ops.Push(types.Int(), 7))
 	block.Emit(ops.Stop())
+	var thread gofu.TThread
+	thread.Init(&scope)
 
-	var calls gofu.CallStack
-	var stack gofu.Stack
-	stack.Init(scope.StackDepth())
-
-	if err := block.Run(0, &calls, &stack); err != nil {
+	if err := block.Run(&thread, 0); err != nil {
 		fmt.Println(err)
 	}
 	
-	fmt.Println(stack)
+	fmt.Println(thread.Stack())
 }
