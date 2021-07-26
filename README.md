@@ -39,6 +39,7 @@ p := gofu.Pos("Test", -1, -1)
 block.Emit(ops.Call(p, add))
 block.Emit(ops.Stop())
 ...
+```
 
 `fimp.Compile` may be used to compile function bodies.
 
