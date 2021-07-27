@@ -2,7 +2,7 @@
 ## a scripting language toolkit in Go
 
 ### intro
-[gofu](https://github.com/codr7/gofu) is an attempt at providing a flexible toolkit for building custom scripting languages in Go.
+[gofu](https://github.com/codr7/gofu) aims to provide a flexible toolkit for creating custom scripting languages in Go.
 
 ### functions
 Functions have a name, an argument list, a result list and a body.
