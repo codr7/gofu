@@ -4,25 +4,31 @@ import (
 	"bytes"
 )
 
-type Slot struct {
+type TSlot struct {
 	_type Type
 	value interface{}
 }
 
-func (self *Slot) Init(t Type, v interface{}) {
+func Slot(t Type, v interface{}) TSlot {
+	var s TSlot
+	return *s.Init(t, v)
+}
+	
+func (self *TSlot) Init(t Type, v interface{}) *TSlot {
 	self._type = t
 	self.value = v
+	return self
 }
 
-func (self Slot) Type() Type {
+func (self TSlot) Type() Type {
 	return self._type
 }
 
-func (self Slot) Value() interface{} {
+func (self TSlot) Value() interface{} {
 	return self.value
 }
 
-func (self Slot) String() string {
+func (self TSlot) String() string {
 	var out bytes.Buffer
 	self._type.DumpValue(self.value, &out)
 	out.WriteRune(':')

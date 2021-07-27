@@ -34,7 +34,7 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	switch s := f.(type) {
 	case int:
 		return fmt.Errorf("Dynamic calls are not implemented: %v", f)
-	case gofu.Slot:
+	case gofu.TSlot:
 		if !gofu.Isa(s.Type(), types.Target()) {
 			return fmt.Errorf("Invalid target: %v", s)
 		}

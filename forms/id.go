@@ -27,7 +27,7 @@ func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	switch found := found.(type) {
 	case int:
 		block.Emit(ops.Get(found))
-	case gofu.Slot:
+	case gofu.TSlot:
 		block.Emit(ops.Push(found.Type(), found.Value()))
 	default:
 		return fmt.Errorf("Invalid binding: %v", found)

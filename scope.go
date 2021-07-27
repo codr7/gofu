@@ -29,7 +29,7 @@ func (self *TScope) BindId(id string) int {
 }
 
 func (self *TScope) BindSlot(id string, t Type, v interface{}) bool {
-	var s Slot
+	var s TSlot
 	s.Init(t, v)
 	return self.bindings.Add(id, s) == nil
 }

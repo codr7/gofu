@@ -8,8 +8,8 @@ type TCall struct {
 	pos TPos
 	target Target
 	
-	registers []Slot
-	stack Stack
+	registers []TSlot
+	stack TStack
 	returnPc int
 }
 
@@ -25,8 +25,8 @@ func (self *TCall) Enter(scope *TScope, thread *TThread, pc *int) {
 	self.registers = thread.registers
 	self.stack = thread.stack
 
-	thread.registers = make([]Slot, scope.RegisterCount())
-	thread.stack.Init()
+	thread.registers = make([]TSlot, scope.RegisterCount())
+	thread.stack.Init(nil)
 
 	self.returnPc = *pc
 }

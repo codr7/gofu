@@ -4,40 +4,45 @@ import (
 	"strings"
 )
 
-type Stack struct {
-	items []Slot
+type TStack struct {
+	items []TSlot
 }
 
-func (self *Stack) Init() {
-	self.items = nil
+func Stack(items...TSlot) *TStack {
+	return new(TStack).Init(items)
 }
 
-func (self Stack) Empty() bool {
+func (self *TStack) Init(items []TSlot) *TStack {
+	self.items = items
+	return self
+}
+
+func (self TStack) Empty() bool {
 	return len(self.items) == 0
 }
 
-func (self Stack) Len() int {
+func (self TStack) Len() int {
 	return len(self.items)
 }
 
-func (self *Stack) Push(t Type, v interface{}) {
-	var s Slot
+func (self *TStack) Push(t Type, v interface{}) {
+	var s TSlot
 	s.Init(t, v)
 	self.items = append(self.items, s)
 }
 
-func (self Stack) Peek(offs int) Slot {
+func (self TStack) Peek(offs int) TSlot {
 	return self.items[len(self.items)-offs-1]
 }
 
-func (self *Stack) Pop() Slot {
+func (self *TStack) Pop() TSlot {
 	i := len(self.items)-1
 	it := self.items[i]
 	self.items = self.items[:i]
 	return it
 }
 
-func (self Stack) String() string {
+func (self TStack) String() string {
 	var out strings.Builder
 	out.WriteRune('[')
 

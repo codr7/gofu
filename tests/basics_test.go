@@ -9,7 +9,7 @@ import (
 	"github.com/codr7/gofu/types"
 )
 
-func Expect7(t *testing.T, stack *gofu.Stack) {
+func Expect7(t *testing.T, stack *gofu.TStack) {
 	if s := stack.Pop(); s.Type() != types.Int() {
 		t.Errorf("Expected Int: %v", s.Type())
 	} else if s.Value() != 7 {

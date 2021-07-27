@@ -7,7 +7,7 @@ import (
 
 type TLiteral struct {
 	gofu.BForm
-	slot gofu.Slot
+	slot gofu.TSlot
 }
 
 func Literal(pos gofu.TPos, t gofu.Type, v interface{}) TLiteral {

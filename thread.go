@@ -5,8 +5,8 @@ import (
 
 type TThread struct {
 	calls []TCall
-	registers []Slot
-	stack Stack
+	registers []TSlot
+	stack TStack
 }
 
 func Thread(scope *TScope) *TThread {
@@ -14,7 +14,7 @@ func Thread(scope *TScope) *TThread {
 }
 
 func (self *TThread) Init(scope *TScope) *TThread {
-	self.registers = make([]Slot, scope.RegisterCount())
+	self.registers = make([]TSlot, scope.RegisterCount())
 	return self
 }
 
@@ -43,11 +43,11 @@ func (self *TThread) PeekCall() *TCall {
 	return &self.calls[n-1]
 }
 
-func (self *TThread) Stack() *Stack {
+func (self *TThread) Stack() *TStack {
 	return &self.stack
 }
 
-func (self *TThread) Get(idx int) Slot {
+func (self *TThread) Get(idx int) TSlot {
 	return self.registers[idx]
 }
 

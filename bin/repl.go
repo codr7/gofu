@@ -10,15 +10,19 @@ import (
 func main() {
 	fmt.Println("gofu v1\n")
 
-	var block gofu.Block	
-	var scope gofu.Scope
+	var block gofu.TBlock	
 
+	var scope gofu.TScope
 	scope.Init()
+
+	var thread gofu.TThread
+	thread.Init(&scope)
+
+	scope.BindSlot("stack", types.Stack(), thread.Stack())
+	
 	//p := gofu.Pos("repl", 1, 1)
 	block.Emit(ops.Push(types.Int(), 7))
 	block.Emit(ops.Stop())
-	var thread gofu.TThread
-	thread.Init(&scope)
 
 	if err := block.Run(&thread, 0); err != nil {
 		fmt.Println(err)

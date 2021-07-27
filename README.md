@@ -57,7 +57,7 @@ f1 := gofu.Func("foo", []gofu.Type{types.Bool()}, []gofu.Type{types.Int()},
     func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
 	    stack := thread.Stack()
 	    stack.Pop()
-	    stack.Push(types.Int(), 7)
+	    stack.Push(types.String(), "Bool!")
 	    return nil
     })
 
@@ -65,7 +65,7 @@ f2 := gofu.Func("foo", []gofu.Type{types.Int()}, []gofu.Type{types.Int()},
     func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
 	    stack := thread.Stack()
 	    stack.Pop()
-	    stack.Push(types.Int(), 14)
+	    stack.Push(types.String(), "String!")
 	    return nil
     })
 
@@ -74,3 +74,16 @@ block.Emit(ops.Push(types.Bool(), true))
 block.Emit(ops.Call(p, m))
 block.Emit(ops.Stop())	
 ```
+
+### types
+The following list of types are built in, but anything implementing `gofu.Type` may be used as a type.
+
+* Bool
+* Func
+* Int
+* Meta
+* Multi
+* Num
+* Seq
+* Stack
+* String
