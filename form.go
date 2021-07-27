@@ -2,7 +2,7 @@ package gofu
 
 type Form interface {
 	Compile(scope *TScope, block *TBlock) error
-	Slot() *TSlot
+	Slot(scope *TScope) *TSlot
 }
 
 type BForm struct {

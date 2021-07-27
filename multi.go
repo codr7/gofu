@@ -47,7 +47,7 @@ func (self *TMulti) Pop() *TFunc {
 	return it
 }
 
-func (self *TMulti) GetFunc(args []Form) Target {
+func (self *TMulti) GetFunc(args []Form, scope *TScope) Target {
 	var matches []*TFunc
 	nfs := len(self.funcs)
 	
@@ -56,7 +56,7 @@ func (self *TMulti) GetFunc(args []Form) Target {
 		match := true
 		
 		for ai, a := range(args) {
-			if s := a.Slot(); s != nil && !Isa(s.Type(), f.argTypes[ai]) {
+			if s := a.Slot(scope); s != nil && !Isa(s.Type(), f.argTypes[ai]) {
 				match = false
 			}
 

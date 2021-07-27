@@ -36,6 +36,17 @@ func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	return nil
 }
 
-func (self TId) Slot() *gofu.TSlot {
-	return nil
+func (self TId) Slot(scope *gofu.TScope) *gofu.TSlot {
+	var s gofu.TSlot
+	
+	switch found := scope.Find(self.name).(type) {
+	case gofu.TRegister:
+		s = gofu.Slot(found.Type(), nil)
+	case gofu.TSlot:
+		s = found
+	default:
+		return nil
+	}
+
+	return &s
 }

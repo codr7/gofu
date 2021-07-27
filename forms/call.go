@@ -51,7 +51,7 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 		}
 
 		if m, ok := f.(*gofu.TMulti); ok {
-			f = m.GetFunc(self.args)
+			f = m.GetFunc(self.args, scope)
 		}
 
 		if f, ok := f.(*gofu.TFunc); ok {
@@ -59,7 +59,7 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 			unknowns := 0
 
 			for i, a := range(self.args) {
-				if s := a.Slot(); s == nil {
+				if s := a.Slot(scope); s == nil {
 					unknowns++					
 				} else if !gofu.Isa(s.Type(), ats[i]) {
 					return fmt.Errorf("Wrong argument type: %v/%v", s.Type().Name(), ats[i].Name())
@@ -79,6 +79,6 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	return nil
 }
 
-func (self TCall) Slot() *gofu.TSlot {
+func (self TCall) Slot(scope *gofu.TScope) *gofu.TSlot {
 	return nil
 }

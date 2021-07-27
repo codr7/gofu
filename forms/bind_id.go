@@ -21,7 +21,7 @@ func BindId(pos gofu.TPos, id string, t gofu.Type, v gofu.Form) TBindId {
 
 func (self TBindId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	if v, ok := self.value.(TLiteral); ok {
-		s := v.Slot()
+		s := v.Slot(scope)
 		
 		if x, y := s.Type(), self._type;  y != nil && !gofu.Isa(x, y) {
 			return fmt.Errorf("Incompatible type: %v/%v", x, y)
@@ -47,7 +47,7 @@ func (self TBindId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	return nil
 }
 
-func (self TBindId) Slot() *gofu.TSlot {
+func (self TBindId) Slot(scope *gofu.TScope) *gofu.TSlot {
 	return nil
 }
 

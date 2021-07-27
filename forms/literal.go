@@ -22,6 +22,6 @@ func (self TLiteral) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	return nil
 }
 
-func (self TLiteral) Slot() *gofu.TSlot {
+func (self TLiteral) Slot(scope *gofu.TScope) *gofu.TSlot {
 	return &self.slot
 }
