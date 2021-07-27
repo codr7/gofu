@@ -25,7 +25,7 @@ func (self TBlock) Run(thread *TThread, pc int) error {
 	
 	for {
 		if err = self.ops[pc].Eval(thread, &pc); err != nil {
-			if err == errors.Stop {
+			if err == errors.Stop() {
 				err = nil
 			}
 			

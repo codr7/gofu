@@ -1,6 +1,8 @@
 package gofu
 
 import (
+	"fmt"
+	"io"
 	"strings"
 )
 
@@ -32,36 +34,48 @@ func (self *TStack) Push(t Type, v interface{}) {
 }
 
 func (self TStack) Peek(offs int) *TSlot {
-	if len(self.items) == 0 {
+	n := len(self.items)
+	
+	if n == 0 {
 		return nil
 	}
 
-	return &self.items[len(self.items)-offs-1]
+	return &self.items[n-offs-1]
 }
 
 func (self *TStack) Pop() *TSlot {
-	if len(self.items) == 0 {
+	n := len(self.items)
+
+	if n == 0 {
 		return nil
 	}
 
-	i := len(self.items)-1
+	i := n-1
 	it := self.items[i]
 	self.items = self.items[:i]
 	return &it
 }
 
-func (self TStack) String() string {
-	var out strings.Builder
-	out.WriteRune('[')
+func (self *TStack) Dump(out io.Writer) {
+	fmt.Fprint(out, "[")
 
 	for i, s := range self.items {
 		if i > 0 {
-			out.WriteRune(' ')
+			fmt.Fprint(out, " ")
 		}
 
-		s.Type().DumpValue(s.Value(), &out)
+		if s.Value() == self {
+			fmt.Fprint(out, "[^]")
+		}
+		
+		s.Type().DumpValue(s.Value(), out)
 	}
 	
-	out.WriteRune(']')
+	fmt.Fprint(out, "]")
+}
+
+func (self *TStack) String() string {
+	var out strings.Builder
+	self.Dump(&out)
 	return out.String()
 }

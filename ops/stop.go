@@ -14,5 +14,5 @@ func Stop() TStop {
 }
 
 func (self TStop) Eval(thread *gofu.TThread, pc *int) error {
-	return errors.Stop
+	return errors.Stop()
 }

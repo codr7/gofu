@@ -2,6 +2,7 @@ package types
 
 import (
 	"github.com/codr7/gofu"
+	"io"
 )
 
 type TFunc struct {
@@ -20,3 +21,8 @@ func Func() *TFunc {
 
 	return _func
 }
+
+func (self TFunc) DumpValue(val interface{}, out io.Writer) {
+	val.(*gofu.TFunc).Dump(out)
+}
+

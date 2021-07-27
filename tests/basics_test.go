@@ -190,7 +190,7 @@ func TestMulti(t *testing.T) {
 func TestDynamicCall(t *testing.T) {
 	block := gofu.Block()	
 	scope := gofu.Scope()
-	inits.Scope(scope)
+	inits.Core(scope)
 	
 	p := gofu.Pos("TestDynamicCall", -1, -1)
 

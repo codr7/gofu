@@ -5,7 +5,7 @@ import (
 	"github.com/codr7/gofu/types"
 )
 
-func Scope(scope *gofu.TScope) {
+func Core(scope *gofu.TScope) {
 	scope.BindSlot("true", types.Bool(), true)
 	scope.BindSlot("false", types.Bool(), false)
 	

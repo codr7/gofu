@@ -1,6 +1,8 @@
 package gofu
 
 import (
+	"fmt"
+	"io"
 )
 
 type Fimp = func(pos TPos, thread *TThread, pc *int) error
@@ -50,4 +52,8 @@ func (self TFunc) Applicable(stack *TStack) bool {
 
 func (self TFunc) Call(pos TPos, thread *TThread, pc *int) error {
 	return self.body(pos, thread, pc)
+}
+
+func (self TFunc) Dump(out io.Writer) {
+	fmt.Fprintf(out, "Func(%v %v %v)", self.name, self.argTypes, self.resTypes)
 }

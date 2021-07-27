@@ -2,7 +2,11 @@ package errors
 
 type TStop struct{}
 
-var Stop TStop
+var stop TStop
+
+func Stop() TStop {
+	return stop
+}
 
 func (self TStop) Error() string {
     return "Great success!"

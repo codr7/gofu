@@ -13,7 +13,7 @@ type TStack struct {
 
 func Stack(itemType gofu.Type) *TStack {
 	t := new(TStack)
-	t.Init(fmt.Sprintf("Stack"), itemType)
+	t.Init(fmt.Sprintf("Stack[%v]", itemType.Name()), itemType)
 	t.AddParent(Any(), false)
 	t.AddParent(Seq(itemType), true)
 	return t
@@ -25,6 +25,6 @@ func (self *TStack) Init(name string, itemType gofu.Type) *TStack {
 	return self
 }
 
-func (self *TStack) DumpValue(val interface{}, out io.Writer) {
-	io.WriteString(out, val.(*gofu.TStack).String())
+func (self TStack) DumpValue(val interface{}, out io.Writer) {
+	val.(*gofu.TStack).Dump(out)
 }
