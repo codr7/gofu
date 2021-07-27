@@ -50,7 +50,7 @@ func (self *TMulti) Pop() *TFunc {
 func (self *TMulti) GetFunc(args []Form, scope *TScope) Target {
 	var matches []*TFunc
 	nfs := len(self.funcs)
-	
+
 	for fi := nfs-1; fi >= 0; fi-- {
 		f := self.funcs[fi]
 		match := true
@@ -76,7 +76,7 @@ func (self *TMulti) GetFunc(args []Form, scope *TScope) Target {
 		return matches[0]
 	}
 
-	if nms > 0 && nms < nfs {
+	if nms > 0 && (nms < nfs || nfs == 1) {
 		return Multi(self.name, self.argCount, matches...)
 	}
 	

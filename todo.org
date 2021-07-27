@@ -1,6 +1,4 @@
-* wrap errors in stack trace
-* add parsers.Int
-* add macro type
+* add macros
 ** bind in scope
 ** handle in id compile
 ** add reset macro in core init
@@ -8,6 +6,7 @@
 *** stack.Init(nil)
 ** add call macro in core init
 *** emit Call op
+* add parsers.Int
 * add parsers.Stack
 ** [...]
 * add TestFib

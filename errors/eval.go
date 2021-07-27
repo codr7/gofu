@@ -1,20 +1,21 @@
 package errors
 
 import (
-	"fmt"
 	"github.com/codr7/gofu"
 )
 
 type TEval struct{
-	pos gofu.TPos
-	message string
+	gofu.TError
 }
 
 var eval TEval
 
 func Eval(pos gofu.TPos, spec string, args...interface{}) TEval {
-	return TEval{pos: pos, message: fmt.Sprintf(spec, args...)}
+	var e TEval
+	e.Init(pos, spec, args...)
+	return e
 }
 
 func (self TEval) Error() string {
-	return fmt.Sprintf("Eval error in %v: %v", self.pos, self.message)}
+	return "Eval " + self.TError.Error()
+}

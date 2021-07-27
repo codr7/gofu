@@ -22,5 +22,5 @@ func (self *TPos) NewLine() {
 }
 
 func (self TPos) String() string {
-	return fmt.Sprintf("'%v' at line @%v, column %v", self.source, self.line, self.column)
+	return fmt.Sprintf("'%v' at line %v, column %v", self.source, self.line, self.column)
 }

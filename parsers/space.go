@@ -1,6 +1,7 @@
 package parsers
 
 import (
+	"fmt"
 	"bufio"
 	"github.com/codr7/gofu"
 	"io"
@@ -21,6 +22,7 @@ func Space(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
 		case ' ', '\t':
 			pos.Next()
 		case '\n':
+			fmt.Println("NewLine")
 			pos.NewLine()
 		default:
 			in.UnreadRune()

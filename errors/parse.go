@@ -1,20 +1,21 @@
 package errors
 
 import (
-	"fmt"
 	"github.com/codr7/gofu"
 )
 
 type TParse struct{
-	pos gofu.TPos
-	message string
+	gofu.TError
 }
 
 var parse TParse
 
 func Parse(pos gofu.TPos, spec string, args...interface{}) TParse {
-	return TParse{pos: pos, message: fmt.Sprintf(spec, args...)}
+	var e TParse
+	e.Init(pos, spec, args...)
+	return e
 }
 
 func (self TParse) Error() string {
-	return fmt.Sprintf("Parse error in %v: %v", self.pos, self.message)}
+	return "Parse " + self.TError.Error()
+}
