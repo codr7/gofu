@@ -14,6 +14,7 @@ type TStack struct {
 func Stack(itemType gofu.Type) *TStack {
 	t := new(TStack)
 	t.Init(fmt.Sprintf("Stack"), itemType)
+	t.AddParent(Any(), false)
 	t.AddParent(Seq(itemType), true)
 	return t
 }

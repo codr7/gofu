@@ -17,5 +17,7 @@ func (self *TSeq) Init(name string, itemType gofu.Type) *TSeq {
 }
 
 func Seq(itemType gofu.Type) *TSeq {
-	return new(TSeq).Init(fmt.Sprintf("Seq<%v>", itemType.Name), itemType)
+	t := new(TSeq).Init(fmt.Sprintf("Seq<%v>", itemType.Name), itemType)
+	t.AddParent(Any(), false)
+	return t
 }

@@ -14,6 +14,7 @@ func Multi() *TMulti {
 	if multi == nil {
 		multi = new(TMulti)
 		multi.Init("Multi")
+		multi.AddParent(Any(), false)
 		multi.AddParent(Target(), true)
 	}
 	

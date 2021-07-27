@@ -1,5 +1,3 @@
-* add Any type
-** add as parent for all other types and self
 * add support for lookups in id.Slot()
 ** add *TScope arg
 ** handle both TSlot & TRegister

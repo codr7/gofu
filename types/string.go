@@ -16,6 +16,7 @@ func String() *TString {
 	if _string == nil {
 		_string = new(TString)
 		_string.Init("String")
+		_string.AddParent(Any(), false)
 		_string.AddParent(Seq(Char()), true)
 	}
 	

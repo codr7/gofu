@@ -14,6 +14,7 @@ func Num() *TNum {
 	if num == nil {
 		num = new(TNum)
 		num.Init("Num")
+		num.AddParent(Any(), false)
 	}
 	
 	return num

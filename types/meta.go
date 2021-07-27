@@ -15,6 +15,7 @@ func Meta() *TMeta {
 	if meta == nil {
 		meta = new(TMeta)
 		meta.Init("Meta")
+		meta.AddParent(Any(), false)
 	}
 	
 	return meta

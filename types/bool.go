@@ -14,6 +14,7 @@ func Bool() *TBool {
 	if _bool == nil {
 		_bool = new(TBool)
 		_bool.Init("Bool")
+		_bool.AddParent(Any(), false)
 	}
 	
 	return _bool

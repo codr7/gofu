@@ -14,6 +14,7 @@ func Target() *TTarget {
 	if target == nil {
 		target = new(TTarget)
 		target.Init("Target")
+		target.AddParent(Any(), false)
 	}
 	
 	return target
