@@ -1,4 +1,4 @@
-package fimp
+package fimps
 
 import (
 	"github.com/codr7/gofu"

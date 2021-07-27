@@ -3,8 +3,9 @@ package tests
 import (
 	"testing"
 	"github.com/codr7/gofu"
-	"github.com/codr7/gofu/fimp"
+	"github.com/codr7/gofu/fimps"
 	"github.com/codr7/gofu/forms"
+	"github.com/codr7/gofu/inits"
 	"github.com/codr7/gofu/ops"
 	"github.com/codr7/gofu/types"
 )
@@ -127,7 +128,7 @@ func TestFimp(t *testing.T) {
 	scope.Init()
 	p := gofu.Pos("TestFimp", -1, -1)
 
-	fimp, err := fimp.Compile(forms.Literal(p, types.Int(), 7), block)
+	fimp, err := fimps.Compile(forms.Literal(p, types.Int(), 7), block)
 
 	if err != nil {
 		t.Fatal(err)
@@ -189,8 +190,8 @@ func TestMulti(t *testing.T) {
 func TestDynamicCall(t *testing.T) {
 	block := gofu.Block()	
 	scope := gofu.Scope()
+	inits.Scope(scope)
 	
-	scope.Init()
 	p := gofu.Pos("TestDynamicCall", -1, -1)
 
 	f := gofu.Func("foo", nil, []gofu.Type{types.Int()},
