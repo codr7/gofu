@@ -17,6 +17,10 @@ func Call(pos TPos, tgt Target) TCall {
 	return TCall{pos: pos, target: tgt, returnPc: -1}
 }
 
+func (self TCall) Target() Target {
+	return self.target
+}
+
 func (self TCall) ReturnPc() int {
 	return self.returnPc
 }
