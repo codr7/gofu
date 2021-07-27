@@ -21,19 +21,18 @@ func Call(pos gofu.TPos, target TId, args...gofu.Form) TCall {
 
 func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	for _, a := range self.args {
-		switch a := a.(type) {
-		case TLiteral:
-			block.Emit(ops.Push(a.slot.Type(), a.slot.Value()))
-		default:
-			return fmt.Errorf("Invalid argument: %v", a)
+		if err := a.Compile(scope, block); err != nil {
+			return err
 		}
 	}
 
 	f := scope.Find(self.target.name)
 	
 	switch s := f.(type) {
-	case int:
-		return fmt.Errorf("Dynamic calls are not implemented: %v", f)
+	case gofu.TRegister:
+		block.Emit(ops.Get(s))
+		block.Emit(ops.Call(self.Pos(), nil))
+		return nil
 	case gofu.TSlot:
 		if !gofu.Isa(s.Type(), types.Target()) {
 			return fmt.Errorf("Invalid target: %v", s)

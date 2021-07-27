@@ -27,8 +27,10 @@ func (self TBindId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 			return fmt.Errorf("Incompatible type: %v/%v", x, y)
 		}
 
-		scope.BindSlot(self.id, s.Type(), s.Value())
-		return nil
+		//TODO Possible performance improvement
+		//bind literals at compile time
+		//scope.BindSlot(self.id, s.Type(), s.Value())
+		//return nil
 	}
 	
 	i := scope.BindId(self.id, self._type)
@@ -36,8 +38,6 @@ func (self TBindId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	if i == -1 {
 		return fmt.Errorf("Duplicate binding: %v", self.id) 
 	}
-
-
 
 	if err := self.value.Compile(scope, block); err != nil {
 		return err

@@ -185,3 +185,38 @@ func TestMulti(t *testing.T) {
 
 	Expect7(t, thread.Stack())
 }
+
+func TestDynamicCall(t *testing.T) {
+	block := gofu.Block()	
+	scope := gofu.Scope()
+	
+	scope.Init()
+	p := gofu.Pos("TestDynamicCall", -1, -1)
+
+	f := gofu.Func("foo", nil, []gofu.Type{types.Int()},
+		func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+			thread.Stack().Push(types.Int(), 7)
+			return nil
+		})
+
+	b := forms.BindId(p, "foo", types.Func(), forms.Literal(p, types.Func(), f))
+
+	if err := b.Compile(scope, block); err != nil {
+		t.Fatal(err)
+	}
+	
+	c := forms.Call(p, forms.Id(p, "foo"))
+
+	if err := c.Compile(scope, block); err != nil {
+		t.Fatal(err)
+	}
+	
+	block.Emit(ops.Stop())	
+	thread := gofu.Thread(scope)
+	
+	if err := block.Run(thread, 0); err != nil {
+		t.Fatal(err)
+	}
+
+	Expect7(t, thread.Stack())
+}
