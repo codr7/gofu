@@ -31,7 +31,7 @@ block.Run(thread, 0)
 
 The same thing could be accomplished by manually emitting operations.
 
-```
+```go
 block.Emit(ops.Push(types.Int(), 35))
 block.Emit(ops.Push(types.Int(), 7))
 block.Emit(ops.Call(p, add))
@@ -40,7 +40,7 @@ block.Emit(ops.Stop())
 
 `fimp.Compile` may be used to compile function bodies.
 
-```
+```go
 fimp, err := fimp.Compile(forms.Literal(p, []gofu.Type{types.Int()}, 42), block)
 fortyTwo := gofu.Func("fortyTwo", nil, []gofu.Type{types.Int()}, fimp)
 scope.BindSlot("fortyTwo", types.Func(), f)
@@ -49,7 +49,7 @@ scope.BindSlot("fortyTwo", types.Func(), f)
 #### multiple dispatch
 The following example will dispatch to the right function based on the argument and push `"Bool!"` on the stack.
 
-```
+```go
 f1 := gofu.Func("foo", []gofu.Type{types.Bool()}, []gofu.Type{types.Int()},
     func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
 	    stack := thread.Stack()
