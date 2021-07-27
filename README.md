@@ -75,15 +75,15 @@ block.Emit(ops.Stop())
 ### types
 The following list of types are built in but optional, anything implementing `gofu.Type` may be used as a type.
 
-* Any
-* Bool: Any
-* Char: Any
-* Func: Any
-* Int: Any Num
-* Meta: Any
-* Multi: Any Target
-* Num: Any
-* Seq[T]: Any
-* Stack[T]: Any Seq[T]
-* String: Any Seq[Char]
-* Target: Any
+* Any: Any - Anything
+* Bool: Any - true/false
+* Char: Any - Characters
+* Func: Any - Functions
+* Int: Any Num - Integers
+* Meta: Any - The type of types
+* Multi: Any Target - Multimethods
+* Num: Any - Parent of all numbers
+* Seq[T]: Any - Parent of all sequences
+* Stack[T]: Any Seq[T] - Stacks of values
+* String: Any Seq[Char] - Strings
+* Target: Any - Callable values
