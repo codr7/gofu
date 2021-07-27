@@ -1,20 +1,21 @@
 package types
 
 import (
+	"fmt"
 	"github.com/codr7/gofu"
 )
 
 type TSeq struct {
 	gofu.BType
+	itemType gofu.Type
 }
 
-var seq *TSeq
+func (self *TSeq) Init(name string, itemType gofu.Type) *TSeq {
+	self.BType.Init(name)
+	self.itemType = itemType
+	return self
+}
 
-func Seq() *TSeq {
-	if seq == nil {
-		seq = new(TSeq)
-		seq.Init("Seq")
-	}
-	
-	return seq
+func Seq(itemType gofu.Type) *TSeq {
+	return new(TSeq).Init(fmt.Sprintf("Seq<%v>", itemType.Name), itemType)
 }

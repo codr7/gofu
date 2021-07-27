@@ -76,11 +76,12 @@ block.Emit(ops.Stop())
 The following list of types are built in but optional, anything implementing `gofu.Type` may be used as a type.
 
 * Bool
+* Char
 * Func
-* Int
+* Int: Num
 * Meta
 * Multi
 * Num
-* Seq
-* Stack
-* String
+* Seq<T>
+* Stack<T>: Seq<T>
+* String: Seq<Char>

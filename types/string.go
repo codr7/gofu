@@ -10,16 +10,16 @@ type TString struct {
 	gofu.BType
 }
 
-var string *TString
+var _string *TString
 
 func String() *TString {
-	if string == nil {
-		string = new(TString)
-		string.Init("String")
-		stack.AddParent(Seq(), true)
+	if _string == nil {
+		_string = new(TString)
+		_string.Init("String")
+		_string.AddParent(Seq(Char()), true)
 	}
 	
-	return string
+	return _string
 }
 
 func (self *TString) DumpValue(val interface{}, out io.Writer) {
