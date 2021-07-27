@@ -41,8 +41,6 @@ func (self *TMulti) Pop() *TFunc {
 }
 
 func (self *TMulti) GetFunc(args []Form) Target {
-	//TODO Return first matching implementation from end if possible,
-	//if and only if full match or nothing else matches
 	var matches []*TFunc
 	nfs := len(self.funcs)
 	
