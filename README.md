@@ -51,6 +51,7 @@ scope.BindSlot("fortyTwo", types.Func(), f)
 ```
 
 #### multiple dispatch
+The following example will dispatch to the right function based on the argument and push `"Bool!"` on the stack.
 
 ```
 f1 := gofu.Func("foo", []gofu.Type{types.Bool()}, []gofu.Type{types.Int()},
@@ -65,7 +66,7 @@ f2 := gofu.Func("foo", []gofu.Type{types.Int()}, []gofu.Type{types.Int()},
     func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
 	    stack := thread.Stack()
 	    stack.Pop()
-	    stack.Push(types.String(), "String!")
+	    stack.Push(types.String(), "Int!")
 	    return nil
     })
 
