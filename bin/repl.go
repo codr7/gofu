@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	fmt.Println("gofu v1\n")
+	fmt.Printf("gofu v%v\n", gofu.VERSION)
 
 	var block gofu.TBlock	
 
