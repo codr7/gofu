@@ -77,7 +77,7 @@ block.Emit(ops.Stop())
 ```
 
 ### types
-The following list of types are built in, but anything implementing `gofu.Type` may be used as a type.
+The following list of types are built in but optional, anything implementing `gofu.Type` may be used as a type.
 
 * Bool
 * Func
