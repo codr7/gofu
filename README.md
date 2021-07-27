@@ -2,10 +2,10 @@
 ## a scripting language toolkit in Go
 
 ### intro
-[gofu](https://github.com/codr7/gofu) is yet another attempt to provide the pieces needed to build a decent custom interpreter in library form, this time in Go.
+[gofu](https://github.com/codr7/gofu) is an attempt at providing a flexible toolkit for building custom scripting languages in Go.
 
 ### functions
-Functions have names, argument types, return types and bodies.
+Functions have a name, an argument list, a result list and a body.
 
 ```
 p := gofu.Pos("Test", -1, -1)
