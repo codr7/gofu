@@ -78,7 +78,7 @@ The following list of types are built in but optional, anything implementing `go
 * Any: Any - Anything
 * Bool: Any - true/false
 * Char: Any - Characters
-* Func: Any - Functions
+* Func: Any Target - Functions
 * Int: Any Num - Integers
 * Meta: Any - The type of types
 * Multi: Any Target - Multimethods
