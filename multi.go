@@ -2,6 +2,7 @@ package gofu
 
 import (
 	"fmt"
+	"log"
 )
 
 type TMulti struct {
@@ -11,10 +12,16 @@ type TMulti struct {
 }
 
 func Multi(name string, argCount int, funcs...*TFunc) *TMulti {
+	if argCount == 0 {
+		log.Fatal("Invalid arg count: 0")
+	}
+	
 	var m = TMulti{name: name, argCount: argCount}
 
 	for _, f := range(funcs) {
-		m.Push(f)
+		if err := m.Push(f); err != nil {
+			log.Fatal(err)
+		}
 	}
 	
 	return &m
