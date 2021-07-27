@@ -82,6 +82,6 @@ The following list of types are built in but optional, anything implementing `go
 * Meta
 * Multi
 * Num
-* Seq<T>
-* Stack<T>: Seq<T>
-* String: Seq<Char>
+* Seq[T]
+* Stack[T]: Seq[T]
+* String: Seq[Char]
