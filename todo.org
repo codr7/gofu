@@ -2,6 +2,9 @@
 ** use in Form.Compile
 ** grep fmt.Errorf
 ** wrap in stack trace
+* add parsers.Stack
+** [...]
+* add parsers.Int
 * add macro type
 ** bind in scope
 ** handle in id compile

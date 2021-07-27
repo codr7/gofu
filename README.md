@@ -4,6 +4,15 @@
 ### intro
 [gofu](https://github.com/codr7/gofu) aims to provide a flexible toolkit for creating custom scripting languages in Go.
 
+```
+$ cd bin
+$ ./mk
+$ ./repl
+gofu v1
+  stack
+[Func(stack [] [Stack[Any]])]
+```
+
 ### functions
 Functions have a name, an argument list, a result list and a body.
 
