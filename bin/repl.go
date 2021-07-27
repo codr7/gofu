@@ -18,7 +18,7 @@ func main() {
 	var thread gofu.TThread
 	thread.Init(&scope)
 
-	scope.BindSlot("stack", types.Stack(), thread.Stack())
+	scope.BindSlot("stack", types.Stack(types.Any()), thread.Stack())
 	
 	//p := gofu.Pos("repl", 1, 1)
 	block.Emit(ops.Push(types.Int(), 7))
