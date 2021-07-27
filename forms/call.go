@@ -1,8 +1,8 @@
 package forms
 
 import (
-	"fmt"
 	"github.com/codr7/gofu"
+	"github.com/codr7/gofu/errors"
 	"github.com/codr7/gofu/ops"
 	"github.com/codr7/gofu/types"
 )
@@ -30,23 +30,23 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	
 	switch s := f.(type) {
 	case gofu.TRegister:
-		block.Emit(ops.Get(s))
+		block.Emit(ops.Get(self.Pos(), s))
 		block.Emit(ops.Call(self.Pos(), nil))
 		return nil
 	case gofu.TSlot:
 		if !gofu.Isa(s.Type(), types.Target()) {
-			return fmt.Errorf("Invalid target: %v", s)
+			return errors.Compile(self.Pos(), "Invalid target: %v", s)
 		}
 		
 		f = s.Value()
 	default:
-		return fmt.Errorf("Invalid target: %v", f)
+		return errors.Compile(self.Pos(), "Invalid target: %v", f)
 	}
 
 	switch f := f.(type) {
 	case gofu.Target:
 		if n := len(self.args) ; n != f.ArgCount() {
-			return fmt.Errorf("Wrong number of args: %v", n)
+			return errors.Compile(self.Pos(), "Wrong number of args: %v", n)
 		}
 
 		if m, ok := f.(*gofu.TMulti); ok {
@@ -61,7 +61,8 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 				if s := a.Slot(scope); s == nil {
 					unknowns++					
 				} else if !gofu.Isa(s.Type(), ats[i]) {
-					return fmt.Errorf("Wrong argument type: %v/%v", s.Type().Name(), ats[i].Name())
+					return errors.Compile(self.Pos(),
+						"Wrong argument type: %v/%v", s.Type().Name(), ats[i].Name())
 				}
 			}
 
@@ -72,7 +73,7 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 		
 		block.Emit(ops.Call(self.Pos(), f))
 	default:
-		return fmt.Errorf("Invalid target: %v", f)
+		return errors.Compile(self.Pos(), "Invalid target: %v", f)
 	}
 	
 	return nil

@@ -16,7 +16,7 @@ func Compile(body gofu.Form, block *gofu.TBlock) (gofu.Fimp, error) {
 		return nil, err
 	}
 
-	block.Emit(ops.Return())
+	block.Emit(ops.Return(body.Pos()))
 	block.Set(skip, ops.Goto(block.Pc()))
 	
 	return func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {

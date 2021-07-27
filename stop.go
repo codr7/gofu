@@ -1,4 +1,4 @@
-package errors
+package gofu
 
 type TStop struct{}
 

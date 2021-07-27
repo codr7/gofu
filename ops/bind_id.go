@@ -1,8 +1,8 @@
 package ops
 
 import (
-	"fmt"
 	"github.com/codr7/gofu"
+	"github.com/codr7/gofu/errors"
 )
 
 type TBindId struct {
@@ -21,13 +21,13 @@ func (self TBindId) Eval(thread *gofu.TThread, pc *int) error {
 	
 	if v := self.slot.Value(); v == nil {
 		if stack.Empty() {
-			return fmt.Errorf("Missing value to bind")
+			return errors.Eval(self.pos, "Missing value to bind")
 		}
 		
 		s = *stack.Pop()
 		
 		if ct, pt := s.Type(), self.slot.Type(); pt != nil && !gofu.Isa(ct, pt) {
-			return fmt.Errorf("Invalid binding: %v/%v", s, pt.Name())
+			return errors.Eval(self.pos, "Invalid binding: %v/%v", s, pt.Name())
 		}
 	}
 

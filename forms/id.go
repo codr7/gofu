@@ -1,8 +1,8 @@
 package forms
 
 import (
-	"fmt"
 	"github.com/codr7/gofu"
+	"github.com/codr7/gofu/errors"
 	"github.com/codr7/gofu/ops"
 )
 
@@ -21,16 +21,16 @@ func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	found := scope.Find(self.name)
 
 	if found == nil {
-		return fmt.Errorf("Unknown identifier: %v", self.name)
+		return errors.Compile(self.Pos(), "Unknown identifier: %v", self.name)
 	}
 
 	switch found := found.(type) {
 	case gofu.TRegister:
-		block.Emit(ops.Get(found))
+		block.Emit(ops.Get(self.Pos(), found))
 	case gofu.TSlot:
 		block.Emit(ops.Push(found.Type(), found.Value()))
 	default:
-		return fmt.Errorf("Invalid binding: %v", found)
+		return errors.Compile(self.Pos(), "Invalid binding: %v", found)
 	}
 	
 	return nil

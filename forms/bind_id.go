@@ -1,8 +1,8 @@
 package forms
 
 import (
-	"fmt"
 	"github.com/codr7/gofu"
+	"github.com/codr7/gofu/errors"
 	"github.com/codr7/gofu/ops"
 )
 
@@ -24,19 +24,22 @@ func (self TBindId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 		s := v.Slot(scope)
 		
 		if x, y := s.Type(), self._type;  y != nil && !gofu.Isa(x, y) {
-			return fmt.Errorf("Incompatible type: %v/%v", x, y)
+			return errors.Compile(self.Pos(), "Incompatible type: %v/%v", x, y)
 		}
 
-		//TODO Possible performance improvement
+		//TODO Performance
 		//bind literals at compile time
 		//scope.BindSlot(self.id, s.Type(), s.Value())
 		//return nil
+		//make sure to force dynamic call in test
+		//use find(scope, id)/call
+		//add nil type
 	}
 	
 	i := scope.BindId(self.id, self._type)
 
 	if i == -1 {
-		return fmt.Errorf("Duplicate binding: %v", self.id) 
+		return errors.Compile(self.Pos(), "Duplicate binding: %v", self.id)
 	}
 
 	if err := self.value.Compile(scope, block); err != nil {

@@ -1,8 +1,8 @@
 package ops
 
 import (
-	"fmt"
 	"github.com/codr7/gofu"
+	"github.com/codr7/gofu/errors"
 	"github.com/codr7/gofu/types"
 )
 
@@ -23,11 +23,11 @@ func (self TCall) Eval(thread *gofu.TThread, pc *int) error {
 		s := stack.Pop()
 
 		if s == nil {
-			return fmt.Errorf("Missing target")
+			return errors.Eval(self.pos, "Missing target")
 		}
 
 		if !gofu.Isa(s.Type(), types.Target()) {
-			return fmt.Errorf("Invalid target: %v", s)
+			return errors.Eval(self.pos, "Invalid target: %v", s)
 		}
 
 		t = s.Value().(gofu.Target)
@@ -41,7 +41,7 @@ func (self TCall) Eval(thread *gofu.TThread, pc *int) error {
 	}
 
 	if c := thread.PeekCall(); c == nil {
-		return fmt.Errorf("No call in progress")
+		return errors.Eval(self.pos, "No call in progress")
 	} else if c.ReturnPc() == -1 {
 		thread.PopCall()
 	}

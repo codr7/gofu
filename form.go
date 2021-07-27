@@ -2,6 +2,7 @@ package gofu
 
 type Form interface {
 	Compile(scope *TScope, block *TBlock) error
+	Pos() TPos
 	Slot(scope *TScope) *TSlot
 }
 

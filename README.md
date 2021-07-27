@@ -47,10 +47,10 @@ block.Emit(ops.Call(p, add))
 block.Emit(ops.Stop())
 ```
 
-`fimp.Compile` may be used to compile function bodies.
+`fimps.Compile` may be used to compile function bodies.
 
 ```go
-fimp, err := fimp.Compile(forms.Literal(p, []gofu.Type{types.Int()}, 42), block)
+fimp, err := fimps.Compile(forms.Literal(p, []gofu.Type{types.Int()}, 42), block)
 fortyTwo := gofu.Func("fortyTwo", nil, []gofu.Type{types.Int()}, fimp)
 scope.BindSlot("fortyTwo", types.Func(), f)
 ```

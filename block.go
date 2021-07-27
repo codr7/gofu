@@ -1,7 +1,6 @@
 package gofu
 
 import (
-	"github.com/codr7/gofu/errors"
 )
 
 type TBlock struct {
@@ -25,7 +24,7 @@ func (self TBlock) Run(thread *TThread, pc int) error {
 	
 	for {
 		if err = self.ops[pc].Eval(thread, &pc); err != nil {
-			if err == errors.Stop() {
+			if err == Stop() {
 				err = nil
 			}
 			
