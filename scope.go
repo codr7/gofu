@@ -22,10 +22,10 @@ func (self *TScope) RegisterCount() int {
 	return self.registerCount
 }
 
-func (self *TScope) BindId(id string) int {
+func (self *TScope) BindId(id string, t Type) int {
 	i := self.registerCount
 
-	if self.bindings.Add(id, i) != nil {
+	if self.bindings.Add(id, Register(i, t)) != nil {
 		return -1
 	}
 

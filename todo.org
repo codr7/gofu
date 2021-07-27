@@ -1,5 +1,8 @@
 * check returned slots in Return op
 ** add _func attr
+* add support for lookups in id.Slot()
+** add *TScope arg
+** handle both TSlot & TRegister
 * implement dynamic calls
 ** set value when binding literals
 ** convert test to dynamic call

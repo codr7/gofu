@@ -25,7 +25,7 @@ func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	}
 
 	switch found := found.(type) {
-	case int:
+	case gofu.TRegister:
 		block.Emit(ops.Get(found))
 	case gofu.TSlot:
 		block.Emit(ops.Push(found.Type(), found.Value()))
