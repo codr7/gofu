@@ -12,8 +12,8 @@ type TBindId struct {
 	_type gofu.Type
 }
 
-func BindId(pos gofu.TPos, id string) TBindId {
-	f := TBindId{id: id}
+func BindId(pos gofu.TPos, id string, t gofu.Type) TBindId {
+	f := TBindId{id: id, _type: t}
 	f.BForm.Init(pos)
 	return f
 }

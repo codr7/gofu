@@ -72,7 +72,7 @@ func TestBindId(t *testing.T) {
 	p := gofu.Pos("TestBindId", -1, -1)
 	block.Emit(ops.Push(types.Int(), 7))
 	
-	if err := forms.BindId(p, "foo").Compile(scope, block); err != nil {
+	if err := forms.BindId(p, "foo", types.Int()).Compile(scope, block); err != nil {
 		t.Fatal(err)
 	}
 
