@@ -4,6 +4,8 @@
 * implement dynamic calls
 ** set value when binding literals
 ** convert test to dynamic call
+* Add TestFib
+* --
 * add form based macros
 ** name
 ** implementation func(forms.Call, *Scope) (Form, error)
