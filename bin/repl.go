@@ -14,7 +14,7 @@ func main() {
 	scope := gofu.Scope()
 	inits.Core(scope)
 
-	parser := gofu.Parser(parsers.Space, parsers.Id)
+	parser := parsers.Chain(parsers.Space, parsers.Id)
 	block := gofu.Block()
 	thread := gofu.Thread(scope)
 

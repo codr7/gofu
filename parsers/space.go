@@ -7,7 +7,6 @@ import (
 )
 
 func Space(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
-	
 	for {
 		var c rune
 		var err error
@@ -19,7 +18,7 @@ func Space(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
 		}
 		
 		switch c {
-		case ' ':
+		case ' ', '\t':
 			pos.Next()
 		case '\n':
 			pos.NewLine()
