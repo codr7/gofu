@@ -31,15 +31,23 @@ func (self *TStack) Push(t Type, v interface{}) {
 	self.items = append(self.items, s)
 }
 
-func (self TStack) Peek(offs int) TSlot {
-	return self.items[len(self.items)-offs-1]
+func (self TStack) Peek(offs int) *TSlot {
+	if len(self.items) == 0 {
+		return nil
+	}
+
+	return &self.items[len(self.items)-offs-1]
 }
 
-func (self *TStack) Pop() TSlot {
+func (self *TStack) Pop() *TSlot {
+	if len(self.items) == 0 {
+		return nil
+	}
+
 	i := len(self.items)-1
 	it := self.items[i]
 	self.items = self.items[:i]
-	return it
+	return &it
 }
 
 func (self TStack) String() string {
