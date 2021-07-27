@@ -7,7 +7,7 @@
 ### functions
 Functions have a name, an argument list, a result list and a body.
 
-```
+```go
 p := gofu.Pos("Test", -1, -1)
 
 add := gofu.Func("+", []gofu.Type{types.Int(), types.Int()}, []gofu.Type{types.Int()},
@@ -17,35 +17,31 @@ add := gofu.Func("+", []gofu.Type{types.Int(), types.Int()}, []gofu.Type{types.I
 		return nil
 	})
 
-var scope gofu.TScope	
-scope.Init()
+scope := gofu.Scope()	
 scope.BindSlot("+", types.Func(), add)
 
-var block gofu.TBlock	
+block := gofu.Block()
 c := forms.Call(p, forms.Id(p, "+"), forms.Literal(p, types.Int(), 35), forms.Literal(p, types.Int(), 7))
-c.Compile(&scope, &block)
+c.Compile(scope, block)
 block.Emit(ops.Stop())
 
-var thread gofu.TThread
-thread.Init(&scope)
-block.Run(&thread, 0)
+thread := gofu.Thread(scope)
+block.Run(thread, 0)
 ```
 
 The same thing could be accomplished by manually emitting operations.
 
 ```
-...
 block.Emit(ops.Push(types.Int(), 35))
 block.Emit(ops.Push(types.Int(), 7))
 block.Emit(ops.Call(p, add))
 block.Emit(ops.Stop())
-...
 ```
 
 `fimp.Compile` may be used to compile function bodies.
 
 ```
-fimp, err := fimp.Compile(forms.Literal(p, []gofu.Type{types.Int()}, 42), &block)
+fimp, err := fimp.Compile(forms.Literal(p, []gofu.Type{types.Int()}, 42), block)
 fortyTwo := gofu.Func("fortyTwo", nil, []gofu.Type{types.Int()}, fimp)
 scope.BindSlot("fortyTwo", types.Func(), f)
 ```

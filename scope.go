@@ -9,8 +9,13 @@ type TScope struct {
 	registerCount int
 }
 
-func (self *TScope) Init() {
+func Scope() *TScope {
+	return new(TScope).Init()
+}
+
+func (self *TScope) Init() *TScope {
 	self.bindings.Init(gollies.CompareString)
+	return self
 }
 
 func (self *TScope) RegisterCount() int {

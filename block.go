@@ -8,6 +8,10 @@ type TBlock struct {
 	ops []Op
 }
 
+func Block() *TBlock {
+	return new(TBlock)
+}
+
 func (self TBlock) Pc() int {
 	return len(self.ops)
 }

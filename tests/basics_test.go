@@ -22,21 +22,20 @@ func Expect7(t *testing.T, stack *gofu.TStack) {
 }
 
 func TestLiteral(t *testing.T) {
-	var block gofu.TBlock	
-	var scope gofu.TScope
+	block := gofu.Block()	
+	scope := gofu.Scope()
 	
 	scope.Init()
 	p := gofu.Pos("TestLiteral", -1, -1)
 	
-	if err := forms.Literal(p, types.Int(), 7).Compile(&scope, &block); err != nil {
+	if err := forms.Literal(p, types.Int(), 7).Compile(scope, block); err != nil {
 		t.Fatal(err)
 	}
 	
 	block.Emit(ops.Stop())	
-	var thread gofu.TThread
-	thread.Init(&scope)
+	thread := gofu.Thread(scope)
 	
-	if err := block.Run(&thread, 0); err != nil {
+	if err := block.Run(thread, 0); err != nil {
 		t.Fatal(err)
 	}
 
@@ -44,22 +43,21 @@ func TestLiteral(t *testing.T) {
 }
 
 func TestBindSlot(t *testing.T) {
-	var block gofu.TBlock	
-	var scope gofu.TScope
+	block := gofu.Block()	
+	scope := gofu.Scope()
 	
 	scope.Init()
 	p := gofu.Pos("TestBindSlot", -1, -1)
 	scope.BindSlot("foo", types.Int(), 7)
 	
-	if err := forms.Id(p, "foo").Compile(&scope, &block); err != nil {
+	if err := forms.Id(p, "foo").Compile(scope, block); err != nil {
 		t.Fatal(err)
 	}
 	
 	block.Emit(ops.Stop())	
-	var thread gofu.TThread
-	thread.Init(&scope)
+	thread := gofu.Thread(scope)
 	
-	if err := block.Run(&thread, 0); err != nil {
+	if err := block.Run(thread, 0); err != nil {
 		t.Fatal(err)
 	}
 
@@ -67,26 +65,25 @@ func TestBindSlot(t *testing.T) {
 }
 
 func TestBindId(t *testing.T) {
-	var block gofu.TBlock	
-	var scope gofu.TScope
+	block := gofu.Block()	
+	scope := gofu.Scope()
 	
 	scope.Init()
 	p := gofu.Pos("TestBindId", -1, -1)
 	block.Emit(ops.Push(types.Int(), 7))
 	
-	if err := forms.BindId(p, "foo").Compile(&scope, &block); err != nil {
+	if err := forms.BindId(p, "foo").Compile(scope, block); err != nil {
 		t.Fatal(err)
 	}
 
-	if err := forms.Id(p, "foo").Compile(&scope, &block); err != nil {
+	if err := forms.Id(p, "foo").Compile(scope, block); err != nil {
 		t.Fatal(err)
 	}
 	
 	block.Emit(ops.Stop())	
-	var thread gofu.TThread
-	thread.Init(&scope)
+	thread := gofu.Thread(scope)
 	
-	if err := block.Run(&thread, 0); err != nil {
+	if err := block.Run(thread, 0); err != nil {
 		t.Fatal(err)
 	}
 
@@ -94,8 +91,8 @@ func TestBindId(t *testing.T) {
 }
 
 func TestFunc(t *testing.T) {
-	var block gofu.TBlock	
-	var scope gofu.TScope
+	block := gofu.Block()	
+	scope := gofu.Scope()
 	
 	scope.Init()
 	p := gofu.Pos("TestFunc", -1, -1)
@@ -110,15 +107,14 @@ func TestFunc(t *testing.T) {
 	scope.BindSlot("foo", types.Func(), f)
 	c := forms.Call(p, forms.Id(p, "foo"), forms.Literal(p, types.Int(), 14))
 
-	if err := c.Compile(&scope, &block); err != nil {
+	if err := c.Compile(scope, block); err != nil {
 		t.Fatal(err)
 	}
 	
 	block.Emit(ops.Stop())	
-	var thread gofu.TThread
-	thread.Init(&scope)
+	thread := gofu.Thread(scope)
 	
-	if err := block.Run(&thread, 0); err != nil {
+	if err := block.Run(thread, 0); err != nil {
 		t.Fatal(err)
 	}
 
@@ -126,13 +122,13 @@ func TestFunc(t *testing.T) {
 }
 
 func TestFimp(t *testing.T) {
-	var block gofu.TBlock	
-	var scope gofu.TScope
+	block := gofu.Block()	
+	scope := gofu.Scope()
 	
 	scope.Init()
 	p := gofu.Pos("TestFimp", -1, -1)
 
-	fimp, err := fimp.Compile(forms.Literal(p, types.Int(), 7), &block)
+	fimp, err := fimp.Compile(forms.Literal(p, types.Int(), 7), block)
 
 	if err != nil {
 		t.Fatal(err)
@@ -141,15 +137,14 @@ func TestFimp(t *testing.T) {
 	f := gofu.Func("foo", nil, []gofu.Type{types.Int()}, fimp)
 	scope.BindSlot("foo", types.Func(), f)
 
-	if err := forms.Call(p, forms.Id(p, "foo")).Compile(&scope, &block); err != nil {
+	if err := forms.Call(p, forms.Id(p, "foo")).Compile(scope, block); err != nil {
 		t.Fatal(err)
 	}
 
 	block.Emit(ops.Stop())	
-	var thread gofu.TThread
-	thread.Init(&scope)
+	thread := gofu.Thread(scope)
 	
-	if err := block.Run(&thread, 0); err != nil {
+	if err := block.Run(thread, 0); err != nil {
 		t.Fatal(err)
 	}
 
@@ -157,8 +152,8 @@ func TestFimp(t *testing.T) {
 }
 
 func TestMulti(t *testing.T) {
-	var block gofu.TBlock	
-	var scope gofu.TScope
+	block := gofu.Block()	
+	scope := gofu.Scope()
 	
 	scope.Init()
 	p := gofu.Pos("TestMulti", -1, -1)
@@ -183,10 +178,9 @@ func TestMulti(t *testing.T) {
 	block.Emit(ops.Push(types.Bool(), true))
 	block.Emit(ops.Call(p, m))
 	block.Emit(ops.Stop())	
-	var thread gofu.TThread
-	thread.Init(&scope)
+	thread := gofu.Thread(scope)
 
-	if err := block.Run(&thread, 0); err != nil {
+	if err := block.Run(thread, 0); err != nil {
 		t.Fatal(err)
 	}
 
