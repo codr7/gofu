@@ -17,8 +17,8 @@ func (self TGet) Eval(thread *gofu.TThread, pc *int) error {
 	i := self.register.Index()
 	it := thread.Get(i)
 
-	if t := self.register.Type(); t != nil && !gofu.Isa(it.Type(), t) {
-		return fmt.Errorf("Invalid type for bound value: %v/%v", it, t.Name())
+	if ct, pt := it.Type(), self.register.Type(); pt != nil && !gofu.Isa(ct, pt) {
+		return fmt.Errorf("Invalid bound value: %v/%v", it, pt.Name())
 	}
 	
 	thread.Stack().Push(it.Type(), it.Value())
