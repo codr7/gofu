@@ -36,8 +36,7 @@ func (self TFunc) ResTypes() []Type {
 	return self.resTypes
 }
 
-func (self TFunc) Applicable(thread *TThread) bool {
-	stack := thread.Stack()
+func (self TFunc) Applicable(stack *TStack) bool {
 	offs := self.ArgCount()-1
 
 	for i, t := range(self.argTypes) {

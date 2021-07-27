@@ -21,3 +21,7 @@ func (self TLiteral) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	block.Emit(ops.Push(self.slot.Type(), self.slot.Value()))
 	return nil
 }
+
+func (self TLiteral) Slot() *gofu.TSlot {
+	return &self.slot
+}

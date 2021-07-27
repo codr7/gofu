@@ -28,3 +28,8 @@ func (self TBindId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	return nil
 }
 
+func (self TBindId) Slot() *gofu.TSlot {
+	return nil
+}
+
+

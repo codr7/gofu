@@ -81,3 +81,7 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	
 	return nil
 }
+
+func (self TCall) Slot() *gofu.TSlot {
+	return nil
+}

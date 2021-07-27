@@ -1,7 +1,5 @@
 * check returned slots in Return op
 ** add _func attr
-* finish Multi
-** finish GetFunc
 * implement dynamic calls
 ** set value when binding literals
 ** convert test to dynamic call
