@@ -41,7 +41,7 @@ func (self TCall) Eval(thread *gofu.TThread, pc *int) error {
 	thread.PushCall(self.pos, t)
 	*pc++
 
-	if err := t.Call(self.pos, thread, pc); err != nil {
+	if err := t.Call(self.pos, thread, pc, self.check); err != nil {
 		return err
 	}
 

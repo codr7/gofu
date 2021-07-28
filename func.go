@@ -50,7 +50,13 @@ func (self TFunc) Applicable(stack *TStack) bool {
 	return true
 }
 
-func (self TFunc) Call(pos TPos, thread *TThread, pc *int) error {
+func (self TFunc) Call(pos TPos, thread *TThread, pc *int, check bool) error {
+	stack := thread.Stack()
+	
+	if check && !self.Applicable(stack) {
+		return Error(pos, "Func is not applicable: %v/%v", self, stack)
+	}
+
 	return self.body(pos, thread, pc)
 }
 

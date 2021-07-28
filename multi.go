@@ -97,12 +97,12 @@ func (self TMulti) Applicable(stack *TStack) bool {
 	return false
 }
 
-func (self *TMulti) Call(pos TPos, thread *TThread, pc *int) error {
+func (self *TMulti) Call(pos TPos, thread *TThread, pc *int, check bool) error {
 	stack := thread.Stack()
 	
 	for i := len(self.funcs)-1; i >= 0; i-- {
 		if f := self.funcs[i]; f.Applicable(stack) {
-			return f.Call(pos, thread, pc)
+			return f.Call(pos, thread, pc, false)
 		}
 	}
 	
