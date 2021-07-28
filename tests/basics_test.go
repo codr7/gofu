@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 	"github.com/codr7/gofu"
-	"github.com/codr7/gofu/fimps"
+	"github.com/codr7/gofu/funcs"
 	"github.com/codr7/gofu/forms"
 	"github.com/codr7/gofu/inits"
 	"github.com/codr7/gofu/ops"
@@ -128,7 +128,7 @@ func TestFimp(t *testing.T) {
 	scope.Init()
 	p := gofu.Pos("TestFimp", -1, -1)
 
-	fimp, err := fimps.Compile(forms.Literal(p, types.Int(), 7), block)
+	fimp, err := funcs.CompileBody(forms.Literal(p, types.Int(), 7), block)
 
 	if err != nil {
 		t.Fatal(err)

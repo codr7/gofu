@@ -1,11 +1,11 @@
-package fimps
+package funcs
 
 import (
 	"github.com/codr7/gofu"
 	"github.com/codr7/gofu/ops"
 )
 
-func Compile(body gofu.Form, block *gofu.TBlock) (gofu.Fimp, error) {
+func CompileBody(body gofu.Form, block *gofu.TBlock) (gofu.FuncBody, error) {
 	var scope gofu.TScope
 	scope.Init()
 

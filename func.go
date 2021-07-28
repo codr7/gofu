@@ -5,16 +5,16 @@ import (
 	"io"
 )
 
-type Fimp = func(pos TPos, thread *TThread, pc *int) error
+type FuncBody = func(pos TPos, thread *TThread, pc *int) error
 
 type TFunc struct {
 	name string
 	argTypes []Type
 	resTypes []Type
-	body Fimp
+	body FuncBody
 }
 
-func Func(name string, aTypes []Type, rTypes []Type, body Fimp) *TFunc {
+func Func(name string, aTypes []Type, rTypes []Type, body FuncBody) *TFunc {
 	return &TFunc{name: name, argTypes: aTypes, resTypes: rTypes, body: body}
 }
 
