@@ -28,10 +28,9 @@ func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	case gofu.TRegister:
 		block.Emit(ops.Get(self.Pos(), found))
 	case gofu.TSlot:
-		switch v := found.Value().(type) {
-		case *gofu.TMacro:
-			return v.Call(self.Pos(), scope, block)
-		default:
+		if m, ok := found.Value().(*gofu.TMacro); ok {
+			return m.Expand(self.Pos(), scope, block)
+		} else {
 			block.Emit(ops.Push(found.Type(), found.Value()))
 		}
 	default:

@@ -16,7 +16,7 @@ func Macro(name string, body MacroBody) *TMacro {
 	return &TMacro{name: name, body: body}
 }
 
-func (self TMacro) Call(pos TPos, scope *TScope, block *TBlock) error {
+func (self TMacro) Expand(pos TPos, scope *TScope, block *TBlock) error {
 	return self.body(pos, scope, block)
 }
 
