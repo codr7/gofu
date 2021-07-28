@@ -6,6 +6,6 @@ import (
 
 func Any() gofu.Parser {
 	p := Chain()
-	p.Chain(Space(), Group(p), Id())
+	p.Chain(Space(), Group(p), Int(10), Id())
 	return p
 }

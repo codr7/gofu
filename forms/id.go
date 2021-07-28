@@ -29,6 +29,11 @@ func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 		block.Emit(ops.Get(self.Pos(), found))
 	case gofu.TSlot:
 		if m, ok := found.Value().(*gofu.TMacro); ok {
+			if m.ArgCount() > 0 {
+				return errors.Compile(self.Pos(),
+					"Bare macro id, take reference with & or call %v(...)", m.Name())
+			}
+
 			return m.Expand(self.Pos(), nil, scope, block)
 		} else if t, ok := found.Value().(gofu.Target); ok {
 			block.Emit(ops.Call(self.Pos(), t, true))

@@ -26,10 +26,11 @@ func Core(scope *gofu.TScope) {
 
 	scope.BindSlot("reset",
 		types.Macro(),
-		gofu.Macro("reset", func(pos gofu.TPos, args []gofu.Form, scope *gofu.TScope, block *gofu.TBlock) error {
-			block.Emit(ops.Reset())
-			return nil
-		}))
+		gofu.Macro("reset", 0,
+			func(pos gofu.TPos, args []gofu.Form, scope *gofu.TScope, block *gofu.TBlock) error {
+				block.Emit(ops.Reset())
+				return nil
+			}))
 	
 	scope.BindSlot("stack",
 		types.Func(),

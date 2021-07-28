@@ -1,4 +1,3 @@
-* add parsers.Int
 * add get macro
 ** string -> slot if any
 ** add nil type

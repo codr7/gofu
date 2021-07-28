@@ -24,14 +24,14 @@ Parens may be used to group multiple values into one form.
 [1 2 3]
 ```
 
-Macros and functions are called automatically when referenced, arguments are passed on the stack.
+Functions are called automatically when referenced, arguments are passed on the stack.
 
 ```
   (35 7 +)
 [42]
 ```
 
-The same thing can be accomplished using call syntax, which is triggered by suffixing any identifier with parens.
+The same result may be accomplished using call syntax, which is triggered by suffixing any identifier with parens.
 All declared arguments must be included within the call form.
 
 ```
@@ -114,6 +114,19 @@ m := gofu.Multi("foo", 1, f1, f2)
 block.Emit(ops.Push(types.Bool(), true))
 block.Emit(ops.Call(p, m))
 block.Emit(ops.Stop())	
+```
+
+### macros
+Macros are called at compile time and may emit different code depending on arguments.
+
+```
+scope.BindSlot("reset",
+	types.Macro(),
+	gofu.Macro("reset", 0,
+		func(pos gofu.TPos, args []gofu.Form, scope *gofu.TScope, block *gofu.TBlock) error {
+			block.Emit(ops.Reset())
+			return nil
+		}))
 ```
 
 ### types

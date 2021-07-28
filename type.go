@@ -11,7 +11,6 @@ type Type interface {
 	AddParent(parent Type, rec bool)
 	AddParentsTo(child Type)
 	Isa(parent Type) Type
-	String() string
 
 	DumpValue(val interface{}, out io.Writer)
 }
@@ -28,10 +27,6 @@ func (self *BType) Init(name string) *BType {
 }
 
 func (self BType) Name() string {
-	return self.name
-}
-
-func (self BType) String() string {
 	return self.name
 }
 
