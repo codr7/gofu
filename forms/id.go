@@ -28,7 +28,12 @@ func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	case gofu.TRegister:
 		block.Emit(ops.Get(self.Pos(), found))
 	case gofu.TSlot:
-		block.Emit(ops.Push(found.Type(), found.Value()))
+		switch v := found.Value().(type) {
+		case *gofu.TMacro:
+			return v.Call(self.Pos(), scope, block)
+		default:
+			block.Emit(ops.Push(found.Type(), found.Value()))
+		}
 	default:
 		return errors.Compile(self.Pos(), "Invalid binding: %v", found)
 	}

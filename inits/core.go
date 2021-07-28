@@ -2,12 +2,20 @@ package inits
 
 import (
 	"github.com/codr7/gofu"
+	"github.com/codr7/gofu/ops"
 	"github.com/codr7/gofu/types"
 )
 
 func Core(scope *gofu.TScope) {
 	scope.BindSlot("true", types.Bool(), true)
 	scope.BindSlot("false", types.Bool(), false)
+
+	scope.BindSlot("reset",
+		types.Macro(),
+		gofu.Macro("reset", func(pos gofu.TPos, scope *gofu.TScope, block *gofu.TBlock) error {
+			block.Emit(ops.Reset())
+			return nil
+		}))
 	
 	scope.BindSlot("stack",
 		types.Func(),

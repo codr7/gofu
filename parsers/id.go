@@ -40,6 +40,6 @@ func (self TId) Form(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
 	if out.Len() == 0 {
 		return nil, err
 	}
-	
+
 	return forms.Id(fpos, out.String()), nil
 }
