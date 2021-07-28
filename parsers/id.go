@@ -9,7 +9,13 @@ import (
 	"unicode"
 )
 
-func Id(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
+type TId struct {}
+
+func Id() *TId {
+	return &TId{}
+}
+
+func (self TId) Form(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
 	var out strings.Builder
 	var c rune
 	var err error
@@ -22,7 +28,7 @@ func Id(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
 			return nil, err
 		}
 		
-		if unicode.IsSpace(c) {
+		if unicode.IsSpace(c) || c == ')' {
 			in.UnreadRune()
 			break
 		}

@@ -1,13 +1,18 @@
 package parsers
 
 import (
-	"fmt"
 	"bufio"
 	"github.com/codr7/gofu"
 	"io"
 )
 
-func Space(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
+type TSpace struct {}
+
+func Space() *TSpace {
+	return &TSpace{}
+}
+
+func (self TSpace) Form(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
 	for {
 		var c rune
 		var err error
@@ -22,7 +27,6 @@ func Space(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
 		case ' ', '\t':
 			pos.Next()
 		case '\n':
-			fmt.Println("NewLine")
 			pos.NewLine()
 		default:
 			in.UnreadRune()

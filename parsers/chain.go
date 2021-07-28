@@ -5,16 +5,26 @@ import (
 	"github.com/codr7/gofu"
 )
 
-func Chain(links...gofu.Parser) gofu.Parser {
-	return func(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
-		for _, p := range links {
-			if f, err := p(pos, in); err != nil {
-				return nil, err
-			} else if f != nil {
-				return f, nil
-			}
-		}
+type TChain struct {
+	links []gofu.Parser
+}
 
-		return nil, nil
+func Chain(links...gofu.Parser) *TChain {
+	return &TChain{links: links}
+}
+
+func (self *TChain) Chain(links...gofu.Parser) {
+	self.links = append(self.links, links...)
+}
+
+func (self TChain) Form(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
+	for _, p := range self.links {
+		if f, err := p.Form(pos, in); err != nil {
+			return nil, err
+		} else if f != nil {
+			return f, nil
+			}
 	}
+	
+	return nil, nil
 }

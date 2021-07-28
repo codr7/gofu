@@ -14,7 +14,7 @@ func Repl(scope *gofu.TScope, parser gofu.Parser, block *gofu.TBlock, thread *go
 	for {
 		fmt.Print("  ")
 		p := gofu.Pos("repl", 1, 1)
-		f, err := parser(&p, in)
+		f, err := parser.Form(&p, in)
 
 		if err != nil {
 			fmt.Println(err)
