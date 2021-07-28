@@ -4,6 +4,10 @@
 ### intro
 [gofu](https://github.com/codr7/gofu) aims to provide a flexible toolkit for creating custom scripting languages in Go.
 
+
+### repl
+A primitive [REPL](https://github.com/codr7/gofu/blob/main/utils/repl.go) is provided to allow playing around with the toolkit, it reads one form at a time and pushes prints the stack after each evaluation.
+
 ```
 $ cd bin
 $ ./mk
@@ -11,6 +15,37 @@ $ ./repl
 gofu v1
   +(35 7)
 [42]
+```
+
+Parens may be used to group multiple values into one form.
+
+```
+  (1 2 3)
+[1 2 3]
+```
+
+Macros and functions are called automatically when referenced, arguments are passed on the stack.
+
+```
+  (35 7 +)
+[42]
+```
+
+The same thing can be accomplished using call syntax, which is triggered by suffixing any identifier with parens.
+All declared arguments must be included within the call form.
+
+```
+  +(35 7)
+[42]
+```
+
+You may plug in a different parser to switch syntax, add custom types or operations; and still reuse the same REPL logic.
+
+```
+scope := gofu.Scope()
+block := gofu.Block()
+thread := gofu.Thread(scope)
+utils.Repl(scope, parsers.Any(), block, thread)
 ```
 
 ### functions

@@ -15,6 +15,8 @@ func Maybe(valueType gofu.Type) *TMaybe {
 	t := new(TMaybe)
 	t.Init(fmt.Sprintf("Maybe[%v]", valueType.Name()), valueType)
 	t.AddParent(Any(), false)
+	valueType.AddParent(t, false)
+	Nil().AddParent(t, false)
 	return t
 }
 

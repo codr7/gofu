@@ -44,6 +44,8 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	}
 
 	switch f := f.(type) {
+	case gofu.TMacro:
+		return f.Expand(self.Pos(), self.args, scope, block)
 	case gofu.Target:		
 		if n := len(self.args) ; n != f.ArgCount() {
 			return errors.Compile(self.Pos(), "Wrong number of args: %v", n)

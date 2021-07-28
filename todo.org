@@ -1,8 +1,4 @@
 * add parsers.Int
-* add repl to README
-* expand macros in TCall.Compile
-** forward macro args
-*** add MacroBody arg
 * add get macro
 ** string -> slot if any
 ** add nil type

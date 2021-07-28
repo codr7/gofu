@@ -26,7 +26,7 @@ func Core(scope *gofu.TScope) {
 
 	scope.BindSlot("reset",
 		types.Macro(),
-		gofu.Macro("reset", func(pos gofu.TPos, scope *gofu.TScope, block *gofu.TBlock) error {
+		gofu.Macro("reset", func(pos gofu.TPos, args []gofu.Form, scope *gofu.TScope, block *gofu.TBlock) error {
 			block.Emit(ops.Reset())
 			return nil
 		}))
