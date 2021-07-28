@@ -11,6 +11,7 @@ type Type interface {
 	AddParent(parent Type, rec bool)
 	AddParentsTo(child Type)
 	Isa(parent Type) Type
+	String() string
 
 	DumpValue(val interface{}, out io.Writer)
 }

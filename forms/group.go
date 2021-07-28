@@ -29,3 +29,7 @@ func (self TGroup) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 func (self TGroup) Slot(scope *gofu.TScope) *gofu.TSlot {
 	return nil
 }
+
+func (self TGroup) Members() []gofu.Form {
+	return self.members
+}

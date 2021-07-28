@@ -9,8 +9,8 @@ $ cd bin
 $ ./mk
 $ ./repl
 gofu v1
-  stack
-[Func(stack [] [Stack[Any]])]
+  +(35 7)
+[42]
 ```
 
 ### functions
@@ -85,12 +85,14 @@ block.Emit(ops.Stop())
 The following list of types are provided but optional, anything implementing `gofu.Type` may be used as a type.
 
 * Any: Any - Anything
-* Bool: Any - true/false
+* Bool: Any - true/false values
 * Char: Any - Characters
 * Func: Any Target - Functions
 * Int: Any Num - Integers
+* Maybe[T]: Any - Contains T or Nil
 * Meta: Any - The type of types
 * Multi: Any Target - Multimethods
+* Nil - Nothing, it's only value being `_`
 * Num: Any - Parent of all numbers
 * Seq[T]: Any - Parent of all sequences
 * Stack[T]: Any Seq[T] - Stacks of values

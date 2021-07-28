@@ -30,6 +30,8 @@ func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	case gofu.TSlot:
 		if m, ok := found.Value().(*gofu.TMacro); ok {
 			return m.Expand(self.Pos(), scope, block)
+		} else if t, ok := found.Value().(gofu.Target); ok {
+			block.Emit(ops.Call(self.Pos(), t, true))
 		} else {
 			block.Emit(ops.Push(found.Type(), found.Value()))
 		}

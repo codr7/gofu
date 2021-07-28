@@ -13,12 +13,10 @@ func main() {
 
 	scope := gofu.Scope()
 	inits.Core(scope)
-
-	parser := parsers.Chain()
-	parser.Chain(parsers.Space(), parsers.Group(parser), parsers.Id())
+	inits.Math(scope)
 	
 	block := gofu.Block()
 	thread := gofu.Thread(scope)
 
-	utils.Repl(scope, parser, block, thread)
+	utils.Repl(scope, parsers.Any(), block, thread)
 }

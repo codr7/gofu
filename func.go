@@ -39,7 +39,13 @@ func (self TFunc) ResTypes() []Type {
 }
 
 func (self TFunc) Applicable(stack *TStack) bool {
-	offs := self.ArgCount()-1
+	n := self.ArgCount()
+	
+	if stack.Len() <  n {
+		return false
+	}
+	
+	offs := n-1
 
 	for i, t := range(self.argTypes) {
 		if !Isa(stack.Peek(offs-i).Type(), t) {

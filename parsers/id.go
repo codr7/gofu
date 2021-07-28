@@ -27,8 +27,8 @@ func (self TId) Form(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
 		} else if err != nil {
 			return nil, err
 		}
-		
-		if unicode.IsSpace(c) || c == ')' {
+
+		if unicode.IsSpace(c) || c == '(' || c == ')' {
 			in.UnreadRune()
 			break
 		}
@@ -41,5 +41,13 @@ func (self TId) Form(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
 		return nil, err
 	}
 
-	return forms.Id(fpos, out.String()), nil
+	f := forms.Id(fpos, out.String())
+
+	if c == '(' {
+		var args gofu.Form
+		args, err = Group(Any()).Form(pos, in)
+		return forms.Call(fpos, f, args.(forms.TGroup).Members()...), nil
+	}
+
+	return f, nil
 }
