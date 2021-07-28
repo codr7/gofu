@@ -31,7 +31,7 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	switch s := f.(type) {
 	case gofu.TRegister:
 		block.Emit(ops.Get(self.Pos(), s))
-		block.Emit(ops.Call(self.Pos(), nil))
+		block.Emit(ops.Call(self.Pos(), nil, true))
 		return nil
 	case gofu.TSlot:
 		if !gofu.Isa(s.Type(), types.Target()) {
@@ -44,7 +44,7 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	}
 
 	switch f := f.(type) {
-	case gofu.Target:
+	case gofu.Target:		
 		if n := len(self.args) ; n != f.ArgCount() {
 			return errors.Compile(self.Pos(), "Wrong number of args: %v", n)
 		}
@@ -53,9 +53,10 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 			f = m.GetFunc(self.args, scope)
 		}
 
+		unknowns := 0
+
 		if f, ok := f.(*gofu.TFunc); ok {
 			ats := f.ArgTypes()
-			unknowns := 0
 
 			for i, a := range(self.args) {
 				if s := a.Slot(scope); s == nil {
@@ -65,13 +66,9 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 						"Wrong argument type: %v/%v", s.Type().Name(), ats[i].Name())
 				}
 			}
-
-			if unknowns > 0 {
-				block.Emit(ops.Apply(self.Pos(), f))
-			}
 		}
 		
-		block.Emit(ops.Call(self.Pos(), f))
+		block.Emit(ops.Call(self.Pos(), f, unknowns > 0))
 	default:
 		return errors.Compile(self.Pos(), "Invalid target: %v", f)
 	}

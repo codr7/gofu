@@ -176,7 +176,7 @@ func TestMulti(t *testing.T) {
 
 	m := gofu.Multi("foo", 1, f1, f2)
 	block.Emit(ops.Push(types.Bool(), true))
-	block.Emit(ops.Call(p, m))
+	block.Emit(ops.Call(p, m, false))
 	block.Emit(ops.Stop())	
 	thread := gofu.Thread(scope)
 

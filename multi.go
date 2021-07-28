@@ -27,6 +27,10 @@ func Multi(name string, argCount int, funcs...*TFunc) *TMulti {
 	return &m
 }
 
+func (self TMulti) Name() string {
+	return self.name
+}
+
 func (self *TMulti) ArgCount() int {
 	return self.argCount;
 }
@@ -81,6 +85,16 @@ func (self *TMulti) GetFunc(args []Form, scope *TScope) Target {
 	}
 	
 	return self
+}
+
+func (self TMulti) Applicable(stack *TStack) bool {
+	for i := len(self.funcs)-1; i >= 0; i-- {
+		if f := self.funcs[i]; f.Applicable(stack) {
+			return true
+		}
+	}
+
+	return false
 }
 
 func (self *TMulti) Call(pos TPos, thread *TThread, pc *int) error {

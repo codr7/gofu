@@ -1,4 +1,3 @@
-* convert Apply op to flag in Call op
 * add call macro
 * add parsers.Int
 * add parsers.String

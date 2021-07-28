@@ -9,10 +9,11 @@ import (
 type TCall struct {
 	pos gofu.TPos
 	target gofu.Target
+	check bool
 }
 
-func Call(pos gofu.TPos, tgt gofu.Target) TCall {
-	return TCall{pos: pos, target: tgt}
+func Call(pos gofu.TPos, tgt gofu.Target, chk bool) TCall {
+	return TCall{pos: pos, target: tgt, check: chk}
 }
 
 func (self TCall) Eval(thread *gofu.TThread, pc *int) error {
@@ -31,6 +32,10 @@ func (self TCall) Eval(thread *gofu.TThread, pc *int) error {
 		}
 
 		t = s.Value().(gofu.Target)
+	}
+
+	if self.check && !t.Applicable(stack) {
+		return errors.Eval(self.pos, "Target is not applicable: %v/%v", t, stack)
 	}
 	
 	thread.PushCall(self.pos, t)
