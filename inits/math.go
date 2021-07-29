@@ -9,7 +9,7 @@ func Math(scope *gofu.TScope) {
 	scope.BindSlot("+",
 		types.Func(),
 		gofu.Func("+", []gofu.Type{types.Int(), types.Int()}, []gofu.Type{types.Int()},
-			func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+			func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
 				stack := thread.Stack()
 				stack.Push(types.Int(), stack.Pop().Value().(int) + stack.Pop().Value().(int))
 				return nil

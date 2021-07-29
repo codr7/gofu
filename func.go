@@ -5,7 +5,7 @@ import (
 	"io"
 )
 
-type FuncBody = func(pos TPos, thread *TThread, pc *int) error
+type FuncBody = func(pos TPos, thread *TThread, _func *TFunc, pc *int, check bool) error
 
 type TFunc struct {
 	name string
@@ -56,14 +56,8 @@ func (self TFunc) Applicable(stack *TStack) bool {
 	return true
 }
 
-func (self TFunc) Call(pos TPos, thread *TThread, pc *int, check bool) error {
-	stack := thread.Stack()
-	
-	if check && !self.Applicable(stack) {
-		return Error(pos, "Func is not applicable: %v/%v", self, stack)
-	}
-
-	return self.body(pos, thread, pc)
+func (self *TFunc) Call(pos TPos, thread *TThread, pc *int, check bool) error {
+	return self.body(pos, thread, self, pc, check)
 }
 
 func (self TFunc) Dump(out io.Writer) {

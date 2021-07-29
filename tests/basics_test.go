@@ -98,7 +98,7 @@ func TestFunc(t *testing.T) {
 	p := gofu.Pos("TestFunc", -1, -1)
 
 	f := gofu.Func("foo", []gofu.Type{types.Int()}, []gofu.Type{types.Int()},
-		func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+		func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
 			stack := thread.Stack()
 			stack.Push(types.Int(), stack.Pop().Value().(int) - 7)
 			return nil
@@ -159,7 +159,7 @@ func TestMulti(t *testing.T) {
 	p := gofu.Pos("TestMulti", -1, -1)
 
 	f1 := gofu.Func("foo", []gofu.Type{types.Bool()}, []gofu.Type{types.Int()},
-		func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+		func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
 			stack := thread.Stack()
 			stack.Pop()
 			stack.Push(types.Int(), 7)
@@ -167,7 +167,7 @@ func TestMulti(t *testing.T) {
 		})
 
 	f2 := gofu.Func("foo", []gofu.Type{types.Int()}, []gofu.Type{types.Int()},
-		func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+		func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
 			stack := thread.Stack()
 			stack.Pop()
 			stack.Push(types.Int(), 14)
@@ -195,7 +195,7 @@ func TestDynamicCall(t *testing.T) {
 	p := gofu.Pos("TestDynamicCall", -1, -1)
 
 	f := gofu.Func("foo", nil, []gofu.Type{types.Int()},
-		func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+		func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
 			thread.Stack().Push(types.Int(), 7)
 			return nil
 		})

@@ -1,3 +1,8 @@
+* add support for dot calls
+** scan group members for dots on construction
+*** track prev
+** shift prefix into args if call
+** switch places otherwise
 * add get macro
 ** string -> slot if any
 ** add nil type

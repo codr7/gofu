@@ -35,7 +35,7 @@ func Core(scope *gofu.TScope) {
 	scope.BindSlot("stack",
 		types.Func(),
 		gofu.Func("stack", nil, []gofu.Type{types.Stack(types.Any())},
-			func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+			func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
 				stack := thread.Stack()
 				stack.Push(types.Stack(types.Any()), stack)
 				return nil
