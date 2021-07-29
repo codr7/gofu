@@ -19,17 +19,25 @@ func Call(pos gofu.TPos, target TId, args...gofu.Form) TCall {
 	return f
 }
 
-func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
+func (self TCall) CompileArgs(scope *gofu.TScope, block *gofu.TBlock) error {
 	for _, a := range self.args {
 		if err := a.Compile(scope, block); err != nil {
 			return err
 		}
 	}
 
+	return nil
+}
+
+func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	f := scope.Find(self.target.name)
 	
 	switch s := f.(type) {
 	case gofu.TRegister:
+		if err := self.CompileArgs(scope, block); err != nil {
+			return err
+		}
+		
 		block.Emit(ops.Get(self.Pos(), s))
 		block.Emit(ops.Call(self.Pos(), nil, true))
 		return nil
@@ -68,6 +76,10 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 						"Wrong argument type: %v/%v", s.Type().Name(), ats[i].Name())
 				}
 			}
+		}
+
+		if err := self.CompileArgs(scope, block); err != nil {
+			return err
 		}
 		
 		block.Emit(ops.Call(self.Pos(), f, unknowns > 0))
