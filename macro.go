@@ -21,11 +21,7 @@ func (self TMacro) Name() string {
 	return self.name
 }
 
-func (self TMacro) Expand(pos TPos, args []Form, scope *TScope, block *TBlock) error {
-	if len(args) < self.argCount {
-		return Error(pos, "Missing macro args: %v/%v", self.name, args)
-	}
-	
+func (self TMacro) Expand(pos TPos, args []Form, scope *TScope, block *TBlock) error {	
 	return self.body(pos, args, scope, block)
 }
 

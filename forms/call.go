@@ -53,6 +53,10 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 
 	switch f := f.(type) {
 	case gofu.TMacro:
+		if len(self.args) != f.ArgCount() {
+			return errors.Compile(self.Pos(), "Wrong number of macro arguments: %v/%v", f.Name(), self.args)
+		}
+
 		return f.Expand(self.Pos(), self.args, scope, block)
 	case gofu.Target:		
 		if n := len(self.args) ; n != f.ArgCount() {
