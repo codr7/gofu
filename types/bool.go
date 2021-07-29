@@ -1,7 +1,9 @@
 package types
 
 import (
+	"fmt"
 	"github.com/codr7/gofu"
+	"io"
 )
 
 type TBool struct {
@@ -18,4 +20,12 @@ func Bool() *TBool {
 	}
 	
 	return _bool
+}
+
+func (self TBool) DumpValue(val interface{}, out io.Writer) {
+	if val.(bool) {
+		fmt.Fprint(out, "t")
+	} else {
+		fmt.Fprint(out, "f")
+	}	
 }

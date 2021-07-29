@@ -31,7 +31,5 @@ func (self TSlot) Value() interface{} {
 func (self TSlot) String() string {
 	var out bytes.Buffer
 	self._type.DumpValue(self.value, &out)
-	out.WriteRune(':')
-	out.WriteString(self._type.Name())
 	return out.String()
 }

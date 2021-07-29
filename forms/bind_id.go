@@ -27,13 +27,8 @@ func (self TBindId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 			return errors.Compile(self.Pos(), "Incompatible type: %v/%v", x, y)
 		}
 
-		//TODO Performance
-		//bind literals at compile time
-		//scope.BindSlot(self.id, s.Type(), s.Value())
-		//return nil
-		//make sure to force dynamic call in test
-		//use find(scope, id)/call
-		//add nil type
+		scope.BindSlot(self.id, s.Type(), s.Value())
+		return nil
 	}
 	
 	i := scope.BindId(self.id, self._type)
@@ -46,7 +41,7 @@ func (self TBindId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 		return err
 	}
 	
-	block.Emit(ops.BindId(self.Pos(), i, self._type, nil))
+	block.Emit(ops.BindId(self.Pos(), i, self._type))
 	return nil
 }
 

@@ -56,6 +56,17 @@ func (self *TStack) Pop() *TSlot {
 	return &it
 }
 
+func (self *TStack) Drop(n int) bool {
+	max := len(self.items)
+
+	if max < n {
+		return false
+	}
+
+	self.items = self.items[:max-n]
+	return true
+}
+
 func (self *TStack) Dump(out io.Writer) {
 	fmt.Fprint(out, "[")
 

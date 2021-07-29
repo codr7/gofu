@@ -32,8 +32,7 @@ func (self TCall) CompileArgs(scope *gofu.TScope, block *gofu.TBlock) error {
 func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	f := scope.Find(self.target.name)
 	
-	switch s := f.(type) {
-	case gofu.TRegister:
+	if s, ok := f.(gofu.TRegister); ok {
 		if err := self.CompileArgs(scope, block); err != nil {
 			return err
 		}
@@ -41,12 +40,6 @@ func (self TCall) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 		block.Emit(ops.Get(self.Pos(), s))
 		block.Emit(ops.Call(self.Pos(), nil, nil, true))
 		return nil
-	case gofu.TSlot:
-		if !gofu.Isa(s.Type(), types.Target()) {
-			return errors.Compile(self.Pos(), "Invalid target: %v", s)
-		}
-	default:
-		return errors.Compile(self.Pos(), "Invalid target: %v", f)
 	}
 
 	ts := f.(gofu.TSlot)

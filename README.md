@@ -17,29 +17,30 @@ gofu v1
 [42]
 ```
 
-Parens may be used to group multiple values into one form.
+Parens may be used to group forms.
 
 ```
   (1 2 3)
 [1 2 3]
 ```
 
-Functions are called automatically when referenced, arguments are passed on the stack.
-
-```
-  (35 7 +)
-[42]
-```
-
-The same result may be accomplished using call syntax, which is triggered by suffixing any identifier with parens.
-All declared arguments must be included within the call form.
+Functions may be called by suffixing their ids with argument lists.
 
 ```
   +(35 7)
 [42]
 ```
 
-You may plug in a different parser to switch syntax, add custom types or operations; and still reuse the same REPL logic.
+Values may be bound to identifiers using `bind`.
+
+```
+  bind(foo 42)
+[]
+  foo
+[42]
+```
+
+The REPL is heavily parameterized and assumes very little about the actual language.
 
 ```
 scope := gofu.Scope()

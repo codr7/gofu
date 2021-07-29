@@ -2,6 +2,8 @@ package inits
 
 import (
 	"github.com/codr7/gofu"
+	"github.com/codr7/gofu/errors"
+	"github.com/codr7/gofu/forms"
 	"github.com/codr7/gofu/ops"
 	"github.com/codr7/gofu/types"
 )
@@ -21,8 +23,42 @@ func Core(scope *gofu.TScope) {
 	scope.BindSlot("Target", types.Meta(), types.Target())
 
 	scope.BindSlot("_", types.Nil(), nil)
-	scope.BindSlot("true", types.Bool(), true)
-	scope.BindSlot("false", types.Bool(), false)
+	scope.BindSlot("t", types.Bool(), true)
+	scope.BindSlot("f", types.Bool(), false)
+
+	scope.BindSlot("bind",
+		types.Macro(),
+		gofu.Macro("bind", 2,
+			func(pos gofu.TPos, args []gofu.Form, scope *gofu.TScope, block *gofu.TBlock) error {
+				id := args[0].(forms.TId).Name()
+				v := args[1]
+
+				if s := v.Slot(scope); s == nil {
+					i := scope.BindId(id, nil)
+					
+					if i == -1 {
+						return errors.Compile(pos, "Duplicate binding: %v", id)
+					}
+					
+					if err := v.Compile(scope, block); err != nil {
+						return err
+					}
+				
+					block.Emit(ops.BindId(pos, i, nil))
+				} else {
+					scope.BindSlot(id, s.Type(), s.Value())
+				}
+				
+				return nil
+			}))
+
+	scope.BindSlot("d",
+		types.Macro(),
+		gofu.Macro("d", 0,
+			func(pos gofu.TPos, args []gofu.Form, scope *gofu.TScope, block *gofu.TBlock) error {
+				block.Emit(ops.Drop(pos, 1))
+				return nil
+			}))
 
 	scope.BindSlot("reset",
 		types.Macro(),

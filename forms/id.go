@@ -18,6 +18,10 @@ func Id(pos gofu.TPos, name string) TId {
 	return f
 }
 
+func (self TId) Name() string {
+	return self.name
+}
+
 func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	found := scope.Find(self.name)
 
@@ -29,14 +33,13 @@ func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	case gofu.TRegister:
 		block.Emit(ops.Get(self.Pos(), found))
 	case gofu.TSlot:
-		if m, ok := found.Value().(*gofu.TMacro); ok {
-			if m.ArgCount() > 0 {
-				return errors.Compile(self.Pos(),
-					"Bare macro id, take reference with & or call %v(...)", m.Name())
-			}
+		t := found.Type()
+		
+		if t == types.Macro() {
+			return found.Value().(*gofu.TMacro).Expand(self.Pos(), nil, scope, block)
+		}
 
-			return m.Expand(self.Pos(), nil, scope, block)
-		} else if gofu.Isa(found.Type(), types.Target()); ok {
+		if gofu.Isa(t, types.Target()) {
 			block.Emit(ops.Call(self.Pos(), found.Type(), found.Value(), true))
 		} else {
 			block.Emit(ops.Push(found.Type(), found.Value()))

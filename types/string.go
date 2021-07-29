@@ -23,6 +23,6 @@ func String() *TString {
 	return _string
 }
 
-func (self *TString) DumpValue(val interface{}, out io.Writer) {
+func (self TString) DumpValue(val interface{}, out io.Writer) {
 	fmt.Fprintf(out, "'%v'", val)
 }

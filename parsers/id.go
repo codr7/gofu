@@ -44,9 +44,10 @@ func (self TId) Form(pos *gofu.TPos, in *bufio.Reader) (gofu.Form, error) {
 	f := forms.Id(fpos, out.String())
 
 	if c == '(' {
-		var args gofu.Form
-		args, err = Group(Any()).Form(pos, in)
-		return forms.Call(fpos, f, args.(forms.TGroup).Members()...), nil
+		var af gofu.Form
+		af, err = Group(Any()).Form(pos, in)
+		as := af.(forms.TGroup).Members()
+		return forms.Call(fpos, f, as...), nil
 	}
 
 	return f, nil

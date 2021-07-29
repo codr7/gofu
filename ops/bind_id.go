@@ -8,27 +8,24 @@ import (
 type TBindId struct {
 	pos gofu.TPos
 	index int
-	slot gofu.TSlot
+	_type gofu.Type
 }
 
-func BindId(pos gofu.TPos, idx int, t gofu.Type,  v interface{}) TBindId {
-	return TBindId{pos: pos, index: idx, slot: *gofu.Slot(t, v)}
+func BindId(pos gofu.TPos, idx int, typ gofu.Type) TBindId {
+	return TBindId{pos: pos, index: idx, _type: typ}
 }
 
 func (self TBindId) Eval(thread *gofu.TThread, pc *int) error {
 	stack := thread.Stack()
-	s := self.slot
-	
-	if v := self.slot.Value(); v == nil {
-		if stack.Empty() {
-			return errors.Eval(self.pos, "Missing value to bind")
-		}
-		
-		s = *stack.Pop()
-		
-		if ct, pt := s.Type(), self.slot.Type(); pt != nil && !gofu.Isa(ct, pt) {
-			return errors.Eval(self.pos, "Invalid binding: %v/%v", s, pt.Name())
-		}
+			
+	s := stack.Pop()
+
+	if s == nil {
+		return errors.Eval(self.pos, "Missing value")
+	}
+
+	if ct, pt := s.Type(), self._type; pt != nil && !gofu.Isa(ct, pt) {
+		return errors.Eval(self.pos, "Invalid binding: %v/%v", s, pt.Name())
 	}
 
 	thread.Set(self.index, s.Type(), s.Value())

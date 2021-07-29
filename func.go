@@ -62,5 +62,15 @@ func (self *TFunc) Call(pos TPos, thread *TThread, pc *int, check bool) error {
 }
 
 func (self TFunc) Dump(out io.Writer) {
-	fmt.Fprintf(out, "Func(%v %v %v)", self.name, self.argTypes, self.resTypes)
+	var as, rs []string
+
+	for _, t := range self.argTypes {
+		as = append(as, t.Name())
+	}
+
+	for _, t := range self.resTypes {
+		rs = append(rs, t.Name())
+	}
+
+	fmt.Fprintf(out, "Func(%v %v %v)", self.name, as, rs)
 }
