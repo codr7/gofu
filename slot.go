@@ -9,9 +9,9 @@ type TSlot struct {
 	value interface{}
 }
 
-func Slot(t Type, v interface{}) TSlot {
+func Slot(t Type, v interface{}) *TSlot {
 	var s TSlot
-	return *s.Init(t, v)
+	return s.Init(t, v)
 }
 	
 func (self *TSlot) Init(t Type, v interface{}) *TSlot {

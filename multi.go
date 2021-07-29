@@ -51,7 +51,7 @@ func (self *TMulti) Pop() *TFunc {
 	return it
 }
 
-func (self *TMulti) GetFunc(args []Form, scope *TScope) Target {
+func (self *TMulti) GetFunc(args []Form, scope *TScope) interface{} {
 	var matches []*TFunc
 	nfs := len(self.funcs)
 

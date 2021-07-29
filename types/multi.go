@@ -20,3 +20,15 @@ func Multi() *TMulti {
 	
 	return multi
 }
+
+func (self TMulti) TargetArgCount(val interface{}) int {
+	return val.(*gofu.TMulti).ArgCount()
+}
+
+func (self TMulti) TargetApplicable(val interface{}, stack *gofu.TStack) bool {
+	return val.(*gofu.TMulti).Applicable(stack)	
+}
+
+func (self TMulti) CallTarget(val interface{}, pos gofu.TPos, thread *gofu.TThread, pc *int, check bool) error {
+	return val.(*gofu.TMulti).Call(pos, thread, pc, check)		
+}

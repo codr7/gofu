@@ -56,8 +56,9 @@ func (self TFunc) Applicable(stack *TStack) bool {
 	return true
 }
 
-func (self *TFunc) Call(pos TPos, thread *TThread, pc *int, check bool) error {
+func (self *TFunc) Call(pos TPos, thread *TThread, pc *int, check bool) error {	
 	return self.body(pos, thread, self, pc, check)
+
 }
 
 func (self TFunc) Dump(out io.Writer) {

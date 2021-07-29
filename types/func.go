@@ -6,7 +6,7 @@ import (
 )
 
 type TFunc struct {
-	gofu.BType
+	TTarget
 }
 
 var _func *TFunc
@@ -26,3 +26,14 @@ func (self TFunc) DumpValue(val interface{}, out io.Writer) {
 	val.(*gofu.TFunc).Dump(out)
 }
 
+func (self TFunc) TargetArgCount(val interface{}) int {
+	return val.(*gofu.TFunc).ArgCount()
+}
+
+func (self TFunc) TargetApplicable(val interface{}, stack *gofu.TStack) bool {
+	return val.(*gofu.TFunc).Applicable(stack)	
+}
+
+func (self TFunc) CallTarget(val interface{}, pos gofu.TPos, thread *gofu.TThread, pc *int, check bool) error {
+	return val.(*gofu.TFunc).Call(pos, thread, pc, check)		
+}

@@ -4,6 +4,7 @@ import (
 	"github.com/codr7/gofu"
 	"github.com/codr7/gofu/errors"
 	"github.com/codr7/gofu/ops"
+	"github.com/codr7/gofu/types"
 )
 
 type TId struct {
@@ -35,8 +36,8 @@ func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 			}
 
 			return m.Expand(self.Pos(), nil, scope, block)
-		} else if t, ok := found.Value().(gofu.Target); ok {
-			block.Emit(ops.Call(self.Pos(), t, true))
+		} else if gofu.Isa(found.Type(), types.Target()); ok {
+			block.Emit(ops.Call(self.Pos(), found.Type(), found.Value(), true))
 		} else {
 			block.Emit(ops.Push(found.Type(), found.Value()))
 		}
@@ -48,16 +49,14 @@ func (self TId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 }
 
 func (self TId) Slot(scope *gofu.TScope) *gofu.TSlot {
-	var s gofu.TSlot
+	var s *gofu.TSlot
 	
 	switch found := scope.Find(self.name).(type) {
 	case gofu.TRegister:
 		s = gofu.Slot(found.Type(), nil)
 	case gofu.TSlot:
-		s = found
-	default:
-		return nil
+		s = &found
 	}
 
-	return &s
+	return s
 }

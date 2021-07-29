@@ -29,8 +29,9 @@ func (self *TThread) PopCall() *TCall {
 	return &c
 }
 
-func (self *TThread) PushCall(pos TPos, tgt Target) {
-	self.calls = append(self.calls, Call(pos, tgt))
+func (self *TThread) PushCall(pos TPos, fun *TFunc) *TCall {
+	self.calls = append(self.calls, Call(pos, fun))
+	return &self.calls[len(self.calls)-1]
 }
 
 func (self *TThread) PeekCall() *TCall {

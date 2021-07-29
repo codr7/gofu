@@ -12,7 +12,7 @@ type TBindId struct {
 }
 
 func BindId(pos gofu.TPos, idx int, t gofu.Type,  v interface{}) TBindId {
-	return TBindId{pos: pos, index: idx, slot: gofu.Slot(t, v)}
+	return TBindId{pos: pos, index: idx, slot: *gofu.Slot(t, v)}
 }
 
 func (self TBindId) Eval(thread *gofu.TThread, pc *int) error {

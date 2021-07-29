@@ -15,16 +15,12 @@ func Return(pos gofu.TPos) TReturn {
 
 func (self TReturn) Eval(thread *gofu.TThread, pc *int) error {
 	c := thread.PopCall()
-	
+
 	if c == nil {
 		return errors.Eval(self.pos, "No call in progress")
 	}
 	
-	if err := c.Exit(thread, pc); err != nil {
-		return err
-	}
-
-	f := c.Target().(*gofu.TFunc)
+	f := c.Func()
 	stack := thread.Stack();
 	offs := stack.Len()-1
 
@@ -36,6 +32,10 @@ func (self TReturn) Eval(thread *gofu.TThread, pc *int) error {
 		if v := stack.Peek(offs-i); !gofu.Isa(v.Type(), t) {
 			return errors.Eval(self.pos, "Invalid result: %v/%v/%v", f.Name(), v, t.Name())
 		}
+	}
+
+	if err := c.Exit(thread, pc); err != nil {
+		return err
 	}
 
 	return nil

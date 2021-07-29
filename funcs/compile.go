@@ -7,13 +7,12 @@ import (
 )
 
 func CompileBody(body gofu.Form, block *gofu.TBlock) (gofu.FuncBody, error) {
-	var scope gofu.TScope
-	scope.Init()
+	scope := gofu.Scope()
 
 	skip := block.Emit(ops.Nop())
 	startPc := block.Pc()
 	
-	if err := body.Compile(&scope, block); err != nil {
+	if err := body.Compile(scope, block); err != nil {
 		return nil, err
 	}
 
@@ -27,7 +26,7 @@ func CompileBody(body gofu.Form, block *gofu.TBlock) (gofu.FuncBody, error) {
 			return errors.Eval(pos, "Func is not applicable: %v/%v", _func, stack)
 		}
 
-		thread.PeekCall().Enter(&scope, thread, pc)
+		thread.PushCall(pos, _func).Enter(scope, thread, pc)
 		*pc = startPc
 		return nil
 	}, nil

@@ -8,12 +8,18 @@ import (
 
 type TCall struct {
 	pos gofu.TPos
-	target gofu.Target
+	target *gofu.TSlot
 	check bool
 }
 
-func Call(pos gofu.TPos, tgt gofu.Target, chk bool) TCall {
-	return TCall{pos: pos, target: tgt, check: chk}
+func Call(pos gofu.TPos, t gofu.Type, v interface{}, chk bool) TCall {
+	op := TCall{pos: pos, check: chk}
+
+	if t != nil || v != nil {
+		op.target = gofu.Slot(t, v)
+	}
+
+	return op
 }
 
 func (self TCall) Eval(thread *gofu.TThread, pc *int) error {
@@ -21,34 +27,21 @@ func (self TCall) Eval(thread *gofu.TThread, pc *int) error {
 	t := self.target
 	
 	if t == nil {
-		s := stack.Pop()
+		t = stack.Pop()
 
-		if s == nil {
+		if t == nil {
 			return errors.Eval(self.pos, "Missing target")
 		}
-
-		if !gofu.Isa(s.Type(), types.Target()) {
-			return errors.Eval(self.pos, "Invalid target: %v", s)
-		}
-
-		t = s.Value().(gofu.Target)
 	}
 
-	if self.check && !t.Applicable(stack) {
-		return errors.Eval(self.pos, "Target is not applicable: %v/%v", t, stack)
+	if !gofu.Isa(t.Type(), types.Target()) {
+		return errors.Eval(self.pos, "Invalid target: %v", t)
 	}
-	
-	thread.PushCall(self.pos, t)
+
 	*pc++
 
-	if err := t.Call(self.pos, thread, pc, self.check); err != nil {
+	if err := t.Type().(types.ITarget).CallTarget(t.Value(), self.pos, thread, pc, self.check); err != nil {
 		return err
-	}
-
-	if c := thread.PeekCall(); c == nil {
-		return errors.Eval(self.pos, "No call in progress")
-	} else if c.ReturnPc() == -1 {
-		thread.PopCall()
 	}
 
 	return nil
