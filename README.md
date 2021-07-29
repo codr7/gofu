@@ -6,7 +6,7 @@
 
 
 ### repl
-A primitive [REPL](https://github.com/codr7/gofu/blob/main/utils/repl.go) is provided to allow playing around with the toolkit, it reads one form at a time and pushes prints the stack after each evaluation.
+A primitive [REPL](https://github.com/codr7/gofu/blob/main/utils/repl.go) is provided to allow playing around with the toolkit, it reads one form at a time and prints the stack after each evaluation.
 
 ```
 $ cd bin
