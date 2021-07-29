@@ -24,7 +24,18 @@ Parens may be used to group forms.
 [1 2 3]
 ```
 
-Functions may be called by suffixing their ids with argument lists.
+The stack may be directly modified using `d` and `reset`.
+
+```
+  (1 2 3)
+[1 2 3]
+  d
+[1 2]
+  reset
+[]
+```
+
+Functions may be called by suffixing names with argument lists.
 
 ```
   +(35 7)
@@ -134,7 +145,7 @@ scope.BindSlot("reset",
 The following list of types are provided but optional, anything implementing `gofu.Type` may be used as a type.
 
 * Any: Any - Anything
-* Bool: Any - true/false values
+* Bool: Any - t/f
 * Char: Any - Characters
 * Func: Any Target - Functions
 * Int: Any Num - Integers
