@@ -4,62 +4,6 @@
 ### intro
 [gofu](https://github.com/codr7/gofu) aims to provide a flexible toolkit for creating custom scripting languages in Go.
 
-
-### repl
-A primitive [REPL](https://github.com/codr7/gofu/blob/main/utils/repl.go) is provided to allow playing around with the toolkit, it reads one form at a time and prints the stack after each evaluation.
-
-```
-$ cd bin
-$ ./mk
-$ ./repl
-gofu v1
-  +(35 7)
-[42]
-```
-
-Parens may be used to group forms.
-
-```
-  (1 2 3)
-[1 2 3]
-```
-
-The stack may be directly modified using `d` and `reset`.
-
-```
-  (1 2 3)
-[1 2 3]
-  d
-[1 2]
-  reset
-[]
-```
-
-Functions may be called by suffixing names with argument lists.
-
-```
-  +(35 7)
-[42]
-```
-
-Values may be bound to identifiers using `bind`.
-
-```
-  bind(foo 42)
-[]
-  foo
-[42]
-```
-
-The REPL is heavily parameterized and assumes very little about the actual language.
-
-```
-scope := gofu.Scope()
-block := gofu.Block()
-thread := gofu.Thread(scope)
-utils.Repl(scope, parsers.Any(), block, thread)
-```
-
 ### functions
 Functions have a name, an argument list, a result list and a body.
 
@@ -67,7 +11,7 @@ Functions have a name, an argument list, a result list and a body.
 p := gofu.Pos("Test", -1, -1)
 
 add := gofu.Func("+", []gofu.Type{types.Int(), types.Int()}, []gofu.Type{types.Int()},
-	func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+	func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
 		stack := thread.Stack()
 		stack.Push(types.Int(), stack.Pop().Value().(int) + stack.Pop().Value().(int))
 		return nil
@@ -107,7 +51,7 @@ The following example will dispatch to the right function based on the argument 
 
 ```go
 f1 := gofu.Func("foo", []gofu.Type{types.Bool()}, []gofu.Type{types.Int()},
-    func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+    func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
 	    stack := thread.Stack()
 	    stack.Pop()
 	    stack.Push(types.String(), "Bool!")
@@ -115,7 +59,7 @@ f1 := gofu.Func("foo", []gofu.Type{types.Bool()}, []gofu.Type{types.Int()},
     })
 
 f2 := gofu.Func("foo", []gofu.Type{types.Int()}, []gofu.Type{types.Int()},
-    func(pos gofu.TPos, thread *gofu.TThread, pc *int) error {
+    func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
 	    stack := thread.Stack()
 	    stack.Pop()
 	    stack.Push(types.String(), "Int!")
@@ -158,3 +102,67 @@ The following list of types are provided but optional, anything implementing `go
 * Stack[T]: Any Seq[T] - Stacks of values
 * String: Any Seq[Char] - Strings
 * Target: Any - Callable values
+
+### repl
+A primitive [REPL](https://github.com/codr7/gofu/blob/main/utils/repl.go) is provided, it reads one form at a time and prints the stack after each evaluation.
+
+```
+$ cd bin
+$ ./mk
+$ ./repl
+gofu v1
+  +(35 7)
+[42]
+```
+
+Parens may be used to group forms.
+
+```
+  (1 2 3)
+[1 2 3]
+```
+
+The stack may be directly modified using `d` and `reset`.
+
+```
+  (1 2 3)
+[1 2 3]
+  d
+[1 2]
+  reset
+[]
+```
+
+Functions may be called by suffixing names with argument lists.
+
+```
+  +(35 7)
+[42]
+```
+
+New functions may be defined using `func`.
+
+```
+  func(foo () (Int) 42)
+[]
+  foo
+[42]
+```
+
+Values may be bound to identifiers using `bind`.
+
+```
+  bind(foo 42)
+[]
+  foo
+[42]
+```
+
+The REPL is heavily parameterized and assumes very little about the actual language.
+
+```
+scope := gofu.Scope()
+block := gofu.Block()
+thread := gofu.Thread(scope)
+utils.Repl(scope, parsers.Any(), block, thread)
+```

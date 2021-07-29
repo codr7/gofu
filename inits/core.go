@@ -4,6 +4,7 @@ import (
 	"github.com/codr7/gofu"
 	"github.com/codr7/gofu/errors"
 	"github.com/codr7/gofu/forms"
+	"github.com/codr7/gofu/funcs"
 	"github.com/codr7/gofu/ops"
 	"github.com/codr7/gofu/types"
 )
@@ -60,6 +61,36 @@ func Core(scope *gofu.TScope) {
 				return nil
 			}))
 
+	scope.BindSlot("func",
+		types.Macro(),
+		gofu.Macro("func", 4,
+			func(pos gofu.TPos, args []gofu.Form, scope *gofu.TScope, block *gofu.TBlock) error {
+				id := args[0].(forms.TId).Name()
+				afs, rfs := args[1], args[2]
+				var ats, rts []gofu.Type
+
+				for _, f := range afs.(forms.TGroup).Members() {
+					found := scope.Find(f.(forms.TId).Name())
+					s := found.(gofu.TSlot)
+					ats = append(ats, s.Value().(gofu.Type))
+				}
+
+				for _, f := range rfs.(forms.TGroup).Members() {
+					found := scope.Find(f.(forms.TId).Name())
+					s := found.(gofu.TSlot)
+					rts = append(rts, s.Value().(gofu.Type))
+				}
+
+				body, err := funcs.CompileBody(args[3], block)
+
+				if err != nil {
+					return err
+				}
+				
+				scope.BindSlot(id, types.Func(), gofu.Func(id, ats, rts, body))
+				return nil
+			}))
+	
 	scope.BindSlot("reset",
 		types.Macro(),
 		gofu.Macro("reset", 0,

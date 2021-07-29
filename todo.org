@@ -1,9 +1,15 @@
 * add TestFib
-** add func macro
-*** func(fib (Int) (Int) 
+** add if-macro
+** add - func
+** add < func
+** add > func
+*** func(fib (Int) (Int) (
       bind(n _)
-      if((n 2 <) n +(fib(n 1 -) fib(n 2 -)))))
-* --
+      if((n 2 <) n +(fib(n 1 -) fib(n 2 -))))))
+* add (x; y z) => (x (y z))
+** extract parsers.GroupBody()
+** check for ';' in parsers.Group
+** parse as separate group
 * add get macro
 ** string -> slot if any
 ** add nil type
