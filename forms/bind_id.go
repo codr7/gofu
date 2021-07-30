@@ -34,7 +34,7 @@ func (self TBindId) Compile(scope *gofu.TScope, block *gofu.TBlock) error {
 	i := scope.BindId(self.id, self._type)
 
 	if i == -1 {
-		return errors.Compile(self.Pos(), "Duplicate binding: %v", self.id)
+		return errors.Compile(self.Pos(), "Dup binding: %v", self.id)
 	}
 
 	if err := self.value.Compile(scope, block); err != nil {

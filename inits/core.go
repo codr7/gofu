@@ -38,7 +38,7 @@ func Core(scope *gofu.TScope) {
 					i := scope.BindId(id, nil)
 					
 					if i == -1 {
-						return errors.Compile(pos, "Duplicate binding: %v", id)
+						return errors.Compile(pos, "Dup binding: %v", id)
 					}
 					
 					if err := v.Compile(scope, block); err != nil {
@@ -47,7 +47,9 @@ func Core(scope *gofu.TScope) {
 				
 					block.Emit(ops.BindId(pos, i, nil))
 				} else {
-					scope.BindSlot(id, s.Type(), s.Value())
+					if !scope.BindSlot(id, s.Type(), s.Value()) {
+						return errors.Compile(pos, "Dup binding: %v", id)
+					}
 				}
 				
 				return nil
@@ -83,7 +85,7 @@ func Core(scope *gofu.TScope) {
 				f := gofu.Func(id, ats, rts, nil)
 
 				if !scope.BindSlot(id, types.Func(), f) {
-					return errors.Compile(pos, "Duplicate binding: %v", id)
+					return errors.Compile(pos, "Dup binding: %v", id)
 				}
 
 				body, err := funcs.CompileBody(args[3], block)

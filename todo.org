@@ -4,9 +4,10 @@
 *** func(fib (Int) (Int) (
       bind(n _)
       if((n 2 <) n +(fib(n 1 -) fib(n 2 -))))))
-* add multi macro, copy func
-** add to multi if exists
-** otherwise bind new multi
+* add parent scope
+** add Scope() arg
+** Find() recursively unless int
+** init func scope parent
 * add Compile stack arg
 ** use to simulate stack usage
 ** return compile error on empty pop
@@ -20,6 +21,10 @@
 * add isa func
 * add call func
 * add parsers.String
+* add multi macro
+** like func
+** add to multi if exists
+** otherwise bind new multi
 * add Sum types
 ** X|Y
 ** create on demand in TId.Compile
