@@ -80,14 +80,16 @@ func Core(scope *gofu.TScope) {
 					s := found.(gofu.TSlot)
 					rts = append(rts, s.Value().(gofu.Type))
 				}
+				f := gofu.Func(id, ats, rts, nil)
+				scope.BindSlot(id, types.Func(), f)
 
 				body, err := funcs.CompileBody(args[3], block)
 
 				if err != nil {
 					return err
 				}
-				
-				scope.BindSlot(id, types.Func(), gofu.Func(id, ats, rts, body))
+
+				f.SetBody(body)
 				return nil
 			}))
 	

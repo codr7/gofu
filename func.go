@@ -73,3 +73,7 @@ func (self TFunc) Dump(out io.Writer) {
 
 	fmt.Fprintf(out, "Func(%v %v %v)", self.name, as, rs)
 }
+
+func (self *TFunc) SetBody(body FuncBody) {
+	self.body = body
+}
