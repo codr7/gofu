@@ -81,7 +81,10 @@ func Core(scope *gofu.TScope) {
 					rts = append(rts, s.Value().(gofu.Type))
 				}
 				f := gofu.Func(id, ats, rts, nil)
-				scope.BindSlot(id, types.Func(), f)
+
+				if !scope.BindSlot(id, types.Func(), f) {
+					return errors.Compile(pos, "Duplicate binding: %v", id)
+				}
 
 				body, err := funcs.CompileBody(args[3], block)
 

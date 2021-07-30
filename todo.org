@@ -4,13 +4,12 @@
 *** func(fib (Int) (Int) (
       bind(n _)
       if((n 2 <) n +(fib(n 1 -) fib(n 2 -))))))
+* add multi macro, copy func
+** add to multi if exists
+** otherwise bind new multi
 * add Compile stack arg
 ** use to simulate stack usage
 ** return compile error on empty pop
-* add Sum types
-** X|Y
-** create on demand in TId.Compile
-*** require Type literals
 * move types into Scope
 * add get macro
 ** string -> slot if any
@@ -21,5 +20,9 @@
 * add isa func
 * add call func
 * add parsers.String
+* add Sum types
+** X|Y
+** create on demand in TId.Compile
+*** require Type literals
 * add fuzzy search to Scope.Find
 ** use edit distance to provide alternatives on failed search
