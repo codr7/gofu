@@ -23,6 +23,10 @@ func String() *TString {
 	return _string
 }
 
+func (self TString) TrueValue(val interface{}) bool {
+	return val.(string) != ""
+}
+
 func (self TString) DumpValue(val interface{}, out io.Writer) {
 	fmt.Fprintf(out, "'%v'", val)
 }

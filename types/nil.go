@@ -21,6 +21,10 @@ func Nil() *TNil {
 	return _nil
 }
 
+func (self TNil) TrueValue(val interface{}) bool {
+	return false
+}
+
 func (self *TNil) DumpValue(val interface{}, out io.Writer) {
 	fmt.Fprintf(out, "_")
 }

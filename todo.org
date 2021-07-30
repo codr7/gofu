@@ -1,14 +1,12 @@
-* add Compile stack arg
-** use to simulate stack usage
-** return compile error on empty pop
 * add TestFib
-** add if-macro
-** add - func
 ** add < func
 ** add > func
 *** func(fib (Int) (Int) (
       bind(n _)
       if((n 2 <) n +(fib(n 1 -) fib(n 2 -))))))
+* add Compile stack arg
+** use to simulate stack usage
+** return compile error on empty pop
 * add get macro
 ** string -> slot if any
 ** add nil type

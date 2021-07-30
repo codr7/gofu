@@ -22,6 +22,10 @@ func Bool() *TBool {
 	return _bool
 }
 
+func (self TBool) TrueValue(val interface{}) bool {
+	return val.(bool)
+}
+
 func (self TBool) DumpValue(val interface{}, out io.Writer) {
 	if val.(bool) {
 		fmt.Fprint(out, "t")

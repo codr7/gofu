@@ -25,6 +25,10 @@ func (self *TStack) Init(name string, itemType gofu.Type) *TStack {
 	return self
 }
 
+func (self TStack) TrueValue(val interface{}) bool {
+	return !val.(*gofu.TStack).Empty()
+}
+
 func (self TStack) DumpValue(val interface{}, out io.Writer) {
 	val.(*gofu.TStack).Dump(out)
 }

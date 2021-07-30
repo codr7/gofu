@@ -133,6 +133,15 @@ The stack may be directly modified using `d` and `reset`.
 []
 ```
 
+Code may be executed conditionally using `if`.
+
+```
+  if(t 1 2)
+[1]
+  if(f 3 4)
+[1 4]
+```
+
 Functions may be called by suffixing names with argument lists.
 
 ```

@@ -12,6 +12,7 @@ type Type interface {
 	AddParentsTo(child Type)
 	Isa(parent Type) Type
 
+	TrueValue(val interface{}) bool
 	DumpValue(val interface{}, out io.Writer)
 }
 
@@ -32,6 +33,10 @@ func (self BType) Name() string {
 
 func (self BType) DumpValue(val interface{}, out io.Writer) {
 	fmt.Fprintf(out, "%v", val)
+}
+
+func (self BType) TrueValue(val interface{}) bool {
+	return true
 }
 
 func (self BType) Isa(parent Type) Type {

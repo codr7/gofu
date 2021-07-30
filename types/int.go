@@ -20,3 +20,7 @@ func Int() *TInt {
 	
 	return _int
 }
+
+func (self TInt) TrueValue(val interface{}) bool {
+	return val.(int) != 0
+}

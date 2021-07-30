@@ -26,6 +26,14 @@ func (self *TMaybe) Init(name string, valueType gofu.Type) *TMaybe {
 	return self
 }
 
+func (self TMaybe) TrueValue(val interface{}) bool {
+	if val == nil {
+		return false
+	}
+
+	return self.valueType.TrueValue(val)
+}
+
 func (self TMaybe) DumpValue(val interface{}, out io.Writer) {
 	if val == nil {
 		fmt.Fprintf(out, "Maybe(_)")

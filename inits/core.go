@@ -93,6 +93,35 @@ func Core(scope *gofu.TScope) {
 				return nil
 			}))
 	
+	scope.BindSlot("if",
+		types.Macro(),
+		gofu.Macro("if", 3,
+			func(pos gofu.TPos, args []gofu.Form, scope *gofu.TScope, block *gofu.TBlock) error {
+				cond := args[0]
+
+				if err := cond.Compile(scope, block); err != nil {
+					return err
+				}
+
+				branch := block.Emit(ops.Nop())
+				
+				x, y := args[1], args[2]
+
+				if err := x.Compile(scope, block); err != nil {
+					return err
+				}
+
+				skip := block.Emit(ops.Nop())
+				block.Set(branch, ops.Branch(block.Pc()))
+
+				if err := y.Compile(scope, block); err != nil {
+					return err
+				}
+
+				block.Set(skip, ops.Goto(block.Pc()))
+				return nil
+			}))
+
 	scope.BindSlot("reset",
 		types.Macro(),
 		gofu.Macro("reset", 0,
