@@ -3,9 +3,10 @@ package gofu
 import (
 	"fmt"
 	"io"
+	"strings"
 )
 
-type FuncBody = func(pos TPos, thread *TThread, _func *TFunc, pc *int, check bool) error
+type FuncBody = func(pos TPos, thread *TThread, _func *TFunc, pc *int) error
 
 type TFunc struct {
 	name string
@@ -56,8 +57,8 @@ func (self TFunc) Applicable(stack *TStack) bool {
 	return true
 }
 
-func (self *TFunc) Call(pos TPos, thread *TThread, pc *int, check bool) error {	
-	return self.body(pos, thread, self, pc, check)
+func (self *TFunc) Call(pos TPos, thread *TThread, pc *int) error {	
+	return self.body(pos, thread, self, pc)
 }
 
 func (self TFunc) Dump(out io.Writer) {
@@ -76,4 +77,10 @@ func (self TFunc) Dump(out io.Writer) {
 
 func (self *TFunc) SetBody(body FuncBody) {
 	self.body = body
+}
+
+func (self *TFunc) String() string {	
+	var out strings.Builder
+	self.Dump(&out)
+	return out.String()
 }

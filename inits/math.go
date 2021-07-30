@@ -9,7 +9,7 @@ func Math(scope *gofu.TScope) {
 	scope.BindSlot("+",
 		types.Func(),
 		gofu.Func("+", []gofu.Type{types.Int(), types.Int()}, []gofu.Type{types.Int()},
-			func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
+			func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int) error {
 				stack := thread.Stack()
 				y := stack.Pop()
 				x := stack.Peek(0)
@@ -20,7 +20,7 @@ func Math(scope *gofu.TScope) {
 	scope.BindSlot("-",
 		types.Func(),
 		gofu.Func("-", []gofu.Type{types.Int(), types.Int()}, []gofu.Type{types.Int()},
-			func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
+			func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int) error {
 				stack := thread.Stack()
 				y := stack.Pop()
 				x := stack.Peek(0)

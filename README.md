@@ -11,7 +11,7 @@ Functions have a name, an argument list, a result list and a body.
 p := gofu.Pos("Test", -1, -1)
 
 add := gofu.Func("+", []gofu.Type{types.Int(), types.Int()}, []gofu.Type{types.Int()},
-	func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
+	func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int) error {
 		stack := thread.Stack()
 		stack.Push(types.Int(), stack.Pop().Value().(int) + stack.Pop().Value().(int))
 		return nil
@@ -51,7 +51,7 @@ The following example will dispatch to the right function based on the argument 
 
 ```go
 f1 := gofu.Func("foo", []gofu.Type{types.Bool()}, []gofu.Type{types.Int()},
-    func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
+    func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int) error {
 	    stack := thread.Stack()
 	    stack.Pop()
 	    stack.Push(types.String(), "Bool!")
@@ -59,7 +59,7 @@ f1 := gofu.Func("foo", []gofu.Type{types.Bool()}, []gofu.Type{types.Int()},
     })
 
 f2 := gofu.Func("foo", []gofu.Type{types.Int()}, []gofu.Type{types.Int()},
-    func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int, check bool) error {
+    func(pos gofu.TPos, thread *gofu.TThread, _func *gofu.TFunc, pc *int) error {
 	    stack := thread.Stack()
 	    stack.Pop()
 	    stack.Push(types.String(), "Int!")

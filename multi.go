@@ -2,7 +2,9 @@ package gofu
 
 import (
 	"fmt"
+	"io"
 	"log"
+	"strings"
 )
 
 type TMulti struct {
@@ -97,15 +99,25 @@ func (self TMulti) Applicable(stack *TStack) bool {
 	return false
 }
 
-func (self *TMulti) Call(pos TPos, thread *TThread, pc *int, check bool) error {
+func (self *TMulti) Call(pos TPos, thread *TThread, pc *int) error {
 	stack := thread.Stack()
 	
 	for i := len(self.funcs)-1; i >= 0; i-- {
 		if f := self.funcs[i]; f.Applicable(stack) {
-			return f.Call(pos, thread, pc, false)
+			return f.Call(pos, thread, pc)
 		}
 	}
 	
 	return fmt.Errorf("No matching function found: %v", self.name)
+}
+
+func (self TMulti) Dump(out io.Writer) {
+	fmt.Fprintf(out, "Multi(%v)", self.name, self.argCount)
+}
+
+func (self *TMulti) String() string {	
+	var out strings.Builder
+	self.Dump(&out)
+	return out.String()
 }
 

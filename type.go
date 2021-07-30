@@ -57,6 +57,10 @@ func (self BType) AddParentsTo(child Type) {
 	}
 }
 
+func (self *BType) String() string {	
+	return self.name
+}
+
 func Isa(child, parent Type) bool {
 	if child == parent {
 		return true

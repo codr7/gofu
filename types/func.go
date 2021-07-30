@@ -2,6 +2,7 @@ package types
 
 import (
 	"github.com/codr7/gofu"
+	"github.com/codr7/gofu/errors"
 	"io"
 )
 
@@ -35,5 +36,12 @@ func (self TFunc) TargetApplicable(val interface{}, stack *gofu.TStack) bool {
 }
 
 func (self TFunc) CallTarget(val interface{}, pos gofu.TPos, thread *gofu.TThread, pc *int, check bool) error {
-	return val.(*gofu.TFunc).Call(pos, thread, pc, check)		
+	stack := thread.Stack()
+	f := val.(*gofu.TFunc)
+	
+	if check && !f.Applicable(stack) {
+		return errors.Eval(pos, "Func is not applicable: %v/%v", f, stack)
+	}
+
+	return f.Call(pos, thread, pc)		
 }

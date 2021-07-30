@@ -7,6 +7,11 @@
 * add Compile stack arg
 ** use to simulate stack usage
 ** return compile error on empty pop
+* add Sum types
+** X|Y
+** create on demand in TId.Compile
+*** require Type literals
+* move types into Scope
 * add get macro
 ** string -> slot if any
 ** add nil type

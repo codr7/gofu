@@ -2,6 +2,7 @@ package types
 
 import (
 	"github.com/codr7/gofu"
+	"io"
 )
 
 type TMulti struct {
@@ -21,6 +22,10 @@ func Multi() *TMulti {
 	return multi
 }
 
+func (self TMulti) DumpValue(val interface{}, out io.Writer) {
+	val.(*gofu.TMulti).Dump(out)
+}
+
 func (self TMulti) TargetArgCount(val interface{}) int {
 	return val.(*gofu.TMulti).ArgCount()
 }
@@ -30,5 +35,5 @@ func (self TMulti) TargetApplicable(val interface{}, stack *gofu.TStack) bool {
 }
 
 func (self TMulti) CallTarget(val interface{}, pos gofu.TPos, thread *gofu.TThread, pc *int, check bool) error {
-	return val.(*gofu.TMulti).Call(pos, thread, pc, check)		
+	return val.(*gofu.TMulti).Call(pos, thread, pc)		
 }
